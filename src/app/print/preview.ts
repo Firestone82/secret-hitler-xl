@@ -1,5 +1,5 @@
 import { RolesFile } from '../core/types';
-import { BLEED, Item, PAGE, PrintFile, SIZE, Sheet } from './layout';
+import { BLEED, Item, PAGE, PrintFile, Sheet, slotSize } from './layout';
 import { Slot } from './plan';
 import { Paper } from './options';
 
@@ -49,7 +49,7 @@ function previewItem(it: Item, PW: number, back: boolean, data: RolesFile): Prev
   };
   if (f.type === 'piece') {
     out.img = `preview/${f.id}_${f.page}.jpg`;
-    out.aw = d.w + 2 * PIECE_BLEED; out.ah = d.h + 2 * PIECE_BLEED;
+    out.aw = d.w + 2 * PIECE_BLEED * d.scale; out.ah = d.h + 2 * PIECE_BLEED * d.scale;
   } else if (f.type === 'solid') {
     out.fill = `rgb(${f.rgb.join(',')})`;
   } else {
@@ -69,8 +69,8 @@ export function allSheets(files: PrintFile[]): SheetRef[] {
 
 /** A single piece on its own, at cut size plus the 1.5 mm bleed the sheets keep. */
 export function previewPiece(slot: Slot, back: boolean, data: RolesFile): PreviewItem {
-  const [w, h] = SIZE[slot.size];
-  const draw = (face: Slot['front']) => ({ face, rot: 0 as const, dx: 0, w, h });
+  const [w, h] = slotSize(slot);
+  const draw = (face: Slot['front']) => ({ face, rot: 0 as const, dx: 0, w, h, scale: slot.scale ?? 1 });
   const it: Item = { x: 0, y: 0, w, h, name: slot.name, front: draw(slot.front), back: draw(slot.back), free: [true, true, true, true] };
   return previewItem(it, w, back, data);
 }

@@ -1,4 +1,22 @@
 export type Paper = 'A3' | 'A4';
+export type BoardStyle = 'border' | 'borderless' | 'both';
+export type SpareKind = 'tiles' | 'roles' | 'memberships' | 'ballots';
+
+/** The reference cards, in print order, with what each needs and how many a table usually wants. */
+export const REF_CARDS: { id: string; label: string; hint: string; copies: number; needs?: 'powers' | 'communists' | 'full' }[] = [
+  { id: 'r_setupnight', label: 'Setup and night script', hint: 'For whoever runs the night.', copies: 1 },
+  { id: 'r_round', label: 'Round', hint: 'The order of a round.', copies: 2 },
+  { id: 'r_emerg', label: 'Emergency powers and anti-policies', hint: 'Needs emergency powers or anti-policies.', copies: 2, needs: 'powers' },
+  { id: 'r_compow', label: 'Communist powers and winning', hint: 'Needs the Communists.', copies: 2, needs: 'communists' },
+  { id: 'r_contents', label: 'Contents', hint: 'Lists the full set: needs every module and the briefings.', copies: 1, needs: 'full' },
+];
+
+export const SPARE_KINDS: { k: SpareKind; label: string; hint: string }[] = [
+  { k: 'tiles', label: 'Policy tiles', hint: 'per party' },
+  { k: 'roles', label: 'Regular roles', hint: 'Liberal, Fascist, Communist' },
+  { k: 'memberships', label: 'Party Membership', hint: 'per party' },
+  { k: 'ballots', label: 'Ballots', hint: 'besides the one spare' },
+];
 
 export interface PrintOptions {
   paper: Paper;
@@ -12,9 +30,14 @@ export interface PrintOptions {
   roles: Record<string, boolean>;
   briefings: boolean;
   ballots: 'double' | 'separate';
-  boards: boolean;
-  inserts: boolean;
-  referenceCards: boolean;
+  /** border: the classic boards; borderless: for the 3D-printed frames; both */
+  boardStyle: BoardStyle;
+  /** borderless boards printed at this percentage of 390 × 130 mm, to fit a frame */
+  insertScale: number;
+  /** copies of each reference card, by piece id (r_round…); 0 leaves it out */
+  refCards: Record<string, number>;
+  /** spare copies on top of what the table needs, by kind */
+  spares: Record<SpareKind, number>;
   placards: boolean;
   pileCards: boolean;
   blanks: boolean;
@@ -37,9 +60,10 @@ export const DEFAULT_OPTIONS: PrintOptions = {
   roles: Object.fromEntries(['centrist', 'capitalist', 'monarchist', 'anarchist', 'bodyguard', 'fascist_spy', 'liberal_spy', 'jester', 'propagandist', 'bureaucrat', 'detective'].map((k) => [k, true])),
   briefings: true,
   ballots: 'double',
-  boards: true,
-  inserts: true,
-  referenceCards: true,
+  boardStyle: 'border',
+  insertScale: 100,
+  refCards: Object.fromEntries(REF_CARDS.map((r) => [r.id, r.copies])),
+  spares: { tiles: 0, roles: 0, memberships: 0, ballots: 0 },
   placards: true,
   pileCards: true,
   blanks: true,
@@ -51,7 +75,12 @@ export const DEFAULT_OPTIONS: PrintOptions = {
 
 /** Keeps the options consistent: what the rules allow at this table size and with these modules. */
 export function normalise(o: PrintOptions, needsCommunists: (id: string) => boolean): PrintOptions {
-  const n: PrintOptions = { ...o, roles: { ...o.roles } };
+  const n: PrintOptions = { ...o, roles: { ...o.roles }, refCards: { ...DEFAULT_OPTIONS.refCards, ...o.refCards }, spares: { ...DEFAULT_OPTIONS.spares, ...o.spares } };
+  if (!['border', 'borderless', 'both'].includes(n.boardStyle)) n.boardStyle = 'border';
+  n.insertScale = Math.min(100, Math.max(80, Math.round((Number(n.insertScale) || 100) * 2) / 2));
+  const clamp = (v: unknown, max: number) => Math.min(max, Math.max(0, Math.round(Number(v) || 0)));
+  for (const k of Object.keys(n.refCards)) n.refCards[k] = clamp(n.refCards[k], 9);
+  for (const k of Object.keys(n.spares) as SpareKind[]) n.spares[k] = clamp(n.spares[k], 9);
   if (!n.xl) {
     n.communists = n.emergency = n.antiPolicies = false;
     for (const k of Object.keys(n.roles)) n.roles[k] = false;
@@ -66,4 +95,13 @@ export function normalise(o: PrintOptions, needsCommunists: (id: string) => bool
   // the two spies always come together
   n.roles['liberal_spy'] = n.roles['fascist_spy'] = !!(n.roles['liberal_spy'] || n.roles['fascist_spy']) && n.xl;
   return n;
+}
+
+/** Whether a reference card makes sense with these modules. */
+export function refCardAllowed(r: (typeof REF_CARDS)[number], o: PrintOptions): boolean {
+  if (!o.xl) return false;
+  if (r.needs === 'powers') return o.emergency || o.antiPolicies;
+  if (r.needs === 'communists') return o.communists;
+  if (r.needs === 'full') return o.communists && o.emergency && o.antiPolicies && o.briefings;
+  return true;
 }

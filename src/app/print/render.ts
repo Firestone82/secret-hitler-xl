@@ -2,7 +2,7 @@ import { PDFDocument, PDFEmbeddedPage, PDFFont, PDFImage, PDFPage, clip, concatT
 import fontkit from '@pdf-lib/fontkit';
 import { RolesFile } from '../core/types';
 import { BriefingFonts, MM, drawBlankBriefing, drawBriefing } from './briefing-pdf';
-import { BLEED, Draw, Item, PAGE, PrintFile, SIZE, Sheet } from './layout';
+import { BLEED, Draw, Item, PAGE, PrintFile, Sheet, slotSize } from './layout';
 import { Paper } from './options';
 import { Face, Plan, Slot, uniquePieces } from './plan';
 
@@ -120,7 +120,7 @@ export class Renderer {
       const label = slug(labelOf(u.slot)), key = faceKey(u.slot.front);
       const base = `${u.group}/${String(n).padStart(3, '0')}_${label}${seen.get(u.group + '/' + label)! > 1 && !label.includes(key) ? '_' + key : ''}${perCopy ? '' : `_x${u.copies}`}`;
       const [front, back] = await Promise.all([this.facePdf(u.slot, u.slot.front, data), this.facePdf(u.slot, u.slot.back, data)]);
-      const [w, h] = SIZE[u.slot.size];
+      const [w, h] = slotSize(u.slot);
       for (let c = 0; c < (perCopy ? u.copies : 1); c++) {
         const name = perCopy && u.copies > 1 ? `${base}_${String(c + 1).padStart(2, '0')}` : base;
         files.push({ path: `${name}_front.pdf`, bytes: front }, { path: `${name}_back.pdf`, bytes: back });
@@ -136,11 +136,11 @@ export class Renderer {
   private async facePdf(slot: Slot, f: Face, data: RolesFile): Promise<Uint8Array> {
     const doc = await PDFDocument.create();
     doc.setCreator('Secret Hitler XL print builder');
-    const [w, h] = SIZE[slot.size], b = PIECE_BLEED;
+    const [w, h] = slotSize(slot), b = PIECE_BLEED, sc = slot.scale ?? 1;
     if (f.type === 'piece') {
       const [emb] = await doc.embedPdf(await this.cache.get(`pieces/${f.id}.pdf`), [f.page]);
-      const page = doc.addPage([emb.width, emb.height]);
-      page.drawPage(emb, { x: 0, y: 0, width: emb.width, height: emb.height });
+      const page = doc.addPage([emb.width * sc, emb.height * sc]);
+      page.drawPage(emb, { x: 0, y: 0, width: emb.width * sc, height: emb.height * sc });
       return doc.save({ useObjectStreams: true });
     }
     const page = doc.addPage([pt(w + 2 * b), pt(h + 2 * b)]);
@@ -179,7 +179,7 @@ export class Renderer {
     const f = d.face;
     if (f.type === 'piece') {
       const emb = ctx.pages.get(f.id)![f.page];
-      const pw = pt(d.w + 2 * PIECE_BLEED), ph = pt(d.h + 2 * PIECE_BLEED);
+      const pw = pt(d.w + 2 * PIECE_BLEED * d.scale), ph = pt(d.h + 2 * PIECE_BLEED * d.scale);
       const vx = (pw / 2) * cos - (ph / 2) * sin, vy = (pw / 2) * sin + (ph / 2) * cos;
       page.drawPage(emb, { x: C.x - vx, y: C.y - vy, width: pw, height: ph, rotate: degrees(d.rot) });
     } else if (f.type === 'solid') {

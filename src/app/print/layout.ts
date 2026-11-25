@@ -11,6 +11,8 @@ export interface Draw {
   /** size of the artwork without bleed, before rotation */
   w: number;
   h: number;
+  /** the piece file is drawn at this scale, bleed included */
+  scale: number;
 }
 
 export interface Item {
@@ -42,20 +44,25 @@ export const PAGE: Record<Paper, [number, number]> = { A3: [297, 420], A4: [210,
 export const SIZE: Record<Slot['size'], [number, number]> = {
   tile: [44, 68], card: [63.5, 88], long: [395, 134], insert: [390, 130], placard: [104.5, 176],
 };
+/** Cut size of a slot in mm, with its scale applied. */
+export function slotSize(slot: Slot): [number, number] {
+  const [w, h] = SIZE[slot.size], s = slot.scale ?? 1;
+  return [+(w * s).toFixed(2), +(h * s).toFixed(2)];
+}
 const GUT = 3;
 const BOARD_NOTCH: [number, number, number] = [0.30, 0.31, 0.29];
 const INSERT_NOTCH: Record<string, [number, number, number]> = { l: [97, 201, 217], f: [230, 100, 68], c: [230, 72, 66] };
 
 function draw(slot: Slot, side: 'front' | 'back', rot: 0 | 90 | -90, dx = 0): Draw {
-  const [w, h] = SIZE[slot.size];
-  return { face: side === 'front' ? slot.front : slot.back, rot, dx, w, h };
+  const [w, h] = slotSize(slot);
+  return { face: side === 'front' ? slot.front : slot.back, rot, dx, w, h, scale: slot.scale ?? 1 };
 }
 
 /** Cards in a grid. rotated = landscape cells with the card turned (A3). */
 function cardSheets(title: string, slots: Slot[], paper: Paper, rotated: boolean, cols: number, rows: number, gx: number, gy: number): Sheet[] {
   if (!slots.length) return [];
   const [PW, PH] = PAGE[paper];
-  const [cw0, ch0] = SIZE[slots[0].size];
+  const [cw0, ch0] = slotSize(slots[0]);
   const cw = rotated ? ch0 : cw0, ch = rotated ? cw0 : ch0;
   const tw = cols * cw + (cols - 1) * gx, th = rows * ch + (rows - 1) * gy;
   const ox = (PW - tw) / 2, oy = (PH - th) / 2, per = cols * rows;
@@ -100,7 +107,7 @@ function longSheetsA3(title: string, slots: Slot[], placards: Slot[]): Sheet[] {
   const [PW, PH] = PAGE.A3, out: Sheet[] = [];
   for (let i = 0; i < slots.length; i += 2) {
     const pair = slots.slice(i, i + 2);
-    const [L, S] = SIZE[pair[0].size];
+    const [L, S] = slotSize(pair[0]);
     const ox = (PW - (2 * S + 4)) / 2, y = (PH - L) / 2;
     const items: Item[] = pair.map((slot, k) => ({
       x: ox + k * (S + 4), y, w: S, h: L, name: slot.name,
@@ -130,7 +137,7 @@ function longSheetsA3(title: string, slots: Slot[], placards: Slot[]): Sheet[] {
 function longSheetsA4(title: string, slots: Slot[], placards: Slot[]): Sheet[] {
   const [PW, PH] = PAGE.A4, out: Sheet[] = [];
   for (const slot of slots) {
-    const [L, S] = SIZE[slot.size], hl = L / 2, gap = 6, ox = (PW - hl) / 2, oy = (PH - (2 * S + gap)) / 2;
+    const [L, S] = slotSize(slot), hl = L / 2, gap = 6, ox = (PW - hl) / 2, oy = (PH - (2 * S + gap)) / 2;
     const items: Item[] = [0, 1].map((i) => {
       const off = i === 0 ? 0 : hl;
       return {
