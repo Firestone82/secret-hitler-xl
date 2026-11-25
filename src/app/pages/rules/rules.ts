@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
 import { Block } from '../../core/types';
+import { Credits } from '../../shared/credits';
 import { RoleBox } from '../../shared/role-box';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 
@@ -23,7 +24,7 @@ function blockText(b: Block): string {
 
 @Component({
   selector: 'app-rules',
-  imports: [SafeHtmlPipe, RoleBox],
+  imports: [SafeHtmlPipe, RoleBox, Credits],
   templateUrl: './rules.html',
   styleUrl: './rules.scss',
 })
