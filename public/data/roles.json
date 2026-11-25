@@ -332,7 +332,7 @@
     "image": "r_anarchist.jpg",
     "paragraphs": [
      "Wins if the Communists win. At setup the Anarchist only shows a thumb, so the Communists know them but not the other way round, unless there is just one other Communist.",
-     "<b>Assassination,</b> once per game: after a policy is enacted and before the next election, the Anarchist reveals their role and executes a player."
+     "<b>Power:</b> Assassination. Once per game, after a policy is enacted and before the next election, the Anarchist reveals their role and executes a player."
     ],
     "addWhen": "The group wants a wild card.",
     "addWhenTable": "The group knows the Communists well and <b>wants a wild card</b>.",
@@ -1005,7 +1005,7 @@
     "image": "r_detective.jpg",
     "paragraphs": [
      "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
-     "<b>Power: Detective investigation.</b> It can only be used at the moment Bugging or Investigate Loyalty is unlocked <b>and</b> the Detective is President or Chancellor at that moment. The Detective then reveals their Secret Role card and uses that power instead of the President. The chosen player secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
+     "<b>Power:</b> Detective investigation. It can only be used at the moment Bugging or Investigate Loyalty is unlocked <b>and</b> the Detective is President or Chancellor at that moment. The Detective then reveals their Secret Role card and uses that power instead of the President. The chosen player secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
      "Revealing does not give a power to use at any other time: outside those two moments the Detective plays like any member of their party."
     ],
     "addWhen": "You want stronger investigations.",
