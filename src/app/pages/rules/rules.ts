@@ -7,6 +7,7 @@ import { Block, SeatTable } from '../../core/types';
 import { Credits } from '../../shared/credits';
 import { RoleBox } from '../../shared/role-box';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
+import { PrintChoice, PrintDialog } from './print-dialog';
 
 const strip = (s: string) => (s ?? '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -28,7 +29,7 @@ function blockText(b: Block): string {
 
 @Component({
   selector: 'app-rules',
-  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits],
+  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog],
   templateUrl: './rules.html',
   styleUrl: './rules.scss',
 })
@@ -40,6 +41,7 @@ export class RulesPage {
   tocOpen = signal(false);
   printing = signal(false);
   meta = this.data.rulebookMeta;
+
 
   blocks = computed(() => this.data.rulebook() ?? []);
   toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => b.type === 'part' || b.type === 'h1' || b.type === 'h2'));
@@ -85,14 +87,28 @@ export class RulesPage {
     return { cols, rows };
   }
 
-  /** Loads every picture first (most are lazy), then opens the browser's print dialog. */
-  async print() {
+  /**
+   * A booklet opens its imposed PDF. Otherwise the page itself is printed on the chosen paper:
+   * every picture is loaded first (most are lazy), and on A3 the page is scaled up to fill the sheet.
+   */
+  async print(c: PrintChoice) {
+    if (c.bookletFile) {
+      window.open(c.bookletFile, '_blank', 'noopener');
+      return;
+    }
     this.printing.set(true);
     try {
       await this.loadImages(5000);
     } finally {
       this.printing.set(false);
     }
+    const a3 = c.paper === 'A3';
+    const style = document.createElement('style');
+    style.textContent = `@page { size: ${c.paper} portrait; }`;
+    document.head.appendChild(style);
+    document.documentElement.classList.toggle('print-a3', a3);
+    const done = () => { style.remove(); document.documentElement.classList.remove('print-a3'); };
+    window.addEventListener('afterprint', done, { once: true });
     window.print();
   }
 

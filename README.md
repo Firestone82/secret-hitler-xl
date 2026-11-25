@@ -72,6 +72,7 @@ Everything on the Rulebook page comes from this file, so the rules change withou
   "date": "2026-11-25",
   "changelog": [{ "version": "1.0.0", "date": "2026-11-25", "changes": ["..."] }],   // the "Version history" section
   "downloads": [{ "label": "A5, reading order", "file": "pdf/Secret_Hitler_XL_Rulebook_A5.pdf" }],
+  "booklets": { "A4": { "label": "A5 booklet on A4", "file": "pdf/..." }, "A3": { ... } },   // what the Print dialog opens for a booklet
   "setup": {                         // who sits at the table, one entry per player count from "from" upwards
     "xl": { "from": 6, "experimentalFrom": 17, "liberals": [3, 4, ...], "fascists": [...], "hitler": [...],
             "communists": [...], "emergency": [...], "fascistBoard": null },
@@ -85,7 +86,7 @@ Everything on the Rulebook page comes from this file, so the rules change withou
 - Any block can carry `"experimental": true` to show it framed with an *Experimental* mark.
 - Other block types: `part`, `h1`, `h2`, `h3`, `p`, `list`, `table`, `script`, `note`, `figure`, `pairs`, `wide`, `icons`, `wins`, `legislative` (the worked example, with its steps and tiles), `role` (written from roles.json), `credits` and `changelog`.
 
-The **Print the rulebook** button prints the page as it is, with a cover page that carries the version.
+The **Print** button above the rules opens the print options: A4 or A3, and booklet on or off. Without the booklet it prints the page itself, with a cover page that carries the version (on A3 everything is scaled up). With the booklet it opens the booklet PDF for that paper from `booklets`.
 
 ## How the print builder works
 

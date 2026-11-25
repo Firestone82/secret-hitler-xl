@@ -1,11 +1,5 @@
 .wrap { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 2rem; max-width: 1240px; margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
 aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh - 80px); overflow: auto; padding-right: .4rem; }
-.search input { width: 100%; padding: .55rem .75rem; border: 1.5px solid var(--line); border-radius: 8px; font: inherit; background: #fff; }
-.results { margin: .5rem 0 1rem; display: flex; flex-direction: column; gap: .25rem; }
-.results button { text-align: left; border: 0; background: #fff; border-radius: 6px; padding: .4rem .55rem; display: flex; flex-direction: column; }
-.results .where { font-size: .72rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: .04em; }
-.results .snip { font-size: .82rem; color: var(--muted); }
-.none { color: var(--muted); font-size: .9rem; }
 .toc { display: flex; flex-direction: column; margin-top: .8rem; }
 .toc button { text-align: left; border: 0; background: none; padding: .22rem .3rem; border-radius: 4px; color: var(--ink); }
 .toc button:hover { background: #efe9d6; }
@@ -15,11 +9,27 @@ aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh -
 .dl { margin-top: 1.2rem; padding: .8rem; background: var(--dark); border-radius: 10px; display: flex; flex-direction: column; gap: .2rem; }
 .dlh { color: var(--orange); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
 .dl a { color: var(--cream); font-size: .9rem; }
-.dl .print { margin-bottom: .6rem; }
 .ver { margin-top: .6rem; padding-top: .5rem; border-top: 1px solid rgba(255,247,214,.15); color: #b9b6a6; font-size: .78rem; }
 .ver .link { border: 0; background: none; padding: 0; color: var(--cream); font-size: inherit; text-decoration: underline; }
 .tocbtn { display: none; }
-.rules { min-width: 0; max-width: 780px; }
+.col { min-width: 0; max-width: 900px; }
+.rules { min-width: 0; }
+
+/* sticky bar: wide search and the print button stay in reach while reading */
+.bar { position: sticky; top: 56px; z-index: 8; display: flex; gap: .6rem; align-items: center; margin: -.5rem 0 .5rem; padding: .6rem 0; background: var(--paper); box-shadow: 0 8px 8px -8px rgba(43,44,42,.18); }
+.search { position: relative; flex: 1; min-width: 0; }
+.search svg { position: absolute; left: .8rem; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+.search input { width: 100%; padding: .7rem .9rem .7rem 2.5rem; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; font-size: 1.02rem; background: #fff; transition: border-color .15s, box-shadow .15s; }
+.search input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(232,129,58,.2); }
+.results { position: absolute; left: 0; right: 0; top: calc(100% + .35rem); max-height: min(60vh, 520px); overflow: auto; display: flex; flex-direction: column; gap: .15rem; padding: .35rem; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+.results button { text-align: left; border: 0; background: none; border-radius: 6px; padding: .5rem .65rem; display: flex; flex-direction: column; }
+.results button:hover, .results button:focus-visible { background: #f6f1e2; outline: none; }
+.results .where { font-size: .72rem; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: .04em; }
+.results .snip { font-size: .9rem; color: var(--muted); }
+.none { margin: .4rem .6rem; color: var(--muted); font-size: .9rem; }
+.bar .print { display: inline-flex; align-items: center; gap: .45rem; padding: .7rem 1.1rem; white-space: nowrap; }
+.bar .print svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+
 .blk { scroll-margin-top: 70px; }
 .part { margin: 2rem 0 1rem; padding: 1.4rem 1.6rem; border-radius: 14px; color: #fff; scroll-margin-top: 70px; }
 .part .num { font-weight: 700; letter-spacing: .15em; font-size: .78rem; }
@@ -84,7 +94,9 @@ table.seats td.x { background: #fbeedd; font-style: italic; }
 @media print {
   @page { size: A4; margin: 14mm 14mm 16mm; }
   .wrap { display: block; max-width: none; margin: 0; padding: 0; }
-  aside, .tocbtn { display: none !important; }
+  aside, .tocbtn, .bar, app-print-dialog { display: none !important; }
+  .col { max-width: none; }
+  :host-context(.print-a3) .rules { zoom: 1.414; }
   .rules { max-width: none; font-size: 10.5pt; line-height: 1.45; }
   * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .print-head { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 240mm; text-align: center; }
