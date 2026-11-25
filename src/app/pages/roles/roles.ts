@@ -1,4 +1,4 @@
-import { Component, HostListener, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BriefingCard } from '../../shared/briefing-card';
@@ -114,7 +114,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .when { background: #f3eedd; border-left: 3px solid var(--c); padding: .4rem .7rem; }
     .when > b { color: var(--c); margin-right: .35rem; }
     .muted { color: var(--muted); }
-    @media (max-width: 1000px) {
+    @media (max-width: 1024px) {
       .layout { grid-template-columns: minmax(0, 1fr); }
       .toc { display: none; position: fixed; inset: auto 1rem 4.5rem auto; top: auto; z-index: 11; width: min(260px, calc(100vw - 2rem));
         max-height: 70vh; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
@@ -150,8 +150,18 @@ export class RolesPage {
   }
 
   private frame = 0;
-  @HostListener('window:scroll')
-  onScroll() {
+  constructor() {
+    // capture scroll events from any scrolling element, so tracking works whether the window
+    // or a custom scroll container (e.g. SimpleBar) scrolls the page
+    const onScroll = () => this.onScroll();
+    document.addEventListener('scroll', onScroll, { capture: true, passive: true });
+    inject(DestroyRef).onDestroy(() => {
+      document.removeEventListener('scroll', onScroll, { capture: true });
+      cancelAnimationFrame(this.frame);
+    });
+  }
+
+  private onScroll() {
     if (this.frame) return;
     this.frame = requestAnimationFrame(() => {
       this.frame = 0;
