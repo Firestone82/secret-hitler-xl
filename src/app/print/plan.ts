@@ -1,4 +1,4 @@
-import { Role, RolesFile } from '../core/types';
+import { Role, RolesFile, SeatTable } from '../core/types';
 import { PrintOptions } from './options';
 
 /** What is printed on one side of a piece. */
@@ -33,14 +33,22 @@ export interface Plan {
   minPlayers: number;
 }
 
-// who sits at the table (rulebook tables)
-const BASE = { from: 5, lib: [3, 4, 4, 5, 5, 6], fas: [1, 1, 2, 2, 3, 3], com: [0, 0, 0, 0, 0, 0] };
-const XL = {
+// who sits at the table: defaults, replaced by the seat tables of rulebook.json once it loads
+type Seats = Pick<SeatTable, 'from' | 'liberals' | 'fascists' | 'communists'>;
+let BASE: Seats = { from: 5, liberals: [3, 4, 4, 5, 5, 6], fascists: [1, 1, 2, 2, 3, 3], communists: [0, 0, 0, 0, 0, 0] };
+let XL: Seats = {
   from: 6,
-  lib: [3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 8, 9],
-  fas: [1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4],
-  com: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 5],
+  liberals: [3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 8, 9],
+  fascists: [1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4],
+  communists: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 5],
 };
+
+/** Uses the seat tables from rulebook.json, so the rulebook and the print builder agree. */
+export function setSeatTables(t: { base: Seats; xl: Seats }) {
+  BASE = t.base;
+  XL = t.xl;
+}
+
 const EMERGENCY = ['e_investigate', 'e_peek', 'e_special_election', 'e_execution', 'e_propaganda', 'e_no_confidence', 'e_censorship', 'e_enabling_act', 'e_article48', 'e_pardon'];
 const PLACARD_BACK: [number, number, number] = [224, 146, 39];
 
@@ -53,8 +61,8 @@ export function seats(o: PrintOptions) {
   let lib = 0, fas = 0, com = 0;
   for (let p = t.from; p <= o.players; p++) {
     const i = p - t.from;
-    if (i >= t.lib.length) break;
-    lib = Math.max(lib, t.lib[i]); fas = Math.max(fas, t.fas[i]); com = Math.max(com, t.com[i]);
+    if (i >= t.liberals.length) break;
+    lib = Math.max(lib, t.liberals[i]); fas = Math.max(fas, t.fascists[i]); com = Math.max(com, t.communists[i] ?? 0);
   }
   return { lib, fas, com, from: t.from };
 }

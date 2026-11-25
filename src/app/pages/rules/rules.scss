@@ -15,6 +15,9 @@ aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh -
 .dl { margin-top: 1.2rem; padding: .8rem; background: var(--dark); border-radius: 10px; display: flex; flex-direction: column; gap: .2rem; }
 .dlh { color: var(--orange); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
 .dl a { color: var(--cream); font-size: .9rem; }
+.dl .print { margin-bottom: .6rem; }
+.ver { margin-top: .6rem; padding-top: .5rem; border-top: 1px solid rgba(255,247,214,.15); color: #b9b6a6; font-size: .78rem; }
+.ver .link { border: 0; background: none; padding: 0; color: var(--cream); font-size: inherit; text-decoration: underline; }
 .tocbtn { display: none; }
 .rules { min-width: 0; max-width: 780px; }
 .blk { scroll-margin-top: 70px; }
@@ -60,6 +63,15 @@ figure { margin: 1.1rem 0; }
 .lr p { margin: 0; font-size: .9rem; } .n { color: var(--orange); margin-right: .3rem; }
 .tiles { display: flex; gap: 4px; } .tiles img, .disc { height: 54px; }
 .ar { color: var(--orange); font-size: 1.4rem; }
+.blk.experimental { position: relative; padding: .2rem .8rem .4rem; margin: .8rem 0; border: 1.5px dashed var(--orange); border-radius: 10px; }
+.expmark { display: inline-block; margin-top: .4rem; padding: .05rem .5rem; border-radius: 99px; background: var(--orange); color: #2a1206; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+table.seats th.x { background: #8a4a1e; }
+table.seats td.x { background: #fbeedd; font-style: italic; }
+.changelog { display: flex; flex-direction: column; gap: .8rem; margin: .8rem 0; }
+.cv { background: #fff; border-radius: 10px; padding: .6rem .9rem; }
+.cvh b { font-size: 1.05rem; color: var(--orange); margin-right: .4rem; } .cvh span { color: var(--muted); font-size: .88rem; }
+.cv ul { margin: .3rem 0 0; }
+.print-head { display: none; }
 .credits { margin-top: 2.5rem; padding-top: 1rem; border-top: 2px solid var(--line); scroll-margin-top: 70px; }
 .credits .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; font-size: .9rem; }
 .credits h4 { margin: .7rem 0 .1rem; } .credits p { margin: 0; color: var(--muted); }
@@ -71,4 +83,23 @@ figure { margin: 1.1rem 0; }
   .tocbtn { display: block; position: fixed; right: 1rem; bottom: 1rem; z-index: 11; border: 0; border-radius: 99px; padding: .7rem 1.1rem; background: var(--orange); font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
   .credits .cols { grid-template-columns: 1fr; }
   .lr { grid-template-columns: 1fr auto; } .lr .ar, .lr .disc { display: none; }
+}
+
+@media print {
+  @page { size: A4; margin: 14mm 14mm 16mm; }
+  .wrap { display: block; max-width: none; margin: 0; padding: 0; }
+  aside, .tocbtn { display: none !important; }
+  .rules { max-width: none; font-size: 10.5pt; line-height: 1.45; }
+  * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .print-head { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 240mm; text-align: center; }
+  .print-head img { width: 70mm; }
+  .print-head h1 { font-size: 34pt; margin: 6mm 0 2mm; } .print-head h1 em { font-style: normal; color: var(--orange); }
+  .print-head p { margin: 0; font-size: 13pt; } .print-head .pv { margin-top: 8mm; color: var(--muted); font-size: 10pt; }
+  .blk:has(> .part), .blk:has(> .credits) { break-before: page; }
+  h1, h2, h3, .part { break-after: avoid; }
+  table, tr, .script, .note, figure, .ic, .win, .lr, .lic, .cv, .blk.experimental { break-inside: avoid; }
+  .tw { overflow: visible; }
+  table { font-size: 9pt; }
+  .fi img, .wide { box-shadow: none; }
+  a { color: inherit; text-decoration: none; }
 }
