@@ -13,7 +13,8 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     <div class="page">
       <h1>Roles</h1>
       <p class="lead">Every Secret Role with its Role Briefing card. The text comes from <code>data/roles.json</code>; the same file
-        writes the role sections of the rulebook and the briefing cards in the printed PDF.</p>
+        writes the role sections of the rulebook and the briefing cards in the printed PDF. The download button next to a role's name
+        gives you all of its files in one zip.</p>
       <div class="filters">
         @for (f of filters; track f.k) {
           <button [class.on]="filter() === f.k" (click)="filter.set(f.k)">{{ f.label }}</button>
@@ -28,7 +29,18 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
                 <app-briefing-card [role]="r" [palettes]="rf.palettes" />
               </div>
               <div class="info">
-                <h2>{{ r.name }}</h2>
+                <div class="head">
+                  <h2>{{ r.name }}</h2>
+                  <button class="dl" type="button" (click)="download(r)" [disabled]="busy() === r.id"
+                    [attr.aria-label]="'Download all files of the ' + r.name + ' (zip)'"
+                    [title]="'Download the ' + r.name + ': Secret Role card, Role Briefing card, portrait and print-ready PDFs (zip)'">
+                    @if (busy() === r.id) {
+                      <svg viewBox="0 0 24 24" aria-hidden="true" class="spin"><path d="M12 3a9 9 0 1 0 9 9" /></svg>
+                    } @else {
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></svg>
+                    }
+                  </button>
+                </div>
                 <div class="tags">
                   <span class="chip">{{ moduleLabel(r) }}</span>
                   @if (r.seatLabel) { <span class="chip">takes the seat of {{ r.seatLabel.toLowerCase() }}</span> }
@@ -41,7 +53,6 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
                 } @else {
                   <p class="muted">A role of the {{ r.module === 'base' ? 'original game' : 'Communist party' }}: see the rulebook for how it plays.</p>
                 }
-                <button class="btn ghost" (click)="pdf(r.id)" [disabled]="busy()">Briefing card as PDF</button>
               </div>
             </section>
           }
@@ -60,7 +71,15 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .role { background: #fff; border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .8rem; border-top: 5px solid var(--c); }
     .cards { display: flex; gap: .8rem; align-items: flex-start; flex-wrap: wrap; }
     .secret { width: 254px; height: 352px; object-fit: cover; border-radius: 9px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+    .head { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; }
     h2 { margin: 0; font-size: 1.7rem; color: var(--c); }
+    .dl { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border: 0; border-radius: 10px;
+      background: #f3eedd; color: var(--c); transition: background .15s, color .15s; }
+    .dl:hover:not(:disabled) { background: var(--c); color: #fff; }
+    .dl:disabled { cursor: progress; }
+    .dl svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .spin { animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .tags { display: flex; gap: .3rem; flex-wrap: wrap; margin: .3rem 0 .4rem; }
     .info p { margin: .35rem 0; }
     .info p ::ng-deep b { color: var(--c); }
@@ -73,21 +92,25 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
 export class RolesPage {
   data = inject(DataService);
   filter = signal<Filter>('all');
-  busy = signal(false);
+  /** id of the role whose zip is being built */
+  busy = signal('');
   filters: { k: Filter; label: string }[] = [
     { k: 'all', label: 'All roles' }, { k: 'base', label: 'Original game' }, { k: 'communists', label: 'Communists' }, { k: 'roles', label: 'Extra roles (XL)' },
   ];
   shown = computed(() => (this.data.roles()?.roles ?? []).filter((r) => this.filter() === 'all' || r.module === this.filter()));
   moduleLabel(r: Role) { return { base: 'Original game', communists: 'XL: the Communists', roles: 'XL: extra role' }[r.module]; }
 
-  async pdf(id: string) {
-    this.busy.set(true);
-    const tab = window.open('', '_blank');
+  async download(r: Role) {
+    if (this.busy()) return;
+    this.busy.set(r.id);
     try {
-      const { Renderer } = await import('../../print/render');
-      const bytes = await new Renderer().briefingPdf(id, '', this.data.roles()!);
-      const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'application/pdf' }));
-      if (tab) tab.location.href = url; else window.location.href = url;
-    } finally { this.busy.set(false); }
+      const { rolePack } = await import('../../shared/role-pack');
+      const { bytes, name } = await rolePack(r, this.data.roles()!);
+      const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'application/zip' }));
+      const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch (e: any) {
+      alert('Could not build the download: ' + (e?.message ?? e));
+    } finally { this.busy.set(''); }
   }
 }
