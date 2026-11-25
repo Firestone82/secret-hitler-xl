@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BriefingCard } from '../../shared/briefing-card';
@@ -10,7 +10,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
   selector: 'app-roles',
   imports: [BriefingCard, SafeHtmlPipe],
   template: `
-    <div class="page">
+    <div class="page wide">
       <h1>Roles</h1>
       <p class="lead">Every Secret Role with its Role Briefing card. The text comes from <code>data/roles.json</code>; the same file
         writes the role sections of the rulebook and the briefing cards in the printed PDF. The download button next to a role's name
@@ -21,9 +21,22 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
         }
       </div>
       @if (data.roles(); as rf) {
+        <div class="layout">
+          <aside class="toc" [class.open]="tocOpen()" aria-label="Roles on this page">
+            <div class="toch">Jump to a role</div>
+            @for (g of groups(); track g.label) {
+              <div class="tocg">{{ g.label }}</div>
+              @for (r of g.roles; track r.id) {
+                <button type="button" [class.on]="(active() || shown()[0]?.id) === r.id" [style.--c]="rf.palettes[r.palette].accent" (click)="go(r.id)">
+                  <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" loading="lazy" />{{ r.name }}
+                </button>
+              }
+            }
+          </aside>
+          <button class="tocbtn" type="button" (click)="tocOpen.set(!tocOpen())" [attr.aria-expanded]="tocOpen()">{{ tocOpen() ? 'Close' : 'Roles' }}</button>
         <div class="grid">
           @for (r of shown(); track r.id) {
-            <section class="role" [style.--c]="rf.palettes[r.palette].accent">
+            <section class="role" [id]="'role-' + r.id" [style.--c]="rf.palettes[r.palette].accent">
               <div class="cards">
                 <img class="secret" [src]="'cards/' + r.art[0] + '.jpg'" [alt]="r.name + ' Secret Role card'" loading="lazy" />
                 <app-briefing-card [role]="r" [palettes]="rf.palettes" />
@@ -57,6 +70,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
             </section>
           }
         </div>
+        </div>
       } @else { <p>Loading…</p> }
     </div>
   `,
@@ -67,9 +81,23 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .filters { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
     .filters button { border: 0; border-radius: 99px; padding: .4rem .9rem; background: #ece6d3; font-weight: 600; }
     .filters button.on { background: var(--dark); color: var(--cream); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 560px), 1fr)); gap: 1.5rem; }
-    .role { background: #fff; border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .8rem; border-top: 5px solid var(--c); }
-    .cards { display: flex; gap: .8rem; align-items: flex-start; flex-wrap: wrap; }
+    .wide { max-width: 1480px; }
+    .layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+    .toc { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; display: flex; flex-direction: column; gap: 1px;
+      padding: .7rem .5rem; background: #fff; border-radius: 14px; }
+    .toch { font-family: var(--display); font-size: 1.15rem; padding: 0 .5rem .2rem; }
+    .tocg { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: .6rem .5rem .2rem; }
+    .toc button { display: flex; align-items: center; gap: .55rem; width: 100%; border: 0; background: transparent; text-align: left;
+      padding: .28rem .5rem; border-radius: 8px; font-weight: 600; font-size: .9rem; color: var(--ink); border-left: 3px solid transparent;
+      transition: background .15s, border-color .15s; }
+    .toc button img { width: 22px; height: 30px; object-fit: cover; border-radius: 3px; flex: none; }
+    .toc button:hover { background: #f3eedd; }
+    .toc button.on { background: #f3eedd; border-left-color: var(--c); color: var(--c); }
+    .tocbtn { display: none; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 1.5rem; }
+    .role { background: #fff; border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .8rem; border-top: 5px solid var(--c);
+      scroll-margin-top: 76px; }
+    .cards { display: flex; gap: .8rem; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
     .secret { width: 254px; height: 352px; object-fit: cover; border-radius: 9px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
     .head { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; }
     h2 { margin: 0; font-size: 1.7rem; color: var(--c); }
@@ -86,6 +114,14 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .when { background: #f3eedd; border-left: 3px solid var(--c); padding: .4rem .7rem; }
     .when > b { color: var(--c); margin-right: .35rem; }
     .muted { color: var(--muted); }
+    @media (max-width: 1000px) {
+      .layout { grid-template-columns: minmax(0, 1fr); }
+      .toc { display: none; position: fixed; inset: auto 1rem 4.5rem auto; top: auto; z-index: 11; width: min(260px, calc(100vw - 2rem));
+        max-height: 70vh; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+      .toc.open { display: flex; }
+      .tocbtn { display: block; position: fixed; right: 1rem; bottom: 1rem; z-index: 11; border: 0; border-radius: 99px; padding: .7rem 1.1rem;
+        background: var(--orange); font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+    }
     @media (max-width: 600px) { .secret { width: 46%; height: auto; } }
   `,
 })
@@ -98,6 +134,37 @@ export class RolesPage {
     { k: 'all', label: 'All roles' }, { k: 'base', label: 'Original game' }, { k: 'communists', label: 'Communists' }, { k: 'roles', label: 'Extra roles (XL)' },
   ];
   shown = computed(() => (this.data.roles()?.roles ?? []).filter((r) => this.filter() === 'all' || r.module === this.filter()));
+  tocOpen = signal(false);
+  /** id of the role at the top of the viewport */
+  active = signal('');
+  groups = computed(() => {
+    const labels: Record<Role['module'], string> = { base: 'Original game', communists: 'Communists', roles: 'Extra roles (XL)' };
+    return (['base', 'communists', 'roles'] as const)
+      .map((m) => ({ label: labels[m], roles: this.shown().filter((r) => r.module === m) }))
+      .filter((g) => g.roles.length);
+  });
+
+  go(id: string) {
+    this.tocOpen.set(false);
+    document.getElementById('role-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  private frame = 0;
+  @HostListener('window:scroll')
+  onScroll() {
+    if (this.frame) return;
+    this.frame = requestAnimationFrame(() => {
+      this.frame = 0;
+      // the lowest row whose top has passed just below the navbar; in a row of two, its first role
+      let cur = this.shown()[0]?.id ?? '', best = -Infinity;
+      for (const r of this.shown()) {
+        const top = document.getElementById('role-' + r.id)?.getBoundingClientRect().top;
+        if (top !== undefined && top < 160 && top > best + 1) { cur = r.id; best = top; }
+      }
+      this.active.set(cur);
+    });
+  }
+
   moduleLabel(r: Role) { return { base: 'Original game', communists: 'XL: the Communists', roles: 'XL: extra role' }[r.module]; }
 
   async download(r: Role) {
