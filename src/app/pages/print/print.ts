@@ -2,16 +2,18 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { DEFAULT_OPTIONS, Paper, PrintOptions, normalise } from '../../print/options';
-import { CountLine, makePlan } from '../../print/plan';
+import { CountLine, Slot, makePlan, uniquePieces } from '../../print/plan';
 import { layout } from '../../print/layout';
+import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
 import { Renderer, fetchLoader } from '../../print/render';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
+import { PreviewSvg } from './preview-svg';
 
 type Flag = 'briefings' | 'boards' | 'inserts' | 'referenceCards' | 'placards' | 'pileCards' | 'blanks' | 'splitFiles' | 'rulebook';
 
 @Component({
   selector: 'app-print',
-  imports: [SafeHtmlPipe],
+  imports: [SafeHtmlPipe, PreviewSvg],
   templateUrl: './print.html',
   styleUrl: './print.scss',
 })
@@ -39,6 +41,39 @@ export class PrintPage {
     return [...g.entries()];
   });
   totalSheets = computed(() => this.files().reduce((s, f) => s + f.sheets.length, 0));
+
+  // ---- preview: the sheets as they will print, or the single pieces for a print service
+  back = signal(false);
+  private sheetPick = signal(0);
+  sheets = computed(() => allSheets(this.files()));
+  sheetIndex = computed(() => Math.min(this.sheetPick(), Math.max(0, this.sheets().length - 1)));
+  sheetPreview = computed(() => {
+    const ref = this.sheets()[this.sheetIndex()], rf = this.data.roles();
+    return ref && rf ? previewSheet(ref.sheet, this.opts().paper, this.back(), rf) : null;
+  });
+  pieces = computed(() => { const p = this.plan(); return p ? uniquePieces(p) : []; });
+  piecePreviews = computed(() => {
+    const rf = this.data.roles(); if (!rf) return [];
+    return this.pieces().map((u) => ({ u, item: previewPiece(u.slot, this.back(), rf) }));
+  });
+  totalCopies = computed(() => this.pieces().reduce((s, u) => s + u.copies, 0));
+  /** the piece's own label from pieces.json where there is one: "Emergency: Policy Peek", not "Emergency power" */
+  pieceLabel(slot: Slot): string {
+    const f = slot.front;
+    return (f.type === 'piece' && this.data.pieces()?.[f.id]?.label) || slot.name;
+  }
+  pickSheet(i: number) { this.sheetPick.set(Math.max(0, Math.min(i, this.sheets().length - 1))); }
+  pieceBox(it: PreviewItem) { return `0 0 ${it.w} ${it.h}`; }
+
+  /** what an optional role brings to the table, beyond the text in roles.json */
+  roleTags(r: Role): string[] {
+    const tags: string[] = [];
+    if (r.needsCommunists) tags.push('Needs the Communists');
+    if (r.pair) tags.push('Comes with the ' + (this.data.role(r.pair)?.name ?? r.pair));
+    const extra = Object.entries(r.extraMembership ?? {}).map(([k, v]) => `${v} ${k[0].toUpperCase() + k.slice(1)}`);
+    if (extra.length) tags.push('Adds cards: ' + extra.join(', '));
+    return tags;
+  }
   flags: { k: Flag; label: string; hint: string }[] = [
     { k: 'briefings', label: 'Role Briefing cards', hint: 'One per Secret Role card: explains that role on its own.' },
     { k: 'boards', label: 'Boards with border', hint: 'The classic boards, 134 × 395 mm.' },
@@ -66,18 +101,13 @@ export class PrintPage {
     this.busy.set(true); this.error.set(''); this.progress.set(0);
     try {
       const o = this.opts(), files = this.files(), r = new Renderer(fetchLoader);
+      if (o.output === 'pieces') return await this.generatePieces(r, o);
       const out: { name: string; bytes: Uint8Array }[] = [];
       for (const [i, f] of files.entries()) {
         this.status.set(`Building ${f.name} (${f.sheets.length} sheets)…`);
         out.push({ name: f.name, bytes: await r.render(f, o.paper, rf, (d, t) => this.progress.set((i + d / t) / files.length)) });
       }
-      if (o.rulebook) {
-        this.status.set('Adding the rulebook…');
-        const rb = o.paper === 'A3'
-          ? ['Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf', 'Secret_Hitler_XL_Rulebook_A4.pdf', 'Secret_Hitler_XL_Rulings_one_sheet_A3.pdf']
-          : ['Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf', 'Secret_Hitler_XL_Rulebook_A5.pdf', 'Secret_Hitler_XL_Rulings_and_balance_notes.pdf'];
-        for (const n of rb) out.push({ name: 'Rulebook/' + n, bytes: await fetchLoader('pdf/' + n) });
-      }
+      out.push(...(await this.rulebookFiles(o)));
       if (out.length === 1) { save(out[0].bytes, out[0].name, 'application/pdf'); }
       else {
         this.status.set('Packing the zip…');
@@ -91,6 +121,31 @@ export class PrintPage {
       this.error.set(String(e?.message ?? e)); this.status.set('');
     } finally { this.busy.set(false); }
   }
+  /** ZIP for print services: every piece and side as its own PDF, with a manifest of the copies. */
+  private async generatePieces(r: Renderer, o: PrintOptions) {
+    const rf = this.data.roles()!, plan = this.plan()!;
+    this.status.set('Building one file per piece…');
+    const ex = await r.pieceFiles(plan, rf, { perCopy: o.perCopy, label: (sl) => this.pieceLabel(sl) }, (d, t) => this.progress.set(0.9 * d / t));
+    const JSZip = (await import('jszip')).default; const zip = new JSZip();
+    for (const f of ex.files) zip.file(f.path, f.bytes);
+    zip.file('manifest.csv', ex.manifest);
+    zip.file('README.txt', pieceReadme(o, ex.pieces, ex.copies));
+    for (const f of await this.rulebookFiles(o)) zip.file(f.name, f.bytes);
+    this.status.set('Packing the zip…');
+    save(await zip.generateAsync({ type: 'uint8array' }), `Secret_Hitler_XL_print_service_pieces.zip`, 'application/zip');
+    this.status.set(`Done: ${ex.pieces} pieces, ${ex.copies} copies. Each file is cut size plus 3 mm bleed.`); this.progress.set(1);
+  }
+
+  private async rulebookFiles(o: PrintOptions) {
+    if (!o.rulebook) return [];
+    this.status.set('Adding the rulebook…');
+    let rb = o.paper === 'A3'
+      ? ['Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf', 'Secret_Hitler_XL_Rulebook_A4.pdf', 'Secret_Hitler_XL_Rulings_one_sheet_A3.pdf']
+      : ['Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf', 'Secret_Hitler_XL_Rulebook_A5.pdf', 'Secret_Hitler_XL_Rulings_and_balance_notes.pdf'];
+    if (o.output === 'pieces') rb = rb.filter((n) => !n.includes('booklet'));   // a print service binds the page-by-page version
+    return Promise.all(rb.map(async (n) => ({ name: 'Rulebook/' + n, bytes: await fetchLoader('pdf/' + n) })));
+  }
+
   setPaper(p: Paper) { this.set('paper', p); }
   num(v: string) { return +v; }
 }
@@ -99,6 +154,19 @@ function save(bytes: Uint8Array, name: string, type: string) {
   const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type }));
   const a = document.createElement('a'); a.href = url; a.download = name.split('/').pop()!; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}
+
+function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
+  return [
+    'SECRET HITLER + XL - PIECES FOR A PRINT SERVICE', '',
+    `Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`,
+    `${pieces} different pieces, ${copies} copies in total.`, '',
+    'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
+    o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
+    'Folders: tiles 44 x 68 mm, cards 63.5 x 88 mm, boards 395 x 134 mm, borderless boards 390 x 130 mm, placards 104.5 x 176 mm (fold in half).', '',
+    'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
+    'Licensed CC BY-NC-SA 4.0: not for commercial use.',
+  ].join('\n');
 }
 
 function readme(o: PrintOptions, files: string[]): string {

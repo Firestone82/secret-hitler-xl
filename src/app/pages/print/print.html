@@ -44,9 +44,19 @@
               <label class="role" [class.off]="!roleAllowed(r)" [title]="r.needsCommunists && !opts().communists ? 'Needs the Communists' : ''">
                 <input type="checkbox" [disabled]="!roleAllowed(r)" [checked]="!!opts().roles[r.id]" (change)="toggleRole(r, $any($event.target).checked)" />
                 <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" />
-                <span><b>{{ r.name }}@if (r.countLabel) { <small> ×{{ r.count }}</small> }</b>
-                  <small class="seat">{{ r.seatLabel }}</small>
-                  <small [innerHTML]="(r.rulebook?.addWhenTable || '') | safeHtml"></small></span>
+                <span class="rtxt">
+                  <span class="rhead"><b>{{ r.name }}@if (r.countLabel) { <small> ×{{ r.countLabel }}</small> }</b>
+                    <small class="seat">Takes the seat of {{ (r.seatLabel || '').toLowerCase() }}</small></span>
+                  @if (r.rulebook?.addWhenTable; as when) {
+                    <span class="why"><em>Add it when</em><span [innerHTML]="when | safeHtml"></span></span>
+                  }
+                  @if (r.rulebook?.pitch; as pitch) {
+                    <span class="why"><em>What it does</em><span [innerHTML]="pitch | safeHtml"></span></span>
+                  }
+                  @if (roleTags(r).length) {
+                    <span class="tags">@for (t of roleTags(r); track t) { <span class="tag">{{ t }}</span> }</span>
+                  }
+                </span>
               </label>
             }
           </div>
@@ -69,8 +79,21 @@
 
         <section>
           <h2>Output</h2>
-          <label class="sw"><input type="checkbox" [checked]="opts().splitFiles" (change)="set('splitFiles', $any($event.target).checked)" />
-            <span><b>Separate files by paper</b><small>Ballots and borderless boards in their own PDFs, so you can load different paper.</small></span></label>
+          <div class="papers outputs">
+            <button [class.on]="opts().output === 'sheets'" (click)="set('output', 'sheets')">
+              <b>Print at home</b><span>Pieces arranged on {{ opts().paper }} sheets with crop marks, front and back.</span>
+            </button>
+            <button [class.on]="opts().output === 'pieces'" (click)="set('output', 'pieces')">
+              <b>Print service</b><span>A ZIP with every piece as its own PDF, front and back, with 3 mm bleed.</span>
+            </button>
+          </div>
+          @if (opts().output === 'sheets') {
+            <label class="sw"><input type="checkbox" [checked]="opts().splitFiles" (change)="set('splitFiles', $any($event.target).checked)" />
+              <span><b>Separate files by paper</b><small>Ballots and borderless boards in their own PDFs, so you can load different paper.</small></span></label>
+          } @else {
+            <label class="sw"><input type="checkbox" [checked]="opts().perCopy" (change)="set('perCopy', $any($event.target).checked)" />
+              <span><b>One file per copy</b><small>Off: each design once, with the count in the file name and in manifest.csv. On: four Liberal cards are four pairs of files.</small></span></label>
+          }
           <label class="sw"><input type="checkbox" [checked]="opts().rulebook" (change)="set('rulebook', $any($event.target).checked)" />
             <span><b>Add the rulebook</b><small>{{ opts().paper === 'A3' ? 'A4 booklet on A3' : 'A5 booklet on A4' }}, reading version and rulings sheet.</small></span></label>
           <button class="mini" (click)="reset()">Reset all options</button>
@@ -78,19 +101,56 @@
       </div>
 
       <aside class="summary">
-        <h2>Your set</h2>
-        @for (g of groups(); track g[0]) {
-          <div class="grp"><div class="gh">{{ g[0] }}</div>
-            @for (c of g[1]; track c.label) { <div class="ln"><span>{{ c.label }}</span><b>{{ c.count }}</b></div> }
+        <div class="h2row"><h2>Preview</h2>
+          <span class="seg"><button [class.on]="!back()" (click)="back.set(false)">Front</button><button [class.on]="back()" (click)="back.set(true)">Back</button></span></div>
+
+        @if (opts().output === 'sheets') {
+          @if (sheetPreview(); as sp) {
+            <div class="pager">
+              <button class="mini" (click)="pickSheet(sheetIndex() - 1)" [disabled]="sheetIndex() === 0" aria-label="Previous sheet">‹</button>
+              <select [value]="sheetIndex()" (change)="pickSheet(num($any($event.target).value))" aria-label="Sheet">
+                @for (s of sheets(); track $index) { <option [value]="$index" [selected]="$index === sheetIndex()">{{ $index + 1 }}. {{ s.sheet.title }}</option> }
+              </select>
+              <button class="mini" (click)="pickSheet(sheetIndex() + 1)" [disabled]="sheetIndex() >= sheets().length - 1" aria-label="Next sheet">›</button>
+            </div>
+            <div class="sheet-meta">Sheet {{ sheetIndex() + 1 }} of {{ sheets().length }} · {{ sheets()[sheetIndex()].file.name }}</div>
+            <svg class="sheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" role="img" [attr.aria-label]="sp.title">
+              <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
+              <g [appPreview]="sp.items" />
+            </svg>
+          } @else { <p class="empty">Nothing to print yet.</p> }
+          <div class="tot">{{ totalSheets() }} sheets of {{ opts().paper }} in {{ files().length }} {{ files().length === 1 ? 'file' : 'files' }}</div>
+        } @else {
+          <div class="sheet-meta">{{ pieces().length }} different pieces, {{ totalCopies() }} copies</div>
+          <div class="piece-grid">
+            @for (p of piecePreviews(); track $index) {
+              <figure [class.wide]="p.item.w > 150">
+                <svg [attr.viewBox]="pieceBox(p.item)" role="img" [attr.aria-label]="pieceLabel(p.u.slot)">
+                  <g [appPreview]="[p.item]" [cuts]="false" />
+                </svg>
+                <figcaption>{{ pieceLabel(p.u.slot) }} <b>×{{ p.u.copies }}</b></figcaption>
+              </figure>
+            }
           </div>
         }
-        <div class="files">
-          @for (f of files(); track f.key) {
-            <div class="file"><b>{{ f.name }}</b><span>{{ f.sheets.length }} × {{ opts().paper }} · {{ f.title }}</span></div>
+
+        <details class="contents">
+          <summary>What is in the set</summary>
+          @for (g of groups(); track g[0]) {
+            <div class="grp"><div class="gh">{{ g[0] }}</div>
+              @for (c of g[1]; track c.label) { <div class="ln"><span>{{ c.label }}</span><b>{{ c.count }}</b></div> }
+            </div>
           }
-          <div class="tot">{{ totalSheets() }} sheets of {{ opts().paper }} in total</div>
-        </div>
-        <button class="btn primary big" (click)="generate()" [disabled]="busy() || !files().length">{{ busy() ? 'Building…' : 'Create the print files' }}</button>
+          @if (opts().output === 'sheets') {
+            <div class="files">
+              @for (f of files(); track f.key) {
+                <div class="file"><b>{{ f.name }}</b><span>{{ f.sheets.length }} × {{ opts().paper }} · {{ f.title }}</span></div>
+              }
+            </div>
+          }
+        </details>
+
+        <button class="btn primary big" (click)="generate()" [disabled]="busy() || !files().length">{{ busy() ? 'Building…' : opts().output === 'pieces' ? 'Download the ZIP for a print service' : 'Create the print files' }}</button>
         @if (busy() || progress() > 0) {
           <div class="bar"><div [style.width.%]="progress() * 100"></div></div>
         }

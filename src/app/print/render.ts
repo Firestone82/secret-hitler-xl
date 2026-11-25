@@ -2,8 +2,9 @@ import { PDFDocument, PDFEmbeddedPage, PDFFont, PDFImage, PDFPage, clip, concatT
 import fontkit from '@pdf-lib/fontkit';
 import { RolesFile } from '../core/types';
 import { BriefingFonts, MM, drawBlankBriefing, drawBriefing } from './briefing-pdf';
-import { BLEED, Draw, Item, PAGE, PrintFile, Sheet } from './layout';
+import { BLEED, Draw, Item, PAGE, PrintFile, SIZE, Sheet } from './layout';
 import { Paper } from './options';
+import { Face, Plan, Slot, uniquePieces } from './plan';
 
 /** Where the renderer gets its files from: fetch() in the browser, the file system in tests. */
 export type Loader = (path: string) => Promise<Uint8Array>;
@@ -14,6 +15,8 @@ export const fetchLoader: Loader = async (path) => {
 };
 
 const PIECE_BLEED = 3;   // the piece files carry 3 mm bleed; the sheets keep 1.5 mm of it
+/** Colours of the printer's marks: visible enough to cut along, light enough not to stand out. */
+const MARK = { crop: rgb(0.5, 0.5, 0.5), gap: rgb(0.78, 0.78, 0.78), target: rgb(0.6, 0.6, 0.6), text: rgb(0.45, 0.45, 0.45) };
 
 class Cache {
   private m = new Map<string, Promise<Uint8Array>>();
@@ -32,6 +35,17 @@ interface Ctx {
 }
 
 const pt = (v: number) => v * MM;
+
+export interface PieceExport {
+  files: { path: string; bytes: Uint8Array }[];
+  /** CSV: file names, size and number of copies of every piece */
+  manifest: string;
+  pieces: number;
+  copies: number;
+}
+
+const faceKey = (f: Face) => slug(f.type === 'piece' ? f.id.replace(/^[a-z]{1,2}_/, '') : f.type === 'briefing' ? f.role : f.type === 'blankBriefing' ? f.palette : 'solid');
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
 export class Renderer {
   private cache: Cache;
@@ -89,6 +103,64 @@ export class Renderer {
     return doc.save();
   }
 
+  /** Every distinct piece of the plan as its own one-page PDFs (front and back), cut size plus 3 mm bleed:
+   *  the format print services ask for. perCopy repeats the files for every copy instead of naming the count. */
+  async pieceFiles(plan: Plan, data: RolesFile, opts: { perCopy?: boolean; label?: (s: Slot) => string } = {}, progress?: (done: number, total: number) => void): Promise<PieceExport> {
+    const perCopy = !!opts.perCopy, labelOf = opts.label ?? ((s: Slot) => s.name);
+    const unique = uniquePieces(plan);
+    const files: { path: string; bytes: Uint8Array }[] = [];
+    const rows: string[][] = [['front', 'back', 'piece', 'width_mm', 'height_mm', 'copies']];
+    const count = new Map<string, number>();
+    // the piece's id goes into the file name only where two designs share a label (blank tiles, reference cards…)
+    const seen = new Map<string, number>();
+    for (const u of unique) { const k = u.group + '/' + slug(labelOf(u.slot)); seen.set(k, (seen.get(k) ?? 0) + 1); }
+    let done = 0;
+    for (const u of unique) {
+      const n = (count.get(u.group) ?? 0) + 1; count.set(u.group, n);
+      const label = slug(labelOf(u.slot)), key = faceKey(u.slot.front);
+      const base = `${u.group}/${String(n).padStart(3, '0')}_${label}${seen.get(u.group + '/' + label)! > 1 && !label.includes(key) ? '_' + key : ''}${perCopy ? '' : `_x${u.copies}`}`;
+      const [front, back] = await Promise.all([this.facePdf(u.slot, u.slot.front, data), this.facePdf(u.slot, u.slot.back, data)]);
+      const [w, h] = SIZE[u.slot.size];
+      for (let c = 0; c < (perCopy ? u.copies : 1); c++) {
+        const name = perCopy && u.copies > 1 ? `${base}_${String(c + 1).padStart(2, '0')}` : base;
+        files.push({ path: `${name}_front.pdf`, bytes: front }, { path: `${name}_back.pdf`, bytes: back });
+        rows.push([`${name}_front.pdf`, `${name}_back.pdf`, labelOf(u.slot), String(w), String(h), perCopy ? '1' : String(u.copies)]);
+      }
+      progress?.(++done, unique.length);
+    }
+    const csv = rows.map((r) => r.map((v) => (/[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v)).join(',')).join('\n') + '\n';
+    return { files, manifest: csv, pieces: unique.length, copies: unique.reduce((s, u) => s + u.copies, 0) };
+  }
+
+  /** One side of one piece on a page of its own, with the full 3 mm bleed. */
+  private async facePdf(slot: Slot, f: Face, data: RolesFile): Promise<Uint8Array> {
+    const doc = await PDFDocument.create();
+    doc.setCreator('Secret Hitler XL print builder');
+    const [w, h] = SIZE[slot.size], b = PIECE_BLEED;
+    if (f.type === 'piece') {
+      const [emb] = await doc.embedPdf(await this.cache.get(`pieces/${f.id}.pdf`), [f.page]);
+      const page = doc.addPage([emb.width, emb.height]);
+      page.drawPage(emb, { x: 0, y: 0, width: emb.width, height: emb.height });
+      return doc.save({ useObjectStreams: true });
+    }
+    const page = doc.addPage([pt(w + 2 * b), pt(h + 2 * b)]);
+    if (f.type === 'solid') {
+      page.drawRectangle({ x: 0, y: 0, width: page.getWidth(), height: page.getHeight(), color: rgb(f.rgb[0] / 255, f.rgb[1] / 255, f.rgb[2] / 255) });
+      return doc.save({ useObjectStreams: true });
+    }
+    doc.registerFontkit(fontkit);
+    const font = async (n: string) => doc.embedFont(await this.cache.get('fonts/' + n), { subset: true });
+    const fonts = { medium: await font('Jost-Medium.ttf'), bold: await font('Jost-Bold.ttf'), germania: await font('GermaniaOne-Regular.ttf') };
+    page.pushOperators(pushGraphicsState(), concatTransformationMatrix(1, 0, 0, 1, pt(b), pt(b)));
+    if (f.type === 'briefing') {
+      const r = data.roles.find((x) => x.id === f.role)!;
+      const img = await doc.embedJpg(await this.cache.get(`portraits/${r.portrait}.jpg`));
+      drawBriefing(page, r, data.palettes[r.palette], fonts, img, pt(b));
+    } else drawBlankBriefing(page, data.palettes[f.palette], data.blank.sections, fonts, pt(b));
+    page.pushOperators(popGraphicsState());
+    return doc.save({ useObjectStreams: true });
+  }
+
   private item(ctx: Ctx, page: PDFPage, it: Item, back: boolean) {
     const { PH, PW } = ctx;
     const x = back ? PW - it.x - it.w : it.x;
@@ -141,9 +213,10 @@ export class Renderer {
 
   private marks(ctx: Ctx, page: PDFPage, sh: Sheet, back: boolean, label: string) {
     const { PW, PH, paper } = ctx, A4 = paper === 'A4';
-    const black = rgb(0, 0, 0);
-    const ln = (x1: number, y1: number, x2: number, y2: number, w = 0.3, dash?: number) =>
-      page.drawLine({ start: { x: pt(x1), y: pt(PH - y1) }, end: { x: pt(x2), y: pt(PH - y2) }, thickness: w, color: black, dashArray: dash ? [dash, dash] : undefined });
+    // Kept light so they do not show on the cut pieces: crop marks mid-grey, lines through the gaps barely there.
+    const { crop, gap, target, text } = MARK;
+    const ln = (x1: number, y1: number, x2: number, y2: number, color = crop, w = 0.2, dash?: number) =>
+      page.drawLine({ start: { x: pt(x1), y: pt(PH - y1) }, end: { x: pt(x2), y: pt(PH - y2) }, thickness: w, color, dashArray: dash ? [dash, dash] : undefined });
     const xs = new Set<number>(), ys = new Set<number>();
     const ix = (it: Item) => (back ? PW - it.x - it.w : it.x);
     for (const it of sh.items) { const x = ix(it); xs.add(+x.toFixed(3)); xs.add(+(x + it.w).toFixed(3)); ys.add(+it.y.toFixed(3)); ys.add(+(it.y + it.h).toFixed(3)); }
@@ -154,8 +227,8 @@ export class Renderer {
     for (const y of sy) { ln(x0 - G, y, x0 - G - L, y); ln(x1 + G, y, x1 + G + L, y); }
     // cut lines continued through the gaps between pieces
     const gaps = (v: number[]) => v.slice(1).map((b, i) => [v[i], b]).filter(([a, b]) => b - a > 0 && b - a <= 8);
-    for (const x of sx) for (const [a, b] of gaps(sy)) ln(x, a, x, b, 0.25);
-    for (const y of sy) for (const [a, b] of gaps(sx)) ln(a, y, b, y, 0.25);
+    for (const x of sx) for (const [a, b] of gaps(sy)) ln(x, a, x, b, gap, 0.12);
+    for (const y of sy) for (const [a, b] of gaps(sx)) ln(a, y, b, y, gap, 0.12);
     // registration targets: corners and the middle of every edge, where they stay clear of the artwork
     const [TG, TR, TC] = A4 ? [5, 1.1, 2] : [7.5, 1.6, 3];
     const clear = (tx: number, ty: number) => sh.items.every((it) => {
@@ -164,25 +237,25 @@ export class Renderer {
     });
     for (const [tx, ty] of [[TG, TG], [PW - TG, TG], [TG, PH - TG], [PW - TG, PH - TG], [PW / 2, TG], [PW / 2, PH - TG], [TG, PH / 2], [PW - TG, PH / 2]]) {
       if (!clear(tx, ty)) continue;
-      page.drawCircle({ x: pt(tx), y: pt(PH - ty), size: pt(TR), borderColor: black, borderWidth: 0.25 });
-      ln(tx - TC, ty, tx + TC, ty, 0.25); ln(tx, ty - TC, tx, ty + TC, 0.25);
+      page.drawCircle({ x: pt(tx), y: pt(PH - ty), size: pt(TR), borderColor: target, borderWidth: 0.2 });
+      ln(tx - TC, ty, tx + TC, ty, target); ln(tx, ty - TC, tx, ty + TC, target);
     }
-    ln(PW / 2, y0 - G, PW / 2, y0 - G - L, 0.3, 1); ln(PW / 2, y1 + G, PW / 2, y1 + G + L, 0.3, 1);
+    ln(PW / 2, y0 - G, PW / 2, y0 - G - L, crop, 0.2, 1); ln(PW / 2, y1 + G, PW / 2, y1 + G + L, crop, 0.2, 1);
     for (const fx0 of sh.fold ?? []) {
       const fx = back ? PW - fx0 : fx0;
-      ln(fx, y0 - G - L - 1, fx, y0 - G - L - 5, 0.3, 1.5); ln(fx, y1 + G, fx, y1 + G + L + 2, 0.3, 1.5);
+      ln(fx, y0 - G - L - 1, fx, y0 - G - L - 5, crop, 0.2, 1.5); ln(fx, y1 + G, fx, y1 + G + L + 2, crop, 0.2, 1.5);
       const w = ctx.fonts.label.widthOfTextAtSize('FOLD', 5.5);
-      page.drawText('FOLD', { x: pt(fx) - w / 2, y: pt(PH - (y0 - G - L - 6)), size: 5.5, font: ctx.fonts.label, color: black });
+      page.drawText('FOLD', { x: pt(fx) - w / 2, y: pt(PH - (y0 - G - L - 6)), size: 5.5, font: ctx.fonts.label, color: text });
     }
-    for (const fy of sh.yfold ?? []) { ln(x0 - G, fy, x0 - G - L, fy, 0.3, 1.5); ln(x1 + G, fy, x1 + G + L, fy, 0.3, 1.5); }
+    for (const fy of sh.yfold ?? []) { ln(x0 - G, fy, x0 - G - L, fy, crop, 0.2, 1.5); ln(x1 + G, fy, x1 + G + L, fy, crop, 0.2, 1.5); }
     for (const cy of sh.centre ?? []) {
-      ln(x0 - G, cy, x0 - G - L, cy, 0.3, 1.2); ln(x1 + G, cy, x1 + G + L, cy, 0.3, 1.2);
+      ln(x0 - G, cy, x0 - G - L, cy, crop, 0.2, 1.2); ln(x1 + G, cy, x1 + G + L, cy, crop, 0.2, 1.2);
       const w = ctx.fonts.label.widthOfTextAtSize('HALF', 5);
-      page.drawText('HALF', { x: pt(x0 - G - L - 0.8), y: pt(PH - cy) - w / 2, size: 5, font: ctx.fonts.label, color: black, rotate: degrees(90) });
+      page.drawText('HALF', { x: pt(x0 - G - L - 0.8), y: pt(PH - cy) - w / 2, size: 5, font: ctx.fonts.label, color: text, rotate: degrees(90) });
     }
     const room = pt(sx[1] - sx[0] - 4); let fs = 6;
     while (ctx.fonts.label.widthOfTextAtSize(label, fs) > room && fs > 3.5) fs -= 0.1;
-    page.drawText(label, { x: pt(sx[0] + 2), y: pt(PH - (y0 - G - 1.3)), size: fs, font: ctx.fonts.label, color: black });
+    page.drawText(label, { x: pt(sx[0] + 2), y: pt(PH - (y0 - G - 1.3)), size: fs, font: ctx.fonts.label, color: text });
   }
 }
 

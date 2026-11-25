@@ -336,7 +336,8 @@
     ],
     "addWhen": "The group wants a wild card.",
     "addWhenTable": "The group knows the Communists well and <b>wants a wild card</b>.",
-    "seatLabel": "A Communist"
+    "seatLabel": "A Communist",
+    "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
    }
   },
   {
@@ -401,7 +402,8 @@
     ],
     "addWhen": "The Fascists win too often.",
     "addWhenTable": "<b>The Fascists win too often.</b>",
-    "seatLabel": "A Fascist"
+    "seatLabel": "A Fascist",
+    "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
    }
   },
   {
@@ -470,7 +472,8 @@
     ],
     "addWhen": "Hitler is executed too often.",
     "addWhenTable": "<b>Hitler is found and executed too often.</b>",
-    "seatLabel": "A Fascist"
+    "seatLabel": "A Fascist",
+    "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
    }
   },
   {
@@ -540,7 +543,8 @@
     ],
     "addWhen": "Always together with the Liberal Spy.",
     "addWhenTable": "You want a <b>hidden duel</b>. Always add both.",
-    "seatLabel": "A Fascist"
+    "seatLabel": "A Fascist",
+    "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
    }
   },
   {
@@ -608,7 +612,8 @@
     ],
     "addWhen": "Always together with the Fascist Spy.",
     "addWhenTable": "You want a <b>hidden duel</b>. Always add both.",
-    "seatLabel": "A Liberal"
+    "seatLabel": "A Liberal",
+    "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
    }
   },
   {
@@ -672,7 +677,8 @@
     ],
     "addWhen": "Big games, to give the Liberals a trusted core.",
     "addWhenTable": "Big games: the Liberals get a small group that trusts each other.",
-    "seatLabel": "Liberals"
+    "seatLabel": "Liberals",
+    "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
    }
   },
   {
@@ -744,7 +750,8 @@
     ],
     "addWhen": "Communist policies pass too quickly.",
     "addWhenTable": "<b>Communist policies pass too quickly</b>, or Radicalisation is too easy.",
-    "seatLabel": "A Liberal"
+    "seatLabel": "A Liberal",
+    "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
    }
   },
   {
@@ -807,7 +814,8 @@
     ],
     "addWhen": "Executions happen too easily.",
     "addWhenTable": "<b>Executions happen too easily.</b>",
-    "seatLabel": "A Liberal"
+    "seatLabel": "A Liberal",
+    "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
    }
   },
   {
@@ -869,7 +877,8 @@
     ],
     "addWhen": "Elections are too predictable.",
     "addWhenTable": "Elections are <b>too predictable</b>.",
-    "seatLabel": "Any party (usually Fascist)"
+    "seatLabel": "Any party (usually Fascist)",
+    "pitch": "Casts <b>three votes</b> once, enough to swing one election."
    }
   },
   {
@@ -931,7 +940,8 @@
     ],
     "addWhen": "Liberals are fooled about discards.",
     "addWhenTable": "Liberals are <b>fooled about discards</b> too often.",
-    "seatLabel": "Any party (usually Liberal)"
+    "seatLabel": "Any party (usually Liberal)",
+    "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
    }
   },
   {
@@ -1000,7 +1010,8 @@
     ],
     "addWhen": "You want stronger investigations.",
     "addWhenTable": "You want <b>stronger investigations</b>.",
-    "seatLabel": "A Liberal; party drawn at setup"
+    "seatLabel": "A Liberal; party drawn at setup",
+    "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
    }
   }
  ],

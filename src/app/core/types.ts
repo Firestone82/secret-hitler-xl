@@ -17,6 +17,8 @@ export interface RoleRulebook {
   paragraphs: string[];
   addWhen: string;
   addWhenTable?: string;
+  /** optional roles: one line on what the role changes at the table, shown in the print builder */
+  pitch?: string;
   seatLabel?: string;
 }
 
