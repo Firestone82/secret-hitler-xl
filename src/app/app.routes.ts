@@ -8,5 +8,7 @@ export const routes: Routes = [
   { path: 'roles', component: RolesPage, title: 'Roles · Secret Hitler + XL' },
   // the print builder carries pdf-lib, so it loads only when opened
   { path: 'print', loadComponent: () => import('./pages/print/print').then((m) => m.PrintPage), title: 'Print builder · Secret Hitler + XL' },
+  { path: 'about', loadComponent: () => import('./pages/about/about').then((m) => m.AboutPage), title: 'About · Secret Hitler + XL' },
+  { path: 'credits', loadComponent: () => import('./pages/credits/credits').then((m) => m.CreditsPage), title: 'Credits · Secret Hitler + XL' },
   { path: '**', redirectTo: 'rules' },
 ];

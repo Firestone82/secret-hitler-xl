@@ -158,14 +158,7 @@
           @case ('credits') {
             <section class="credits" [id]="b.id">
               <h2>{{ b['title'] }}</h2>
-              <div class="cols">
-                @for (col of b['columns']; track $index) {
-                  <div>@for (c of col; track $index) { <h4 [innerHTML]="c.title | safeHtml"></h4><p [innerHTML]="c.html | safeHtml"></p> }</div>
-                }
-              </div>
-              @if (b['licence']; as l) {
-                <div class="lic">@if (l.image) { <img [src]="'rb/' + l.image" [alt]="l.alt ?? ''" /> }<p [innerHTML]="l.html | safeHtml"></p></div>
-              }
+              <app-credits />
             </section>
           }
           @case ('changelog') {
