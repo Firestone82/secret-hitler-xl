@@ -18,9 +18,9 @@ npm run build        # production build in dist/secret-hitler-xl/browser
 
 ## Deploy to GitHub Pages
 
-1. Push this folder to a GitHub repository (branch `main`).
+1. Push this folder to a GitHub repository (branch `master`).
 2. In the repository settings, under **Pages**, set **Source** to **GitHub Actions**.
-3. Every push to `main` runs `.github/workflows/deploy.yml` and publishes the site at `https://<user>.github.io/<repo>/`.
+3. Every push to `master` runs `.github/workflows/deploy.yml` and publishes the site at `https://<user>.github.io/<repo>/`.
 
 The app uses hash URLs (`#/rules`) and a relative base href, so it works under any repository name with no extra configuration.
 
