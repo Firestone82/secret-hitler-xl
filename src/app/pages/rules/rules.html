@@ -1,0 +1,149 @@
+<div class="wrap">
+  <aside [class.open]="tocOpen()">
+    <div class="search">
+      <input type="search" placeholder="Search the rules…" [value]="query()" (input)="query.set($any($event.target).value)" aria-label="Search the rules" />
+    </div>
+    @if (results().length) {
+      <div class="results">
+        @for (r of results(); track r.i) {
+          <button (click)="go(r.i)"><span class="where">{{ r.where }}</span><span class="snip">{{ r.snippet }}</span></button>
+        }
+      </div>
+    } @else if (query().length >= 3) {
+      <p class="none">Nothing found.</p>
+    }
+    <nav class="toc">
+      @for (t of toc(); track t.i) {
+        <button [class]="t.b.type" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b.type === 'part' ? t.b['title'] : plain(t.b['text']) }}</button>
+      }
+    </nav>
+    <div class="dl">
+      <div class="dlh">Download the rulebook</div>
+      <a href="pdf/Secret_Hitler_XL_Rulebook_A5.pdf" target="_blank">A5, reading order</a>
+      <a href="pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf" target="_blank">A5 booklet on A4</a>
+      <a href="pdf/Secret_Hitler_XL_Rulebook_A4.pdf" target="_blank">A4, reading order</a>
+      <a href="pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf" target="_blank">A4 booklet on A3</a>
+      <a href="pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf" target="_blank">Rulings and balance notes</a>
+    </div>
+  </aside>
+  <button class="tocbtn" (click)="tocOpen.set(!tocOpen())">{{ tocOpen() ? 'Close' : 'Contents' }}</button>
+
+  <article class="rules">
+    @if (!blocks().length) { <p>Loading the rules…</p> }
+    @for (b of blocks(); track $index; let i = $index) {
+      <div [id]="'b' + i" class="blk">
+        @switch (b.type) {
+          @case ('part') {
+            <header class="part" [id]="b.id" [style.background]="b['color']">
+              <div class="num">{{ b['num'] }}</div>
+              <h1>{{ b['title'] }}</h1>
+              <p [innerHTML]="b['sub'] | safeHtml"></p>
+            </header>
+          }
+          @case ('h1') { <h1 [id]="b.id" [innerHTML]="b['text'] | safeHtml"></h1> }
+          @case ('h2') { <h2 [id]="b.id" [innerHTML]="b['text'] | safeHtml"></h2> }
+          @case ('h3') { <h3 [innerHTML]="b['text'] | safeHtml"></h3> }
+          @case ('p') { <p [innerHTML]="b['html'] | safeHtml"></p> }
+          @case ('list') {
+            @if (b['ordered']) {
+              <ol>@for (it of b['items']; track $index) { <li [innerHTML]="it | safeHtml"></li> }</ol>
+            } @else {
+              <ul>@for (it of b['items']; track $index) { <li [innerHTML]="it | safeHtml"></li> }</ul>
+            }
+          }
+          @case ('table') {
+            <div class="tw">
+              <table [class.center]="b['center']">
+                <thead><tr>@for (c of b['rows'][0]; track $index) { <th [innerHTML]="c | safeHtml"></th> }</tr></thead>
+                <tbody>
+                  @for (row of b['rows'].slice(1); track $index) {
+                    <tr>@for (c of row; track $index) { <td [innerHTML]="c | safeHtml"></td> }</tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            @if (b['caption']) { <p class="cap" [innerHTML]="b['caption'] | safeHtml"></p> }
+          }
+          @case ('script') {
+            <div class="script">
+              <div class="st" [innerHTML]="b['title'] | safeHtml"></div>
+              <ol>@for (l of b['lines']; track $index) { <li [innerHTML]="l | safeHtml"></li> }</ol>
+            </div>
+          }
+          @case ('note') {
+            <aside class="note"><b [innerHTML]="b['label'] | safeHtml"></b> <span [innerHTML]="b['html'] | safeHtml"></span></aside>
+          }
+          @case ('figure') {
+            <figure>
+              <div class="imgs">
+                @for (im of b['images']; track $index) {
+                  <div class="fi"><img [src]="'rb/' + im" alt="" loading="lazy" />@if (b['labels']) { <span [innerHTML]="b['labels'][$index] | safeHtml"></span> }</div>
+                }
+              </div>
+              <figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption>
+            </figure>
+          }
+          @case ('pairs') {
+            <figure>
+              <div class="imgs">
+                @for (p of b['pairs']; track $index) {
+                  <div class="fi"><div class="pair"><img [src]="'rb/' + p.a" alt="" /><img [src]="'rb/' + p.b" alt="" /></div><span [innerHTML]="p.label | safeHtml"></span></div>
+                }
+              </div>
+              <figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption>
+            </figure>
+          }
+          @case ('wide') {
+            <figure><img class="wide" [src]="'rb/' + b['image']" alt="" loading="lazy" /><figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption></figure>
+          }
+          @case ('icons') {
+            <div class="icons">
+              @for (it of b['items']; track $index) {
+                <div class="ic"><img [src]="'rb/' + it.icon" alt="" /><div><b [innerHTML]="it.name | safeHtml"></b><p [innerHTML]="it.html | safeHtml"></p></div></div>
+              }
+            </div>
+          }
+          @case ('wins') {
+            <div class="wins">
+              @for (p of b['panels']; track p.name) {
+                <div class="win" [style.--c]="p.color">
+                  <div class="wh"><span>{{ p.name }}</span><small [innerHTML]="p.who | safeHtml"></small></div>
+                  <ul>@for (it of p.items; track $index) { <li [innerHTML]="it | safeHtml"></li> }</ul>
+                </div>
+              }
+            </div>
+          }
+          @case ('legislative') {
+            <div class="legis">
+              <div class="lr"><div><b><span class="n">1</span> The President</b><p>draws three tiles and discards one, face down.</p></div>
+                <div class="tiles"><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p018.jpg" alt="Liberal" /></div><span class="ar">→</span><img class="disc" src="rb/p132.jpg" alt="discard" /></div>
+              <div class="lr"><div><b><span class="n">2</span> The Chancellor</b><p>receives the other two and discards one, face down.</p></div>
+                <div class="tiles"><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p018.jpg" alt="Liberal" /></div><span class="ar">→</span><img class="disc" src="rb/p132.jpg" alt="discard" /></div>
+              <div class="lr"><div><b><span class="n">3</span> Enacted</b><p>The last tile goes face up on its board.</p></div><div class="tiles"><img src="rb/p018.jpg" alt="Liberal" /></div></div>
+              <p class="cap">Example: the President draws Fascist, Fascist, Liberal. Had the President been a Fascist, the Liberal tile could have been the one discarded, and nobody else would know.</p>
+            </div>
+          }
+          @case ('role') { <app-role-box [id]="b['role']" /> }
+          @case ('credits') {
+            <section class="credits" id="credits-and-licence">
+              <h2>Credits and licence</h2>
+              <div class="cols">
+                <div>
+                  <h4>Secret Hitler</h4><p>Rules and art by Mike Boxleiter, Tommy Maranges and Max Temkin; art by Mac Schubert. <a href="https://www.secrethitler.com/" target="_blank">secrethitler.com</a></p>
+                  <h4>Secret Hitler Socialist expansion</h4><p>Dtep, mrkvicka and havosh.</p>
+                  <h4>Secret Hitler XL</h4><p>Rules by Lord_Roguy (Bo P.): the Communists (adapted from the Socialists), Anarchist, Monarchist, Capitalist, Centrists, anti-policies and emergency powers. <a href="https://drive.google.com/drive/folders/1_UMxjcPKxG3I_Zgr0JtOsD5Lh6GaBDVY" target="_blank">Original XL files</a></p>
+                  <h4>XL artwork</h4><p>u/PenguineWithAFez: the Communists and the Anarchist. u/muhaaman: clothing of the Communist grizzly bear. Leo Carlton (u/therazeblitz): the Monarchist and the Capitalist. Hal Aetus: the Centrists.</p>
+                </div>
+                <div>
+                  <h4>Play testers of Secret Hitler XL</h4><p>Fluff, Greenbeehn, Adoy, u/ZoomZoom670, Racc, Zommy, Käs, Brendon Bradburn, Coon, N00bAdrian, Wagon, JP, Kangawolf (inventor of the wildcat strike strategy for the Anarchist); the University of Queensland's Sci-Fi &amp; Fantasy Society, Mafia Society and Board Games Society; and many more.</p>
+                  <h4>This edition</h4><p>A remix of the files above: rulebooks merged and reworded, cards and boards re-set, role briefings and reference cards added. <a href="https://drive.google.com/drive/folders/10owkfJSwhzqOrMcFyPqaK2EqSAq_OIKO" target="_blank">Files of this edition</a></p>
+                </div>
+              </div>
+              <div class="lic"><img src="rb/cc_by_nc_sa.png" alt="CC BY-NC-SA" /><p>Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit; not for commercial use; adaptations use the same licence.</p></div>
+            </section>
+          }
+        }
+      </div>
+    }
+  </article>
+</div>

@@ -1,0 +1,102 @@
+<div class="page">
+  <h1>Print builder</h1>
+  <p class="lead">Choose what goes into your set. The PDF is put together in your browser from the game files; nothing is uploaded.</p>
+  @if (data.roles()) {
+    <div class="cols">
+      <div class="form">
+        <section>
+          <h2>Paper</h2>
+          <div class="papers">
+            @for (p of ['A3', 'A4']; track p) {
+              <button [class.on]="opts().paper === p" (click)="setPaper($any(p))">
+                <b>{{ p }}</b>
+                <span>{{ p === 'A3' ? 'Boards in one piece, 18 cards per sheet' : 'Boards in two halves, 9 cards per sheet' }}</span>
+              </button>
+            }
+          </div>
+        </section>
+
+        <section>
+          <h2>Game</h2>
+          <label class="range">
+            <span>Up to <b>{{ opts().players }}</b> players
+              @if (opts().players >= 17) { <em class="exp">experimental</em> }</span>
+            <input type="range" [min]="plan()!.minPlayers" [max]="opts().communists ? 19 : 10" [value]="opts().players" (input)="set('players', num($any($event.target).value))" />
+          </label>
+          <label class="sw"><input type="checkbox" [checked]="opts().xl" (change)="set('xl', $any($event.target).checked)" />
+            <span><b>Secret Hitler XL</b><small>The fan expansion. Off: only the original game for 5 to 10 players.</small></span></label>
+          <div class="sub" [class.dim]="!opts().xl">
+            <label class="sw"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().communists" (change)="set('communists', $any($event.target).checked)" />
+              <span><b>The Communists</b><small>A third party with its own board. Needed above 10 players.</small></span></label>
+            <label class="sw"><input type="checkbox" [disabled]="!opts().communists" [checked]="opts().emergency" (change)="set('emergency', $any($event.target).checked)" />
+              <span><b>Emergency powers</b><small>Ten one-shot powers for 11 players and up.</small></span></label>
+            <label class="sw"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().antiPolicies" (change)="set('antiPolicies', $any($event.target).checked)" />
+              <span><b>Anti-policies</b><small>Three tiles that undo a board space.</small></span></label>
+          </div>
+        </section>
+
+        <section [class.dim]="!opts().xl">
+          <div class="h2row"><h2>Extra roles</h2>
+            <span><button class="mini" (click)="allRoles(true)" [disabled]="!opts().xl">All</button><button class="mini" (click)="allRoles(false)">None</button></span></div>
+          <p class="note">Each role takes the seat of a regular role. Its card and briefing are added; regular cards stay complete.</p>
+          <div class="roles">
+            @for (r of extraRoles(); track r.id) {
+              <label class="role" [class.off]="!roleAllowed(r)" [title]="r.needsCommunists && !opts().communists ? 'Needs the Communists' : ''">
+                <input type="checkbox" [disabled]="!roleAllowed(r)" [checked]="!!opts().roles[r.id]" (change)="toggleRole(r, $any($event.target).checked)" />
+                <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" />
+                <span><b>{{ r.name }}@if (r.countLabel) { <small> ×{{ r.count }}</small> }</b>
+                  <small class="seat">{{ r.seatLabel }}</small>
+                  <small [innerHTML]="(r.rulebook?.addWhenTable || '') | safeHtml"></small></span>
+              </label>
+            }
+          </div>
+        </section>
+
+        <section>
+          <h2>Components</h2>
+          <div class="flags">
+            @for (f of flags; track f.k) {
+              <label class="sw"><input type="checkbox" [checked]="opts()[f.k]" (change)="set(f.k, $any($event.target).checked)" />
+                <span><b>{{ f.label }}</b><small>{{ f.hint }}</small></span></label>
+            }
+          </div>
+          <div class="ballots">
+            <b>Ballots</b>
+            <label><input type="radio" name="ballots" [checked]="opts().ballots === 'double'" (change)="set('ballots', 'double')" /> One card, Ja! front and Nein back</label>
+            <label><input type="radio" name="ballots" [checked]="opts().ballots === 'separate'" (change)="set('ballots', 'separate')" /> Separate Ja! and Nein cards</label>
+          </div>
+        </section>
+
+        <section>
+          <h2>Output</h2>
+          <label class="sw"><input type="checkbox" [checked]="opts().splitFiles" (change)="set('splitFiles', $any($event.target).checked)" />
+            <span><b>Separate files by paper</b><small>Ballots and borderless boards in their own PDFs, so you can load different paper.</small></span></label>
+          <label class="sw"><input type="checkbox" [checked]="opts().rulebook" (change)="set('rulebook', $any($event.target).checked)" />
+            <span><b>Add the rulebook</b><small>{{ opts().paper === 'A3' ? 'A4 booklet on A3' : 'A5 booklet on A4' }}, reading version and rulings sheet.</small></span></label>
+          <button class="mini" (click)="reset()">Reset all options</button>
+        </section>
+      </div>
+
+      <aside class="summary">
+        <h2>Your set</h2>
+        @for (g of groups(); track g[0]) {
+          <div class="grp"><div class="gh">{{ g[0] }}</div>
+            @for (c of g[1]; track c.label) { <div class="ln"><span>{{ c.label }}</span><b>{{ c.count }}</b></div> }
+          </div>
+        }
+        <div class="files">
+          @for (f of files(); track f.key) {
+            <div class="file"><b>{{ f.name }}</b><span>{{ f.sheets.length }} × {{ opts().paper }} · {{ f.title }}</span></div>
+          }
+          <div class="tot">{{ totalSheets() }} sheets of {{ opts().paper }} in total</div>
+        </div>
+        <button class="btn primary big" (click)="generate()" [disabled]="busy() || !files().length">{{ busy() ? 'Building…' : 'Create the print files' }}</button>
+        @if (busy() || progress() > 0) {
+          <div class="bar"><div [style.width.%]="progress() * 100"></div></div>
+        }
+        @if (status()) { <p class="status">{{ status() }}</p> }
+        @if (error()) { <p class="error">{{ error() }}</p> }
+      </aside>
+    </div>
+  } @else { <p>Loading…</p> }
+</div>
