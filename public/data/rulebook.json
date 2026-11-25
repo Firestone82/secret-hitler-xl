@@ -33,6 +33,16 @@
    "file": "pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf"
   }
  ],
+ "booklets": {
+  "A4": {
+   "label": "A5 booklet on A4",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf"
+  },
+  "A3": {
+   "label": "A4 booklet on A3",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
+  }
+ },
  "setup": {
   "base": {
    "from": 5,

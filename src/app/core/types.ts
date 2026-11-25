@@ -94,6 +94,8 @@ export interface RulebookFile {
   date: string;
   changelog: RulebookVersion[];
   downloads: { label: string; file: string }[];
+  /** the booklet PDF printed for each paper size, from the Print dialog */
+  booklets: Partial<Record<'A4' | 'A3', { label: string; file: string }>>;
   setup: { base: SeatTable; xl: SeatTable };
   blocks: Block[];
 }
