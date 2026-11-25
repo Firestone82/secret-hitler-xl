@@ -14,6 +14,8 @@ export const fetchLoader: Loader = async (path) => {
 };
 
 const PIECE_BLEED = 3;   // the piece files carry 3 mm bleed; the sheets keep 1.5 mm of it
+/** Colours of the printer's marks: visible enough to cut along, light enough not to stand out. */
+const MARK = { crop: rgb(0.5, 0.5, 0.5), gap: rgb(0.78, 0.78, 0.78), target: rgb(0.6, 0.6, 0.6), text: rgb(0.45, 0.45, 0.45) };
 
 class Cache {
   private m = new Map<string, Promise<Uint8Array>>();
@@ -141,9 +143,10 @@ export class Renderer {
 
   private marks(ctx: Ctx, page: PDFPage, sh: Sheet, back: boolean, label: string) {
     const { PW, PH, paper } = ctx, A4 = paper === 'A4';
-    const black = rgb(0, 0, 0);
-    const ln = (x1: number, y1: number, x2: number, y2: number, w = 0.3, dash?: number) =>
-      page.drawLine({ start: { x: pt(x1), y: pt(PH - y1) }, end: { x: pt(x2), y: pt(PH - y2) }, thickness: w, color: black, dashArray: dash ? [dash, dash] : undefined });
+    // Kept light so they do not show on the cut pieces: crop marks mid-grey, lines through the gaps barely there.
+    const { crop, gap, target, text } = MARK;
+    const ln = (x1: number, y1: number, x2: number, y2: number, color = crop, w = 0.2, dash?: number) =>
+      page.drawLine({ start: { x: pt(x1), y: pt(PH - y1) }, end: { x: pt(x2), y: pt(PH - y2) }, thickness: w, color, dashArray: dash ? [dash, dash] : undefined });
     const xs = new Set<number>(), ys = new Set<number>();
     const ix = (it: Item) => (back ? PW - it.x - it.w : it.x);
     for (const it of sh.items) { const x = ix(it); xs.add(+x.toFixed(3)); xs.add(+(x + it.w).toFixed(3)); ys.add(+it.y.toFixed(3)); ys.add(+(it.y + it.h).toFixed(3)); }
@@ -154,8 +157,8 @@ export class Renderer {
     for (const y of sy) { ln(x0 - G, y, x0 - G - L, y); ln(x1 + G, y, x1 + G + L, y); }
     // cut lines continued through the gaps between pieces
     const gaps = (v: number[]) => v.slice(1).map((b, i) => [v[i], b]).filter(([a, b]) => b - a > 0 && b - a <= 8);
-    for (const x of sx) for (const [a, b] of gaps(sy)) ln(x, a, x, b, 0.25);
-    for (const y of sy) for (const [a, b] of gaps(sx)) ln(a, y, b, y, 0.25);
+    for (const x of sx) for (const [a, b] of gaps(sy)) ln(x, a, x, b, gap, 0.12);
+    for (const y of sy) for (const [a, b] of gaps(sx)) ln(a, y, b, y, gap, 0.12);
     // registration targets: corners and the middle of every edge, where they stay clear of the artwork
     const [TG, TR, TC] = A4 ? [5, 1.1, 2] : [7.5, 1.6, 3];
     const clear = (tx: number, ty: number) => sh.items.every((it) => {
@@ -164,25 +167,25 @@ export class Renderer {
     });
     for (const [tx, ty] of [[TG, TG], [PW - TG, TG], [TG, PH - TG], [PW - TG, PH - TG], [PW / 2, TG], [PW / 2, PH - TG], [TG, PH / 2], [PW - TG, PH / 2]]) {
       if (!clear(tx, ty)) continue;
-      page.drawCircle({ x: pt(tx), y: pt(PH - ty), size: pt(TR), borderColor: black, borderWidth: 0.25 });
-      ln(tx - TC, ty, tx + TC, ty, 0.25); ln(tx, ty - TC, tx, ty + TC, 0.25);
+      page.drawCircle({ x: pt(tx), y: pt(PH - ty), size: pt(TR), borderColor: target, borderWidth: 0.2 });
+      ln(tx - TC, ty, tx + TC, ty, target); ln(tx, ty - TC, tx, ty + TC, target);
     }
-    ln(PW / 2, y0 - G, PW / 2, y0 - G - L, 0.3, 1); ln(PW / 2, y1 + G, PW / 2, y1 + G + L, 0.3, 1);
+    ln(PW / 2, y0 - G, PW / 2, y0 - G - L, crop, 0.2, 1); ln(PW / 2, y1 + G, PW / 2, y1 + G + L, crop, 0.2, 1);
     for (const fx0 of sh.fold ?? []) {
       const fx = back ? PW - fx0 : fx0;
-      ln(fx, y0 - G - L - 1, fx, y0 - G - L - 5, 0.3, 1.5); ln(fx, y1 + G, fx, y1 + G + L + 2, 0.3, 1.5);
+      ln(fx, y0 - G - L - 1, fx, y0 - G - L - 5, crop, 0.2, 1.5); ln(fx, y1 + G, fx, y1 + G + L + 2, crop, 0.2, 1.5);
       const w = ctx.fonts.label.widthOfTextAtSize('FOLD', 5.5);
-      page.drawText('FOLD', { x: pt(fx) - w / 2, y: pt(PH - (y0 - G - L - 6)), size: 5.5, font: ctx.fonts.label, color: black });
+      page.drawText('FOLD', { x: pt(fx) - w / 2, y: pt(PH - (y0 - G - L - 6)), size: 5.5, font: ctx.fonts.label, color: text });
     }
-    for (const fy of sh.yfold ?? []) { ln(x0 - G, fy, x0 - G - L, fy, 0.3, 1.5); ln(x1 + G, fy, x1 + G + L, fy, 0.3, 1.5); }
+    for (const fy of sh.yfold ?? []) { ln(x0 - G, fy, x0 - G - L, fy, crop, 0.2, 1.5); ln(x1 + G, fy, x1 + G + L, fy, crop, 0.2, 1.5); }
     for (const cy of sh.centre ?? []) {
-      ln(x0 - G, cy, x0 - G - L, cy, 0.3, 1.2); ln(x1 + G, cy, x1 + G + L, cy, 0.3, 1.2);
+      ln(x0 - G, cy, x0 - G - L, cy, crop, 0.2, 1.2); ln(x1 + G, cy, x1 + G + L, cy, crop, 0.2, 1.2);
       const w = ctx.fonts.label.widthOfTextAtSize('HALF', 5);
-      page.drawText('HALF', { x: pt(x0 - G - L - 0.8), y: pt(PH - cy) - w / 2, size: 5, font: ctx.fonts.label, color: black, rotate: degrees(90) });
+      page.drawText('HALF', { x: pt(x0 - G - L - 0.8), y: pt(PH - cy) - w / 2, size: 5, font: ctx.fonts.label, color: text, rotate: degrees(90) });
     }
     const room = pt(sx[1] - sx[0] - 4); let fs = 6;
     while (ctx.fonts.label.widthOfTextAtSize(label, fs) > room && fs > 3.5) fs -= 0.1;
-    page.drawText(label, { x: pt(sx[0] + 2), y: pt(PH - (y0 - G - 1.3)), size: fs, font: ctx.fonts.label, color: black });
+    page.drawText(label, { x: pt(sx[0] + 2), y: pt(PH - (y0 - G - 1.3)), size: fs, font: ctx.fonts.label, color: text });
   }
 }
 
