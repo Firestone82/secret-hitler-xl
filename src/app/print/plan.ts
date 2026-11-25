@@ -157,3 +157,25 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
 
   return { tiles, cards, ballots, longs, inserts, placards, counts, minPlayers: s.from };
 }
+
+/** A piece that the plan needs, once per distinct design, with the number of copies. */
+export interface UniquePiece { group: string; slot: Slot; copies: number }
+
+/** The plan's pieces grouped by kind and design: what a print service needs as separate files. */
+export function uniquePieces(plan: Plan): UniquePiece[] {
+  const groups: [string, Slot[]][] = [
+    ['tiles', plan.tiles], ['cards', plan.cards], ['ballots', plan.ballots],
+    ['boards', plan.longs], ['borderless_boards', plan.inserts], ['placards', plan.placards],
+  ];
+  const out: UniquePiece[] = [];
+  for (const [group, slots] of groups) {
+    const seen = new Map<string, UniquePiece>();
+    for (const slot of slots) {
+      const k = JSON.stringify([slot.size, slot.front, slot.back]);
+      const u = seen.get(k);
+      if (u) u.copies++;
+      else { const n = { group, slot, copies: 1 }; seen.set(k, n); out.push(n); }
+    }
+  }
+  return out;
+}

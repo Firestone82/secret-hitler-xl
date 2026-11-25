@@ -21,6 +21,10 @@ export interface PrintOptions {
   /** ballots and borderless boards in their own PDF, for different paper */
   splitFiles: boolean;
   rulebook: boolean;
+  /** sheets: imposed sheets to print at home; pieces: one PDF per piece and side, for print services */
+  output: 'sheets' | 'pieces';
+  /** pieces only: repeat the files for every copy instead of putting the count in the file name */
+  perCopy: boolean;
 }
 
 export const DEFAULT_OPTIONS: PrintOptions = {
@@ -41,6 +45,8 @@ export const DEFAULT_OPTIONS: PrintOptions = {
   blanks: true,
   splitFiles: true,
   rulebook: true,
+  output: 'sheets',
+  perCopy: false,
 };
 
 /** Keeps the options consistent: what the rules allow at this table size and with these modules. */

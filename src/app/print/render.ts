@@ -2,8 +2,9 @@ import { PDFDocument, PDFEmbeddedPage, PDFFont, PDFImage, PDFPage, clip, concatT
 import fontkit from '@pdf-lib/fontkit';
 import { RolesFile } from '../core/types';
 import { BriefingFonts, MM, drawBlankBriefing, drawBriefing } from './briefing-pdf';
-import { BLEED, Draw, Item, PAGE, PrintFile, Sheet } from './layout';
+import { BLEED, Draw, Item, PAGE, PrintFile, SIZE, Sheet } from './layout';
 import { Paper } from './options';
+import { Face, Plan, Slot, uniquePieces } from './plan';
 
 /** Where the renderer gets its files from: fetch() in the browser, the file system in tests. */
 export type Loader = (path: string) => Promise<Uint8Array>;
@@ -34,6 +35,17 @@ interface Ctx {
 }
 
 const pt = (v: number) => v * MM;
+
+export interface PieceExport {
+  files: { path: string; bytes: Uint8Array }[];
+  /** CSV: file names, size and number of copies of every piece */
+  manifest: string;
+  pieces: number;
+  copies: number;
+}
+
+const faceKey = (f: Face) => slug(f.type === 'piece' ? f.id.replace(/^[a-z]{1,2}_/, '') : f.type === 'briefing' ? f.role : f.type === 'blankBriefing' ? f.palette : 'solid');
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
 export class Renderer {
   private cache: Cache;
@@ -89,6 +101,64 @@ export class Renderer {
       drawBriefing(page, r, data.palettes[r.palette], fonts, img, 0);
     } else drawBlankBriefing(page, data.palettes[palette], data.blank.sections, fonts, 0);
     return doc.save();
+  }
+
+  /** Every distinct piece of the plan as its own one-page PDFs (front and back), cut size plus 3 mm bleed:
+   *  the format print services ask for. perCopy repeats the files for every copy instead of naming the count. */
+  async pieceFiles(plan: Plan, data: RolesFile, opts: { perCopy?: boolean; label?: (s: Slot) => string } = {}, progress?: (done: number, total: number) => void): Promise<PieceExport> {
+    const perCopy = !!opts.perCopy, labelOf = opts.label ?? ((s: Slot) => s.name);
+    const unique = uniquePieces(plan);
+    const files: { path: string; bytes: Uint8Array }[] = [];
+    const rows: string[][] = [['front', 'back', 'piece', 'width_mm', 'height_mm', 'copies']];
+    const count = new Map<string, number>();
+    // the piece's id goes into the file name only where two designs share a label (blank tiles, reference cards…)
+    const seen = new Map<string, number>();
+    for (const u of unique) { const k = u.group + '/' + slug(labelOf(u.slot)); seen.set(k, (seen.get(k) ?? 0) + 1); }
+    let done = 0;
+    for (const u of unique) {
+      const n = (count.get(u.group) ?? 0) + 1; count.set(u.group, n);
+      const label = slug(labelOf(u.slot)), key = faceKey(u.slot.front);
+      const base = `${u.group}/${String(n).padStart(3, '0')}_${label}${seen.get(u.group + '/' + label)! > 1 && !label.includes(key) ? '_' + key : ''}${perCopy ? '' : `_x${u.copies}`}`;
+      const [front, back] = await Promise.all([this.facePdf(u.slot, u.slot.front, data), this.facePdf(u.slot, u.slot.back, data)]);
+      const [w, h] = SIZE[u.slot.size];
+      for (let c = 0; c < (perCopy ? u.copies : 1); c++) {
+        const name = perCopy && u.copies > 1 ? `${base}_${String(c + 1).padStart(2, '0')}` : base;
+        files.push({ path: `${name}_front.pdf`, bytes: front }, { path: `${name}_back.pdf`, bytes: back });
+        rows.push([`${name}_front.pdf`, `${name}_back.pdf`, labelOf(u.slot), String(w), String(h), perCopy ? '1' : String(u.copies)]);
+      }
+      progress?.(++done, unique.length);
+    }
+    const csv = rows.map((r) => r.map((v) => (/[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v)).join(',')).join('\n') + '\n';
+    return { files, manifest: csv, pieces: unique.length, copies: unique.reduce((s, u) => s + u.copies, 0) };
+  }
+
+  /** One side of one piece on a page of its own, with the full 3 mm bleed. */
+  private async facePdf(slot: Slot, f: Face, data: RolesFile): Promise<Uint8Array> {
+    const doc = await PDFDocument.create();
+    doc.setCreator('Secret Hitler XL print builder');
+    const [w, h] = SIZE[slot.size], b = PIECE_BLEED;
+    if (f.type === 'piece') {
+      const [emb] = await doc.embedPdf(await this.cache.get(`pieces/${f.id}.pdf`), [f.page]);
+      const page = doc.addPage([emb.width, emb.height]);
+      page.drawPage(emb, { x: 0, y: 0, width: emb.width, height: emb.height });
+      return doc.save({ useObjectStreams: true });
+    }
+    const page = doc.addPage([pt(w + 2 * b), pt(h + 2 * b)]);
+    if (f.type === 'solid') {
+      page.drawRectangle({ x: 0, y: 0, width: page.getWidth(), height: page.getHeight(), color: rgb(f.rgb[0] / 255, f.rgb[1] / 255, f.rgb[2] / 255) });
+      return doc.save({ useObjectStreams: true });
+    }
+    doc.registerFontkit(fontkit);
+    const font = async (n: string) => doc.embedFont(await this.cache.get('fonts/' + n), { subset: true });
+    const fonts = { medium: await font('Jost-Medium.ttf'), bold: await font('Jost-Bold.ttf'), germania: await font('GermaniaOne-Regular.ttf') };
+    page.pushOperators(pushGraphicsState(), concatTransformationMatrix(1, 0, 0, 1, pt(b), pt(b)));
+    if (f.type === 'briefing') {
+      const r = data.roles.find((x) => x.id === f.role)!;
+      const img = await doc.embedJpg(await this.cache.get(`portraits/${r.portrait}.jpg`));
+      drawBriefing(page, r, data.palettes[r.palette], fonts, img, pt(b));
+    } else drawBlankBriefing(page, data.palettes[f.palette], data.blank.sections, fonts, pt(b));
+    page.pushOperators(popGraphicsState());
+    return doc.save({ useObjectStreams: true });
   }
 
   private item(ctx: Ctx, page: PDFPage, it: Item, back: boolean) {
