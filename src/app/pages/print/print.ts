@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
-import { DEFAULT_OPTIONS, Paper, PrintOptions, normalise } from '../../print/options';
+import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
 import { CountLine, Slot, makePlan, uniquePieces } from '../../print/plan';
 import { layout } from '../../print/layout';
 import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
@@ -9,7 +9,7 @@ import { Renderer, fetchLoader } from '../../print/render';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 import { PreviewSvg } from './preview-svg';
 
-type Flag = 'briefings' | 'boards' | 'inserts' | 'referenceCards' | 'placards' | 'pileCards' | 'blanks' | 'splitFiles' | 'rulebook';
+type Flag = 'briefings' | 'placards' | 'pileCards' | 'blanks' | 'splitFiles' | 'rulebook';
 
 @Component({
   selector: 'app-print',
@@ -68,17 +68,12 @@ export class PrintPage {
   /** what an optional role brings to the table, beyond the text in roles.json */
   roleTags(r: Role): string[] {
     const tags: string[] = [];
-    if (r.needsCommunists) tags.push('Needs the Communists');
-    if (r.pair) tags.push('Comes with the ' + (this.data.role(r.pair)?.name ?? r.pair));
     const extra = Object.entries(r.extraMembership ?? {}).map(([k, v]) => `${v} ${k[0].toUpperCase() + k.slice(1)}`);
     if (extra.length) tags.push('Adds cards: ' + extra.join(', '));
     return tags;
   }
   flags: { k: Flag; label: string; hint: string }[] = [
     { k: 'briefings', label: 'Role Briefing cards', hint: 'One per Secret Role card: explains that role on its own.' },
-    { k: 'boards', label: 'Boards with border', hint: 'The classic boards, 134 × 395 mm.' },
-    { k: 'inserts', label: 'Borderless boards', hint: 'For the 3D-printed frames, 130 × 390 mm.' },
-    { k: 'referenceCards', label: 'Reference cards', hint: 'Setup and night script, round, powers (XL only).' },
     { k: 'placards', label: 'President and Chancellor placards', hint: 'Fold-in-half tents.' },
     { k: 'pileCards', label: 'Draw and discard pile cards', hint: 'Card size; the tile decks sit on them.' },
     { k: 'blanks', label: 'Blank cards', hint: 'Tiles, roles, briefings and memberships to write your own.' },
@@ -92,6 +87,53 @@ export class PrintPage {
       return { ...o, roles };
     });
   }
+  /** optional roles to show, with paired roles (the two spies) in one entry sharing a checkbox */
+  roleGroups = computed(() => {
+    const out: Role[][] = [], done = new Set<string>();
+    for (const r of this.extraRoles()) {
+      if (done.has(r.id)) continue;
+      const g = [r, ...(r.pair ? this.extraRoles().filter((x) => x.id === r.pair) : [])];
+      g.forEach((x) => done.add(x.id)); out.push(g);
+    }
+    // in a pair, the Liberal first
+    return out.map((g) => g.length > 1 ? [...g].sort((a, b) => (a.seat === 'liberal' ? -1 : b.seat === 'liberal' ? 1 : 0)) : g);
+  });
+  groupName(g: Role[]) { return g.map((r) => r.name).join(' + '); }
+  groupSeat(g: Role[]) { return g.map((r) => (r.seatLabel || '').toLowerCase()).join(' and '); }
+  groupTags(g: Role[]) { return g.flatMap((r) => this.roleTags(r).map((t) => (g.length > 1 ? `${r.name}: ${t}` : t))); }
+
+  // ---- boards, reference cards, spares
+  boardStyles: { k: BoardStyle; label: string; hint: string }[] = [
+    { k: 'border', label: 'With border', hint: 'The classic boards, 395 × 134 mm.' },
+    { k: 'borderless', label: 'Borderless', hint: 'For the 3D-printed frames, 390 × 130 mm.' },
+    { k: 'both', label: 'Both', hint: 'Every board in both versions.' },
+  ];
+  refCards = REF_CARDS;
+  spareKinds = SPARE_KINDS;
+  refAllowed(r: (typeof REF_CARDS)[number]) { return refCardAllowed(r, this.opts()); }
+  setRef(id: string, v: number) { this.raw.update((o) => ({ ...o, refCards: { ...o.refCards, [id]: v } })); }
+  setSpare(k: SpareKind, v: number) { this.raw.update((o) => ({ ...o, spares: { ...o.spares, [k]: v } })); }
+  totalSpares = computed(() => Object.values(this.opts().spares).reduce((a, b) => a + b, 0));
+
+  /** how many sleeves of each size the set needs */
+  sleeves = computed(() => {
+    const p = this.plan();
+    return p ? { cards: p.cards.length + p.ballots.length, tiles: p.tiles.length } : { cards: 0, tiles: 0 };
+  });
+
+  // ---- full-screen preview
+  zoom = signal(false);
+  @HostListener('document:keydown', ['$event'])
+  onKey(e: KeyboardEvent) {
+    if (!this.zoom()) return;
+    if (e.key === 'Escape') this.zoom.set(false);
+    else if (e.key === 'ArrowRight') this.pickSheet(this.sheetIndex() + 1);
+    else if (e.key === 'ArrowLeft') this.pickSheet(this.sheetIndex() - 1);
+    else if (e.key === 'f' || e.key === 'b') this.back.set(!this.back());
+    else return;
+    e.preventDefault();
+  }
+
   allRoles(on: boolean) { this.raw.update((o) => ({ ...o, roles: Object.fromEntries(this.extraRoles().map((r) => [r.id, on])) })); }
   roleAllowed(r: Role) { const o = this.opts(); return o.xl && (!r.needsCommunists || o.communists); }
   reset() { this.raw.set({ ...DEFAULT_OPTIONS }); }
@@ -163,7 +205,7 @@ function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
     `${pieces} different pieces, ${copies} copies in total.`, '',
     'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
     o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
-    'Folders: tiles 44 x 68 mm, cards 63.5 x 88 mm, boards 395 x 134 mm, borderless boards 390 x 130 mm, placards 104.5 x 176 mm (fold in half).', '',
+    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards 395 x 134 mm, borderless boards ${(3.9 * o.insertScale).toFixed(1)} x ${(1.3 * o.insertScale).toFixed(1)} mm, placards 104.5 x 176 mm (fold in half).`, '',
     'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
     'Licensed CC BY-NC-SA 4.0: not for commercial use.',
   ].join('\n');

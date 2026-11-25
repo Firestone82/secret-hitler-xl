@@ -11,6 +11,7 @@ const cases: [string, Partial<PrintOptions>][] = [
   ['full_A3', { paper: 'A3', roles: extra }],
   ['full_A4', { paper: 'A4', roles: extra }],
   ['base_A4', { paper: 'A4', xl: false, players: 10 }],
+  ['borderless_A3', { paper: 'A3', boardStyle: 'both', insertScale: 92, spares: { tiles: 1, roles: 1, memberships: 2, ballots: 1 }, refCards: { r_round: 4, r_contents: 0 } }],
 ];
 const r = new Renderer(pub);
 for (const [name, o] of cases) {

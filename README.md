@@ -4,7 +4,7 @@ An Angular single-page app for the Secret Hitler + Secret Hitler XL print-and-pl
 
 - **Rulebook**: the complete rules, with search and a table of contents. Role sections come from `roles.json`.
 - **Roles**: every Secret Role card with its Role Briefing card. Each role downloads as one zip: card art, portrait, briefing card and print-ready PDFs.
-- **Print builder**: choose paper (A3 or A4), table size, XL modules, extra roles and components, with a live preview of every sheet. The PDFs are built in the browser with [pdf-lib](https://pdf-lib.js.org/); nothing is uploaded. For a print service it can instead export a ZIP with every piece as its own front and back PDF (cut size plus 3 mm bleed) and a `manifest.csv` of the copies.
+- **Print builder**: choose paper (A3 or A4), table size, XL modules, extra roles, boards (with border, borderless at an adjustable size, or both), how many of each reference card, spares and other components, with a live preview of every sheet (click it for full screen). The PDFs are built in the browser with [pdf-lib](https://pdf-lib.js.org/); nothing is uploaded. For a print service it can instead export a ZIP with every piece as its own front and back PDF (cut size plus 3 mm bleed) and a `manifest.csv` of the copies.
 
 It runs entirely on static files, so it deploys to GitHub Pages.
 

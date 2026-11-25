@@ -40,24 +40,70 @@
             <span><button class="mini" (click)="allRoles(true)" [disabled]="!opts().xl">All</button><button class="mini" (click)="allRoles(false)">None</button></span></div>
           <p class="note">Each role takes the seat of a regular role. Its card and briefing are added; regular cards stay complete.</p>
           <div class="roles">
-            @for (r of extraRoles(); track r.id) {
-              <label class="role" [class.off]="!roleAllowed(r)" [title]="r.needsCommunists && !opts().communists ? 'Needs the Communists' : ''">
-                <input type="checkbox" [disabled]="!roleAllowed(r)" [checked]="!!opts().roles[r.id]" (change)="toggleRole(r, $any($event.target).checked)" />
-                <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" />
+            @for (g of roleGroups(); track g[0].id) {
+              <label class="role" [class.off]="!roleAllowed(g[0])" [class.pair]="g.length > 1">
+                <input type="checkbox" [disabled]="!roleAllowed(g[0])" [checked]="!!opts().roles[g[0].id]" (change)="toggleRole(g[0], $any($event.target).checked)" />
+                <span class="imgs">@for (r of g; track r.id) { <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" loading="lazy" /> }</span>
                 <span class="rtxt">
-                  <span class="rhead"><b>{{ r.name }}@if (r.countLabel) { <small> ×{{ r.countLabel }}</small> }</b>
-                    <small class="seat">Takes the seat of {{ (r.seatLabel || '').toLowerCase() }}</small></span>
-                  @if (r.rulebook?.addWhenTable; as when) {
+                  <span class="rhead"><b>{{ groupName(g) }}@if (g[0].countLabel) { <small> ×{{ g[0].countLabel }}</small> }</b>
+                    <small class="seat">Takes the seat of {{ groupSeat(g) }}</small></span>
+                  @if (g[0].needsCommunists) {
+                    <span class="needs" [class.missing]="opts().xl && !opts().communists">
+                      <span class="ico" aria-hidden="true">☭</span> Needs the Communists
+                      @if (opts().xl && !opts().communists) {
+                        <button type="button" (click)="$event.preventDefault(); $event.stopPropagation(); set('communists', true)">Turn them on</button>
+                      }
+                    </span>
+                  }
+                  @if (g[0].rulebook?.addWhenTable; as when) {
                     <span class="why"><em>Add it when</em><span [innerHTML]="when | safeHtml"></span></span>
                   }
-                  @if (r.rulebook?.pitch; as pitch) {
-                    <span class="why"><em>What it does</em><span [innerHTML]="pitch | safeHtml"></span></span>
-                  }
-                  @if (roleTags(r).length) {
-                    <span class="tags">@for (t of roleTags(r); track t) { <span class="tag">{{ t }}</span> }</span>
+                  <span class="why"><em>What it does</em>
+                    @for (r of g; track r.id) {
+                      @if (r.rulebook?.pitch; as pitch) {
+                        <span>@if (g.length > 1) { <b class="who">{{ r.name }}:</b>&nbsp;}<span [innerHTML]="pitch | safeHtml"></span></span>
+                      }
+                    }
+                  </span>
+                  @if (groupTags(g).length) {
+                    <span class="tags">@for (t of groupTags(g); track t) { <span class="tag">{{ t }}</span> }</span>
                   }
                 </span>
               </label>
+            }
+          </div>
+        </section>
+
+        <section>
+          <h2>Boards</h2>
+          <div class="seg3" role="radiogroup" aria-label="Board style">
+            @for (b of boardStyles; track b.k) {
+              <button type="button" role="radio" [attr.aria-checked]="opts().boardStyle === b.k" [class.on]="opts().boardStyle === b.k" (click)="set('boardStyle', b.k)">
+                <b>{{ b.label }}</b><span>{{ b.hint }}</span>
+              </button>
+            }
+          </div>
+          @if (opts().boardStyle !== 'border') {
+            <label class="range scale">
+              <span>Borderless boards at <b>{{ opts().insertScale }} %</b>: {{ (390 * opts().insertScale / 100).toFixed(1) }} × {{ (130 * opts().insertScale / 100).toFixed(1) }} mm
+                @if (opts().insertScale !== 100) { <button type="button" class="mini" (click)="set('insertScale', 100)">Full size</button> }</span>
+              <input type="range" min="80" max="100" step="0.5" [value]="opts().insertScale" (input)="set('insertScale', num($any($event.target).value))" />
+              <small>Make them smaller to fit inside your frame. Measure the frame's opening and leave about 1 mm of play.</small>
+            </label>
+          }
+
+          <div class="refs" [class.dim]="!opts().xl">
+            <div class="h3row"><b>Reference cards</b><small>Same size as a board. Set 0 to leave one out.</small></div>
+            @for (r of refCards; track r.id) {
+              <div class="ref" [class.off]="!refAllowed(r)">
+                <img [src]="'preview/' + r.id + '_0.jpg'" alt="" loading="lazy" />
+                <span class="rlabel"><b>{{ r.label }}</b><small>{{ r.hint }}</small></span>
+                <span class="stepper">
+                  <button type="button" (click)="setRef(r.id, opts().refCards[r.id] - 1)" [disabled]="!refAllowed(r) || !opts().refCards[r.id]" aria-label="Fewer">−</button>
+                  <b>{{ refAllowed(r) ? opts().refCards[r.id] : 0 }}</b>
+                  <button type="button" (click)="setRef(r.id, opts().refCards[r.id] + 1)" [disabled]="!refAllowed(r)" aria-label="More">+</button>
+                </span>
+              </div>
             }
           </div>
         </section>
@@ -74,6 +120,29 @@
             <b>Ballots</b>
             <label><input type="radio" name="ballots" [checked]="opts().ballots === 'double'" (change)="set('ballots', 'double')" /> One card, Ja! front and Nein back</label>
             <label><input type="radio" name="ballots" [checked]="opts().ballots === 'separate'" (change)="set('ballots', 'separate')" /> Separate Ja! and Nein cards</label>
+          </div>
+          <div class="spares">
+            <div class="h3row"><b>Spares</b><small>Extra copies in case one gets lost, bent or marked.</small></div>
+            <div class="spare-grid">
+              @for (k of spareKinds; track k.k) {
+                <div class="ref">
+                  <span class="rlabel"><b>{{ k.label }}</b><small>{{ k.hint }}</small></span>
+                  <span class="stepper">
+                    <button type="button" (click)="setSpare(k.k, opts().spares[k.k] - 1)" [disabled]="!opts().spares[k.k]" aria-label="Fewer">−</button>
+                    <b>+{{ opts().spares[k.k] }}</b>
+                    <button type="button" (click)="setSpare(k.k, opts().spares[k.k] + 1)" aria-label="More">+</button>
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="sleeves">
+            <b>Sleeves</b>
+            <p>Sleeves make paper cards feel like real ones: they shuffle well, last longer and nobody can see through them, so plain 80 to 120 g/m² paper is enough and you can skip gluing two sheets. Use opaque (matte or coloured back) sleeves for the Secret Role and Party Membership cards.</p>
+            <ul>
+              <li><b>{{ sleeves().cards }}</b> standard sleeves for the 63.5 × 88 mm cards (sleeve size about 66 × 91 mm)</li>
+              <li><b>{{ sleeves().tiles }}</b> mini European sleeves for the 44 × 68 mm policy tiles (about 46 × 71 mm)</li>
+            </ul>
           </div>
         </section>
 
@@ -114,10 +183,11 @@
               <button class="mini" (click)="pickSheet(sheetIndex() + 1)" [disabled]="sheetIndex() >= sheets().length - 1" aria-label="Next sheet">›</button>
             </div>
             <div class="sheet-meta">Sheet {{ sheetIndex() + 1 }} of {{ sheets().length }} · {{ sheets()[sheetIndex()].file.name }}</div>
+            <button type="button" class="zoom-btn" (click)="zoom.set(true)" title="Full screen" aria-label="Show the sheet full screen">
             <svg class="sheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" role="img" [attr.aria-label]="sp.title">
               <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
               <g [appPreview]="sp.items" />
-            </svg>
+            </svg><span class="zoom-hint">⤢ Full screen</span></button>
           } @else { <p class="empty">Nothing to print yet.</p> }
           <div class="tot">{{ totalSheets() }} sheets of {{ opts().paper }} in {{ files().length }} {{ files().length === 1 ? 'file' : 'files' }}</div>
         } @else {
@@ -158,5 +228,20 @@
         @if (error()) { <p class="error">{{ error() }}</p> }
       </aside>
     </div>
+    @if (zoom() && sheetPreview(); as sp) {
+      <div class="zoom" (click)="zoom.set(false)" role="dialog" aria-modal="true" aria-label="Sheet preview">
+        <div class="zbar" (click)="$event.stopPropagation()">
+          <button class="mini" (click)="pickSheet(sheetIndex() - 1)" [disabled]="sheetIndex() === 0" aria-label="Previous sheet">‹</button>
+          <span class="ztitle">{{ sheetIndex() + 1 }} / {{ sheets().length }} · {{ sp.title }}</span>
+          <button class="mini" (click)="pickSheet(sheetIndex() + 1)" [disabled]="sheetIndex() >= sheets().length - 1" aria-label="Next sheet">›</button>
+          <span class="seg"><button [class.on]="!back()" (click)="back.set(false)">Front</button><button [class.on]="back()" (click)="back.set(true)">Back</button></span>
+          <button class="mini close" (click)="zoom.set(false)" aria-label="Close">✕</button>
+        </div>
+        <svg class="zsheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" (click)="$event.stopPropagation()">
+          <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
+          <g [appPreview]="sp.items" />
+        </svg>
+      </div>
+    }
   } @else { <p>Loading…</p> }
 </div>
