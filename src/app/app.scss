@@ -1,7 +1,26 @@
-:host { display: flex; flex-direction: column; min-height: 100vh; }
+:host { display: block; }
+/* the whole page scrolls inside SimpleBar; see styles.scss for the scrollbar itself */
+.shell { height: 100vh; height: 100dvh; }
+.frame { flex: 1; display: flex; flex-direction: column; }
+
+/* thin bar along the top while a lazy page loads */
+.progress {
+  position: fixed; top: 0; left: 0; z-index: 100; height: 3px; width: 100%; pointer-events: none;
+  background: linear-gradient(90deg, var(--orange), var(--cream)); transform: scaleX(0); transform-origin: left; opacity: 0;
+  transition: transform .25s ease-out, opacity .3s .15s;
+}
+.progress.on { opacity: 1; transform: scaleX(.85); transition: transform 4s cubic-bezier(.1, .7, .2, 1), opacity .1s; }
+
+.loader {
+  display: flex; flex-direction: column; align-items: center; gap: .8rem; padding: 4rem 1rem; color: var(--muted);
+  animation: fade-in .4s .2s backwards;
+}
+.loader img { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(.9); opacity: .6; } }
+@keyframes fade-in { from { opacity: 0; } }
 
 .top {
-  position: sticky; top: 0; z-index: 10; height: 56px; display: flex; align-items: center; gap: 1rem;
+  position: sticky; top: 0; z-index: 10; view-transition-name: site-header; height: 56px; display: flex; align-items: center; gap: 1rem;
   padding: 0 clamp(.8rem, 3vw, 2rem); background: var(--dark); border-bottom: 3px solid var(--orange);
   box-shadow: 0 2px 12px rgba(0, 0, 0, .18);
 }
@@ -29,6 +48,8 @@ nav a.cta:hover { background: #f0924f; }
 nav a.cta.on::after { display: none; }
 nav a.cta.on { box-shadow: inset 0 0 0 2px var(--cream); }
 
+nav .gh { margin-left: .2rem; }
+
 .burger { display: none; border: 0; background: transparent; color: var(--cream); padding: .35rem; border-radius: 8px; }
 .burger svg { width: 26px; height: 26px; display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 .burger:hover { background: rgba(255, 247, 214, .08); }
@@ -42,11 +63,13 @@ main { flex: 1; }
 }
 .foot .fl { display: flex; align-items: center; gap: .7rem; }
 .foot .fl img { flex: none; }
-.foot .fr { display: flex; gap: 1rem; }
+.foot .fr { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.foot a.ver { font-weight: 500; color: #d8d2b8; padding: .1rem .55rem; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(255, 247, 214, .25); font-variant-numeric: tabular-nums; }
+.foot a.ver:hover { color: var(--cream); text-decoration: none; box-shadow: inset 0 0 0 1px rgba(255, 247, 214, .55); }
 .foot a { color: var(--cream); text-decoration: none; font-weight: 600; }
 .foot a:hover { text-decoration: underline; }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .burger { display: block; }
   nav {
     display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 3px; flex-direction: column; align-items: stretch; gap: .4rem;
@@ -58,6 +81,7 @@ main { flex: 1; }
   nav a { padding: .7rem .8rem; }
   nav a.cta { margin: .2rem 0 0; }
   nav a.on::after { display: none; }
+  nav .gh { margin: .4rem 0 0; align-self: flex-start; }
 }
 @media (max-width: 480px) {
   .brand { font-size: 1.15rem; gap: .45rem; }

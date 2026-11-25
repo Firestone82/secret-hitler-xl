@@ -16,9 +16,14 @@
     @font-face { font-family: 'Jost'; src: url('fonts/Jost-Medium.ttf') format('truetype'); font-weight: 400 500; }
     @font-face { font-family: 'Jost'; src: url('fonts/Jost-Bold.ttf') format('truetype'); font-weight: 600 800; }
     @font-face { font-family: 'Germania'; src: url('fonts/GermaniaOne-Regular.ttf') format('truetype'); }
+    /* shown until Angular starts, then replaced by the app */
+    .boot { position: fixed; inset: 0; display: grid; place-items: center; background: #fbf7ea; }
+    .boot img { width: 72px; height: 72px; animation: boot 1.2s ease-in-out infinite; }
+    @keyframes boot { 50% { transform: scale(.88); opacity: .6; } }
+    @media (prefers-reduced-motion: reduce) { .boot img { animation: none; } }
   </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root><div class="boot" role="status" aria-label="Loading"><img src="icon.svg" alt=""></div></app-root>
 </body>
 </html>

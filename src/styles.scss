@@ -16,8 +16,47 @@ button { font: inherit; cursor: pointer; }
 .page { max-width: 1240px; margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
 .chip { display: inline-block; padding: .1rem .55rem; border-radius: 99px; font-size: .78rem; font-weight: 600; background: #ece6d3; color: #4a483f; }
 
-/* printing: only the page content, on white */
+/* ---- scrolling: the page scrolls inside SimpleBar (App), with an always-visible overlay bar ---- */
+html, body { height: 100%; overflow: hidden; }
+.shell .simplebar-content { min-height: 100%; display: flex; flex-direction: column; }
+.shell .simplebar-content-wrapper:focus { outline: none; }
+.shell > .simplebar-track.simplebar-vertical { top: 59px; width: 12px; background: rgba(54, 56, 53, .06); }
+.simplebar-track.simplebar-vertical { width: 10px; }
+.simplebar-track.simplebar-horizontal { height: 10px; }
+.simplebar-scrollbar::before { background: #8d8a7c; opacity: .55; transition: opacity .2s, background .2s; }
+.simplebar-scrollbar.simplebar-visible::before { opacity: .55; }
+.simplebar-track:hover .simplebar-scrollbar::before, .simplebar-dragging .simplebar-scrollbar::before { background: var(--orange); opacity: .9; }
+.simplebar-track.simplebar-vertical .simplebar-scrollbar::before { left: 3px; right: 3px; }
+/* native scrollbars of inner panes (table of contents, print summary) match it */
+* { scrollbar-width: thin; scrollbar-color: rgba(141, 138, 124, .6) transparent; }
+
+/* ---- motion ---- */
+/* page change: the header stays, the content cross-fades and lifts */
+::view-transition-old(root) { animation: vt-out .16s ease-in both; }
+::view-transition-new(root) { animation: vt-in .32s cubic-bezier(.2, .7, .3, 1) both; }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+/* images fade in once loaded instead of popping in */
+.fade-imgs main img { transition: opacity .35s ease-out; }
+.fade-imgs main img:not(.ld) { opacity: 0; }
+/* [appReveal]: rises into view the first time it is scrolled to */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease-out, transform .55s cubic-bezier(.2, .7, .3, 1); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after, ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* printing: only the page content, on white, flowing over as many sheets as it needs */
 @media print {
-  app-root > :not(main) { display: none !important; }
+  app-root .progress, app-root .top, app-root .foot, app-root .loader, .simplebar-track { display: none !important; }
+  html, body, app-root .shell { height: auto !important; overflow: visible !important; }
+  .shell .simplebar-wrapper, .shell .simplebar-mask, .shell .simplebar-offset, .shell .simplebar-content-wrapper {
+    position: static !important; overflow: visible !important; height: auto !important; max-height: none !important; padding: 0 !important; margin: 0 !important;
+  }
+  .simplebar-placeholder, .simplebar-height-auto-observer-wrapper { display: none !important; }
+  .fade-imgs main img, .reveal { opacity: 1 !important; transform: none !important; }
   body { background: #fff; }
 }
