@@ -31,7 +31,7 @@ All game content is in `public/`:
 | Path | What it is |
 |---|---|
 | `data/roles.json` | Every role: name, module, palette, seat, art, portrait crop, **briefing card text** and **rulebook text**. Edit it to change both. |
-| `data/rulebook.json` | The rest of the rulebook as blocks (headings, paragraphs, tables, scripts, notes, figures). |
+| `data/rulebook.json` | The rest of the rulebook: version and changelog, PDF downloads, seat tables, and the text as blocks (headings, paragraphs, tables, scripts, notes, figures, credits). |
 | `data/pieces.json` | Size and label of every printable piece. |
 | `pieces/*.pdf` | One small PDF per piece: page 1 front, page 2 back, cut size plus 3 mm bleed. The builder places these on the sheets. |
 | `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. |
@@ -59,6 +59,31 @@ All game content is in `public/`:
 ```
 
 Briefing text may use `<b>…</b>`. Briefing cards are drawn as vector text, so edits show up in the PDF with no other step.
+
+### rulebook.json
+
+Everything on the Rulebook page comes from this file, so the rules change without touching code.
+
+```jsonc
+{
+  "version": "1.0.0",               // shown in the sidebar and on the printed cover; raise it with every rule change
+  "date": "2026-11-25",
+  "changelog": [{ "version": "1.0.0", "date": "2026-11-25", "changes": ["..."] }],   // the "Version history" section
+  "downloads": [{ "label": "A5, reading order", "file": "pdf/Secret_Hitler_XL_Rulebook_A5.pdf" }],
+  "setup": {                         // who sits at the table, one entry per player count from "from" upwards
+    "xl": { "from": 6, "experimentalFrom": 17, "liberals": [3, 4, ...], "fascists": [...], "hitler": [...],
+            "communists": [...], "emergency": [...], "fascistBoard": null },
+    "base": { "from": 5, "experimentalFrom": null, ... }
+  },
+  "blocks": [ { "type": "h2", "text": "...", "id": "..." }, { "type": "seats", "table": "xl", "caption": "..." }, ... ]
+}
+```
+
+- The seat tables are used twice: `seats` blocks draw them in the rulebook, and the print builder counts the pieces from them. Player counts from `experimentalFrom` up are marked as experimental.
+- Any block can carry `"experimental": true` to show it framed with an *Experimental* mark.
+- Other block types: `part`, `h1`, `h2`, `h3`, `p`, `list`, `table`, `script`, `note`, `figure`, `pairs`, `wide`, `icons`, `wins`, `legislative` (the worked example, with its steps and tiles), `role` (written from roles.json), `credits` and `changelog`.
+
+The **Print the rulebook** button prints the page as it is, with a cover page that carries the version.
 
 ## How the print builder works
 

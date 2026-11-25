@@ -1,12 +1,11 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { DataService } from '../core/data.service';
-import { BriefingCard } from './briefing-card';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
-/** A role section of the rulebook, written from roles.json, with its briefing card on demand. */
+/** A role section of the rulebook, written from roles.json. */
 @Component({
   selector: 'app-role-box',
-  imports: [SafeHtmlPipe, BriefingCard],
+  imports: [SafeHtmlPipe],
   template: `
     @if (role(); as r) {
       @if (r.rulebook; as rb) {
@@ -17,9 +16,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
             <div class="team">{{ rb.teamLabel }} @if (r.seatLabel) { · takes the seat of {{ r.seatLabel.toLowerCase() }} }</div>
             @for (p of rb.paragraphs; track $index) { <p [innerHTML]="p | safeHtml"></p> }
             <div class="when"><b>Add it when</b> <span [innerHTML]="rb.addWhen | safeHtml"></span></div>
-            <button class="link" (click)="open.set(!open())">{{ open() ? 'Hide' : 'Show' }} the Role Briefing card</button>
           </div>
-          @if (open() && data.roles(); as rf) { <app-briefing-card class="brief" [role]="r" [palettes]="rf.palettes" /> }
         </article>
       }
     }
@@ -33,15 +30,13 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     p ::ng-deep b { color: var(--c); }
     .when { margin-top: .6rem; padding: .45rem .7rem; background: #f3eedd; border-left: 3px solid var(--c); font-size: .95rem; }
     .when b { color: var(--c); margin-right: .3rem; }
-    .link { margin-top: .6rem; border: 0; background: none; padding: 0; color: var(--lib); font-weight: 600; text-decoration: underline; }
-    .brief { grid-column: 2; margin-top: .4rem; }
-    @media (max-width: 560px) { .box { grid-template-columns: 70px 1fr; } img { width: 70px; } .brief { grid-column: 1 / -1; } }
+    @media print { .box { break-inside: avoid; } img { box-shadow: none; } .when { print-color-adjust: exact; -webkit-print-color-adjust: exact; } }
+    @media (max-width: 560px) { .box { grid-template-columns: 70px 1fr; } img { width: 70px; } }
   `,
 })
 export class RoleBox {
   data = inject(DataService);
   id = input.required<string>();
-  open = signal(false);
   role = computed(() => this.data.roles()?.roles.find((r) => r.id === this.id()));
   pal = computed(() => { const r = this.role(); return r ? this.data.roles()!.palettes[r.palette] : undefined; });
 }

@@ -60,5 +60,38 @@ export interface PieceInfo {
 export interface Block {
   type: string;
   id?: string;
+  /** shown with an "Experimental" mark: rules that are not settled yet */
+  experimental?: boolean;
   [k: string]: any;
+}
+
+/** Who sits at the table, one entry per player count from `from` upwards. */
+export interface SeatTable {
+  from: number;
+  /** first player count whose numbers are experimental, or null */
+  experimentalFrom: number | null;
+  liberals: number[];
+  fascists: number[];
+  hitler: number[];
+  communists: number[];
+  /** emergency tiles in the deck, or null when the table has none */
+  emergency: number[] | null;
+  /** which Fascist board to use, or null when it is not part of the table */
+  fascistBoard: string[] | null;
+}
+
+export interface RulebookVersion {
+  version: string;
+  date: string;
+  changes: string[];
+}
+
+export interface RulebookFile {
+  /** version of the rule text, shown on the site and in print */
+  version: string;
+  date: string;
+  changelog: RulebookVersion[];
+  downloads: { label: string; file: string }[];
+  setup: { base: SeatTable; xl: SeatTable };
+  blocks: Block[];
 }

@@ -18,20 +18,34 @@
       }
     </nav>
     <div class="dl">
-      <div class="dlh">Download the rulebook</div>
-      <a href="pdf/Secret_Hitler_XL_Rulebook_A5.pdf" target="_blank">A5, reading order</a>
-      <a href="pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf" target="_blank">A5 booklet on A4</a>
-      <a href="pdf/Secret_Hitler_XL_Rulebook_A4.pdf" target="_blank">A4, reading order</a>
-      <a href="pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf" target="_blank">A4 booklet on A3</a>
-      <a href="pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf" target="_blank">Rulings and balance notes</a>
+      <button class="btn primary print" (click)="print()" [disabled]="!blocks().length || printing()">
+        {{ printing() ? 'Preparing…' : 'Print the rulebook' }}
+      </button>
+      @if (meta(); as m) {
+        @if (m.downloads.length) {
+          <div class="dlh">Download the rulebook</div>
+          @for (d of m.downloads; track d.file) { <a [href]="d.file" target="_blank">{{ d.label }}</a> }
+        }
+        <div class="ver">Version {{ m.version }} · {{ m.date | date: 'longDate' : 'UTC' }}
+          @if (m.changelog.length) { · <button class="link" (click)="goId('version-history')">history</button> }</div>
+      }
     </div>
   </aside>
   <button class="tocbtn" (click)="tocOpen.set(!tocOpen())">{{ tocOpen() ? 'Close' : 'Contents' }}</button>
 
   <article class="rules">
+    @if (meta(); as m) {
+      <header class="print-head">
+        <img src="logo_alpha.png" alt="" />
+        <h1>Secret Hitler <em>+ XL</em></h1>
+        <p>The complete rules, for 5 to 19 players</p>
+        <p class="pv">Rulebook version {{ m.version }} · {{ m.date | date: 'longDate' : 'UTC' }}</p>
+      </header>
+    }
     @if (!blocks().length) { <p>Loading the rules…</p> }
     @for (b of blocks(); track $index; let i = $index) {
-      <div [id]="'b' + i" class="blk">
+      <div [id]="'b' + i" class="blk" [class.experimental]="b.experimental">
+        @if (b.experimental) { <span class="expmark">Experimental</span> }
         @switch (b.type) {
           @case ('part') {
             <header class="part" [id]="b.id" [style.background]="b['color']">
@@ -115,32 +129,56 @@
           }
           @case ('legislative') {
             <div class="legis">
-              <div class="lr"><div><b><span class="n">1</span> The President</b><p>draws three tiles and discards one, face down.</p></div>
-                <div class="tiles"><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p018.jpg" alt="Liberal" /></div><span class="ar">→</span><img class="disc" src="rb/p132.jpg" alt="discard" /></div>
-              <div class="lr"><div><b><span class="n">2</span> The Chancellor</b><p>receives the other two and discards one, face down.</p></div>
-                <div class="tiles"><img src="rb/p005.jpg" alt="Fascist" /><img src="rb/p018.jpg" alt="Liberal" /></div><span class="ar">→</span><img class="disc" src="rb/p132.jpg" alt="discard" /></div>
-              <div class="lr"><div><b><span class="n">3</span> Enacted</b><p>The last tile goes face up on its board.</p></div><div class="tiles"><img src="rb/p018.jpg" alt="Liberal" /></div></div>
-              <p class="cap">Example: the President draws Fascist, Fascist, Liberal. Had the President been a Fascist, the Liberal tile could have been the one discarded, and nobody else would know.</p>
+              @for (st of b['steps']; track $index) {
+                <div class="lr">
+                  <div><b><span class="n">{{ $index + 1 }}</span> <span [innerHTML]="st.title | safeHtml"></span></b><p [innerHTML]="st.html | safeHtml"></p></div>
+                  <div class="tiles">@for (t of st.tiles; track $index) { <img [src]="'rb/' + t.image" [alt]="t.alt" /> }</div>
+                  @if (st.discards && b['discard']) { <span class="ar">→</span><img class="disc" [src]="'rb/' + b['discard']" alt="discard" /> }
+                </div>
+              }
+              @if (b['caption']) { <p class="cap" [innerHTML]="b['caption'] | safeHtml"></p> }
             </div>
+          }
+          @case ('seats') {
+            @if (seatTable(b['table']); as t) {
+              <div class="tw">
+                <table class="center seats">
+                  <thead><tr><th>Players</th>@for (c of t.cols; track c.n) { <th [class.x]="c.x">{{ c.n }}</th> }</tr></thead>
+                  <tbody>
+                    @for (row of t.rows; track row.label) {
+                      <tr><td>{{ row.label }}</td>@for (v of row.cells; track $index) { <td [class.x]="t.cols[$index].x">{{ v }}</td> }</tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              @if (b['caption']) { <p class="cap" [innerHTML]="b['caption'] | safeHtml"></p> }
+            }
           }
           @case ('role') { <app-role-box [id]="b['role']" /> }
           @case ('credits') {
-            <section class="credits" id="credits-and-licence">
-              <h2>Credits and licence</h2>
+            <section class="credits" [id]="b.id">
+              <h2>{{ b['title'] }}</h2>
               <div class="cols">
-                <div>
-                  <h4>Secret Hitler</h4><p>Rules and art by Mike Boxleiter, Tommy Maranges and Max Temkin; art by Mac Schubert. <a href="https://www.secrethitler.com/" target="_blank">secrethitler.com</a></p>
-                  <h4>Secret Hitler Socialist expansion</h4><p>Dtep, mrkvicka and havosh.</p>
-                  <h4>Secret Hitler XL</h4><p>Rules by Lord_Roguy (Bo P.): the Communists (adapted from the Socialists), Anarchist, Monarchist, Capitalist, Centrists, anti-policies and emergency powers. <a href="https://drive.google.com/drive/folders/1_UMxjcPKxG3I_Zgr0JtOsD5Lh6GaBDVY" target="_blank">Original XL files</a></p>
-                  <h4>XL artwork</h4><p>u/PenguineWithAFez: the Communists and the Anarchist. u/muhaaman: clothing of the Communist grizzly bear. Leo Carlton (u/therazeblitz): the Monarchist and the Capitalist. Hal Aetus: the Centrists.</p>
-                </div>
-                <div>
-                  <h4>Play testers of Secret Hitler XL</h4><p>Fluff, Greenbeehn, Adoy, u/ZoomZoom670, Racc, Zommy, Käs, Brendon Bradburn, Coon, N00bAdrian, Wagon, JP, Kangawolf (inventor of the wildcat strike strategy for the Anarchist); the University of Queensland's Sci-Fi &amp; Fantasy Society, Mafia Society and Board Games Society; and many more.</p>
-                  <h4>This edition</h4><p>A remix of the files above: rulebooks merged and reworded, cards and boards re-set, role briefings and reference cards added. <a href="https://drive.google.com/drive/folders/10owkfJSwhzqOrMcFyPqaK2EqSAq_OIKO" target="_blank">Files of this edition</a></p>
-                </div>
+                @for (col of b['columns']; track $index) {
+                  <div>@for (c of col; track $index) { <h4 [innerHTML]="c.title | safeHtml"></h4><p [innerHTML]="c.html | safeHtml"></p> }</div>
+                }
               </div>
-              <div class="lic"><img src="rb/cc_by_nc_sa.png" alt="CC BY-NC-SA" /><p>Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit; not for commercial use; adaptations use the same licence.</p></div>
+              @if (b['licence']; as l) {
+                <div class="lic">@if (l.image) { <img [src]="'rb/' + l.image" [alt]="l.alt ?? ''" /> }<p [innerHTML]="l.html | safeHtml"></p></div>
+              }
             </section>
+          }
+          @case ('changelog') {
+            @if (meta(); as m) {
+              <div class="changelog">
+                @for (v of m.changelog; track v.version) {
+                  <div class="cv">
+                    <div class="cvh"><b>{{ v.version }}</b> <span>{{ v.date | date: 'longDate' : 'UTC' }}</span></div>
+                    <ul>@for (c of v.changes; track $index) { <li [innerHTML]="c | safeHtml"></li> }</ul>
+                  </div>
+                }
+              </div>
+            }
           }
         }
       </div>

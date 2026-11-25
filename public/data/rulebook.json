@@ -1,4 +1,170 @@
 {
+ "version": "1.0.0",
+ "date": "2026-11-25",
+ "changelog": [
+  {
+   "version": "1.0.0",
+   "date": "2026-11-25",
+   "changes": [
+    "First web edition of the merged Secret Hitler + XL rulebook.",
+    "Seat counts for 17 to 19 players are experimental."
+   ]
+  }
+ ],
+ "downloads": [
+  {
+   "label": "A5, reading order",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A5.pdf"
+  },
+  {
+   "label": "A5 booklet on A4",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf"
+  },
+  {
+   "label": "A4, reading order",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A4.pdf"
+  },
+  {
+   "label": "A4 booklet on A3",
+   "file": "pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
+  },
+  {
+   "label": "Rulings and balance notes",
+   "file": "pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf"
+  }
+ ],
+ "setup": {
+  "base": {
+   "from": 5,
+   "experimentalFrom": null,
+   "liberals": [
+    3,
+    4,
+    4,
+    5,
+    5,
+    6
+   ],
+   "fascists": [
+    1,
+    1,
+    2,
+    2,
+    3,
+    3
+   ],
+   "hitler": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "communists": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "emergency": null,
+   "fascistBoard": [
+    "5-6",
+    "5-6",
+    "7-8",
+    "7-8",
+    "9+",
+    "9+"
+   ]
+  },
+  "xl": {
+   "from": 6,
+   "experimentalFrom": 17,
+   "liberals": [
+    3,
+    4,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6,
+    7,
+    7,
+    7,
+    7,
+    8,
+    9
+   ],
+   "fascists": [
+    1,
+    1,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "hitler": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "communists": [
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    5,
+    5,
+    5
+   ],
+   "emergency": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    7,
+    7,
+    7,
+    7,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "fascistBoard": null
+  }
+ },
  "blocks": [
   {
    "type": "part",
@@ -327,7 +493,56 @@
    ]
   },
   {
-   "type": "legislative"
+   "type": "legislative",
+   "discard": "p132.jpg",
+   "steps": [
+    {
+     "title": "The President",
+     "html": "draws three tiles and discards one, face down.",
+     "tiles": [
+      {
+       "image": "p005.jpg",
+       "alt": "Fascist"
+      },
+      {
+       "image": "p005.jpg",
+       "alt": "Fascist"
+      },
+      {
+       "image": "p018.jpg",
+       "alt": "Liberal"
+      }
+     ],
+     "discards": true
+    },
+    {
+     "title": "The Chancellor",
+     "html": "receives the other two and discards one, face down.",
+     "tiles": [
+      {
+       "image": "p005.jpg",
+       "alt": "Fascist"
+      },
+      {
+       "image": "p018.jpg",
+       "alt": "Liberal"
+      }
+     ],
+     "discards": true
+    },
+    {
+     "title": "Enacted",
+     "html": "The last tile goes face up on its board.",
+     "tiles": [
+      {
+       "image": "p018.jpg",
+       "alt": "Liberal"
+      }
+     ],
+     "discards": false
+    }
+   ],
+   "caption": "Example: the President draws Fascist, Fascist, Liberal. Had the President been a Fascist, the Liberal tile could have been the one discarded, and nobody else would know."
   },
   {
    "type": "list",
@@ -510,113 +725,9 @@
    "id": "big-game-setup-table"
   },
   {
-   "type": "table",
-   "rows": [
-    [
-     "Players",
-     "6",
-     "7",
-     "8",
-     "9",
-     "10",
-     "11",
-     "12",
-     "13",
-     "14",
-     "15",
-     "16",
-     "17",
-     "18",
-     "19"
-    ],
-    [
-     "Liberals",
-     "3",
-     "4",
-     "4",
-     "4",
-     "5",
-     "5",
-     "6",
-     "6",
-     "7",
-     "7",
-     "7",
-     "7",
-     "8",
-     "9"
-    ],
-    [
-     "Fascists",
-     "1",
-     "1",
-     "2",
-     "2",
-     "2",
-     "3",
-     "3",
-     "3",
-     "3",
-     "4",
-     "4",
-     "4",
-     "4",
-     "4"
-    ],
-    [
-     "Hitler",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1"
-    ],
-    [
-     "Communists",
-     "1",
-     "1",
-     "1",
-     "2",
-     "2",
-     "2",
-     "2",
-     "3",
-     "3",
-     "3",
-     "4",
-     "5",
-     "5",
-     "5"
-    ],
-    [
-     "Emergency tiles",
-     "-",
-     "-",
-     "-",
-     "-",
-     "-",
-     "7",
-     "7",
-     "7",
-     "7",
-     "10",
-     "10",
-     "10",
-     "10",
-     "10"
-    ]
-   ],
-   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental</b>; those counts and the emergency tiles follow the separate Rulings and balance notes sheet.",
-   "center": true
+   "type": "seats",
+   "table": "xl",
+   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental</b>; those counts and the emergency tiles follow the separate Rulings and balance notes sheet."
   },
   {
    "type": "list",
@@ -1227,56 +1338,9 @@
    "id": "who-is-at-the-table-original-game"
   },
   {
-   "type": "table",
-   "rows": [
-    [
-     "Players",
-     "5",
-     "6",
-     "7",
-     "8",
-     "9",
-     "10"
-    ],
-    [
-     "Liberals",
-     "3",
-     "4",
-     "4",
-     "5",
-     "5",
-     "6"
-    ],
-    [
-     "Fascists",
-     "1",
-     "1",
-     "2",
-     "2",
-     "3",
-     "3"
-    ],
-    [
-     "Hitler",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1"
-    ],
-    [
-     "Fascist board",
-     "5-6",
-     "5-6",
-     "7-8",
-     "7-8",
-     "9+",
-     "9+"
-    ]
-   ],
-   "caption": "Deck: 6 Liberal and 11 Fascist policies.",
-   "center": true
+   "type": "seats",
+   "table": "base",
+   "caption": "Deck: 6 Liberal and 11 Fascist policies."
   },
   {
    "type": "h2",
@@ -1284,116 +1348,57 @@
    "id": "who-is-at-the-table-secret-hitler-xl"
   },
   {
-   "type": "table",
-   "rows": [
-    [
-     "Players",
-     "6",
-     "7",
-     "8",
-     "9",
-     "10",
-     "11",
-     "12",
-     "13",
-     "14",
-     "15",
-     "16",
-     "17",
-     "18",
-     "19"
-    ],
-    [
-     "Liberals",
-     "3",
-     "4",
-     "4",
-     "4",
-     "5",
-     "5",
-     "6",
-     "6",
-     "7",
-     "7",
-     "7",
-     "7",
-     "8",
-     "9"
-    ],
-    [
-     "Fascists",
-     "1",
-     "1",
-     "2",
-     "2",
-     "2",
-     "3",
-     "3",
-     "3",
-     "3",
-     "4",
-     "4",
-     "4",
-     "4",
-     "4"
-    ],
-    [
-     "Hitler",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1"
-    ],
-    [
-     "Communists",
-     "1",
-     "1",
-     "1",
-     "2",
-     "2",
-     "2",
-     "2",
-     "3",
-     "3",
-     "3",
-     "4",
-     "5",
-     "5",
-     "5"
-    ],
-    [
-     "Emergency tiles",
-     "-",
-     "-",
-     "-",
-     "-",
-     "-",
-     "7",
-     "7",
-     "7",
-     "7",
-     "10",
-     "10",
-     "10",
-     "10",
-     "10"
-    ]
-   ],
-   "caption": "Deck: 5 Liberal, 10 Fascist, 8 Communist (exactly 8 players: 6, 9, 8). Fascist board by player count: 5-6, 7-8 or 9+. One Communist board.",
-   "center": true
+   "type": "seats",
+   "table": "xl",
+   "caption": "Deck: 5 Liberal, 10 Fascist, 8 Communist (exactly 8 players: 6, 9, 8). Fascist board by player count: 5-6, 7-8 or 9+. One Communist board."
   },
   {
-   "type": "credits"
+   "type": "credits",
+   "id": "credits-and-licence",
+   "title": "Credits and licence",
+   "columns": [
+    [
+     {
+      "title": "Secret Hitler",
+      "html": "Rules and art by Mike Boxleiter, Tommy Maranges and Max Temkin; art by Mac Schubert. <a href=\"https://www.secrethitler.com/\" target=\"_blank\">secrethitler.com</a>"
+     },
+     {
+      "title": "Secret Hitler Socialist expansion",
+      "html": "Dtep, mrkvicka and havosh."
+     },
+     {
+      "title": "Secret Hitler XL",
+      "html": "Rules by Lord_Roguy (Bo P.): the Communists (adapted from the Socialists), Anarchist, Monarchist, Capitalist, Centrists, anti-policies and emergency powers. <a href=\"https://drive.google.com/drive/folders/1_UMxjcPKxG3I_Zgr0JtOsD5Lh6GaBDVY\" target=\"_blank\">Original XL files</a>"
+     },
+     {
+      "title": "XL artwork",
+      "html": "u/PenguineWithAFez: the Communists and the Anarchist. u/muhaaman: clothing of the Communist grizzly bear. Leo Carlton (u/therazeblitz): the Monarchist and the Capitalist. Hal Aetus: the Centrists."
+     }
+    ],
+    [
+     {
+      "title": "Play testers of Secret Hitler XL",
+      "html": "Fluff, Greenbeehn, Adoy, u/ZoomZoom670, Racc, Zommy, Käs, Brendon Bradburn, Coon, N00bAdrian, Wagon, JP, Kangawolf (inventor of the wildcat strike strategy for the Anarchist); the University of Queensland's Sci-Fi &amp; Fantasy Society, Mafia Society and Board Games Society; and many more."
+     },
+     {
+      "title": "This edition",
+      "html": "A remix of the files above: rulebooks merged and reworded, cards and boards re-set, role briefings and reference cards added. <a href=\"https://drive.google.com/drive/folders/10owkfJSwhzqOrMcFyPqaK2EqSAq_OIKO\" target=\"_blank\">Files of this edition</a>"
+     }
+    ]
+   ],
+   "licence": {
+    "image": "cc_by_nc_sa.png",
+    "alt": "CC BY-NC-SA",
+    "html": "Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit; not for commercial use; adaptations use the same licence."
+   }
+  },
+  {
+   "type": "h1",
+   "text": "Version history",
+   "id": "version-history"
+  },
+  {
+   "type": "changelog"
   }
  ]
 }
