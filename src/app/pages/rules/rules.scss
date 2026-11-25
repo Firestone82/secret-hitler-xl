@@ -30,13 +30,13 @@ aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh -
 .bar .print { display: inline-flex; align-items: center; gap: .45rem; padding: .7rem 1.1rem; white-space: nowrap; }
 .bar .print svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
 
-.blk { scroll-margin-top: 70px; }
-.part { margin: 2rem 0 1rem; padding: 1.4rem 1.6rem; border-radius: 14px; color: #fff; scroll-margin-top: 70px; }
+.blk { scroll-margin-top: 140px; }
+.part { margin: 2rem 0 1rem; padding: 1.4rem 1.6rem; border-radius: 14px; color: #fff; scroll-margin-top: 140px; }
 .part .num { font-weight: 700; letter-spacing: .15em; font-size: .78rem; }
 .part h1 { margin: .1rem 0 .3rem; font-size: 2.4rem; }
 .part p { margin: 0; opacity: .95; }
-h1 { font-size: 2rem; margin: 2rem 0 .6rem; scroll-margin-top: 70px; }
-h2 { font-size: 1.4rem; color: var(--orange); margin: 1.5rem 0 .4rem; scroll-margin-top: 70px; }
+h1 { font-size: 2rem; margin: 2rem 0 .6rem; scroll-margin-top: 140px; }
+h2 { font-size: 1.4rem; color: var(--orange); margin: 1.5rem 0 .4rem; scroll-margin-top: 140px; }
 h3 { font-size: 1.15rem; margin: 1.1rem 0 .3rem; }
 p { margin: .5rem 0; }
 :host ::ng-deep .rules b { font-weight: 700; }
@@ -82,7 +82,7 @@ table.seats td.x { background: #fbeedd; font-style: italic; }
 .cvh b { font-size: 1.05rem; color: var(--orange); margin-right: .4rem; } .cvh span { color: var(--muted); font-size: .88rem; }
 .cv ul { margin: .3rem 0 0; }
 .print-head { display: none; }
-.credits { margin-top: 2.5rem; padding-top: 1rem; border-top: 2px solid var(--line); scroll-margin-top: 70px; }
+.credits { margin-top: 2.5rem; padding-top: 1rem; border-top: 2px solid var(--line); scroll-margin-top: 140px; }
 @media (max-width: 900px) {
   .wrap { grid-template-columns: 1fr; }
   aside { display: none; position: fixed; inset: 56px 0 0 0; max-height: none; background: var(--paper); z-index: 9; padding: 1rem; }
