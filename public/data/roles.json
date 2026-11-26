@@ -334,7 +334,7 @@
           "<b>Power:</b> once per game, after a policy is enacted and before the next election, the Anarchist may reveal their role and assassinate a player."
         ],
         "addWhen": "your group knows the Communists well and wants a wild card.",
-        "addWhenTable": "your group knows the Communists well and wants a wild card.",
+        "addWhenTable": "Your group knows the Communists well and wants a wild card.",
         "seatLabel": "A Communist",
         "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
       }
@@ -400,7 +400,7 @@
           "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
         ],
         "addWhen": "the Fascists win too often.",
-        "addWhenTable": "the Fascists win too often.",
+        "addWhenTable": "The Fascists win too often.",
         "seatLabel": "A Fascist",
         "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
       }
@@ -541,7 +541,7 @@
           "<b>Power:</b> once per game, at any moment, the Fascist Spy may reveal and execute a player. <b>If it is the Liberal Spy, the Fascists win at once.</b>"
         ],
         "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
-        "addWhenTable": "you want a hidden duel. Always add it together with the Liberal Spy.",
+        "addWhenTable": "You want a hidden duel. Always add it together with the Liberal Spy.",
         "seatLabel": "A Fascist",
         "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
       }
@@ -610,7 +610,7 @@
           "Wins with the Liberals. At setup the Liberal Spy sees the Fascists' thumbs, so they know every Fascist except Hitler. <b>If a player of the Fascist team executes the Liberal Spy, the Fascists win.</b> The Liberal Spy must help without giving themselves away."
         ],
         "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
-        "addWhenTable": "you want a hidden duel. Always add it together with the Fascist Spy.",
+        "addWhenTable": "You want a hidden duel. Always add it together with the Fascist Spy.",
         "seatLabel": "A Liberal",
         "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
       }
@@ -682,7 +682,7 @@
           "A radicalised Centrist joins the Communists, but the other Centrists are not told, so they may keep trusting them."
         ],
         "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
-        "addWhenTable": "the game is big and the Liberals need a small group that trusts each other.",
+        "addWhenTable": "The game is big and the Liberals need a small group that trusts each other.",
         "seatLabel": "Liberals",
         "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
       }
@@ -821,7 +821,7 @@
           "Holds a Fascist card. <b>If the Jester is executed, the game ends and only the Jester wins.</b> Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
         ],
         "addWhen": "executions happen too easily.",
-        "addWhenTable": "executions happen too easily.",
+        "addWhenTable": "Executions happen too easily.",
         "seatLabel": "A Liberal",
         "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
       }
@@ -891,7 +891,7 @@
           "<b>Power:</b> once per game, the Propagandist may reveal and cast <b>three votes</b> in one election. It stacks with the Lobby card."
         ],
         "addWhen": "elections are too predictable.",
-        "addWhenTable": "elections are too predictable.",
+        "addWhenTable": "Elections are too predictable.",
         "seatLabel": "Any party (usually Fascist)",
         "pitch": "Casts <b>three votes</b> once, enough to swing one election."
       }
@@ -1030,7 +1030,7 @@
           "Outside those two moments the Detective has no power and plays like any member of their party."
         ],
         "addWhen": "you want stronger investigations.",
-        "addWhenTable": "you want stronger investigations.",
+        "addWhenTable": "You want stronger investigations.",
         "seatLabel": "A Liberal (party drawn at setup)",
         "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
       }

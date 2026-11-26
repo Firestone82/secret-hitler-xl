@@ -15,7 +15,9 @@ export interface RoleRulebook {
   teamLabel: string;
   image: string;
   paragraphs: string[];
+  /** continues an inline "Add it when …" sentence, so it starts lowercase */
   addWhen: string;
+  /** the same advice on its own under an "Add it when" heading (print builder), so it starts uppercase */
   addWhenTable?: string;
   /** optional roles: one line on what the role changes at the table, shown in the print builder */
   pitch?: string;
