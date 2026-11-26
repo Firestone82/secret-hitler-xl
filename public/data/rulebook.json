@@ -954,7 +954,7 @@
         [
           "Centrists (2 to 4)",
           "Liberals",
-          "the game is big and the Liberals need a small group that trusts each other."
+          "The game is big and the Liberals need a small group that trusts each other."
         ],
         [
           "Capitalist",
@@ -964,12 +964,12 @@
         [
           "Monarchist",
           "A Fascist",
-          "the Fascists win too often."
+          "The Fascists win too often."
         ],
         [
           "Anarchist",
           "A Communist",
-          "the group knows the Communists well and wants a wild card."
+          "The group knows the Communists well and wants a wild card."
         ],
         [
           "Bodyguard",
@@ -979,17 +979,17 @@
         [
           "Fascist Spy + Liberal Spy",
           "A Fascist + a Liberal",
-          "you want a hidden duel. Always add both."
+          "You want a hidden duel. Always add both."
         ],
         [
           "Jester",
           "A Liberal",
-          "executions happen too easily."
+          "Executions happen too easily."
         ],
         [
           "Propagandist",
           "Any party (usually Fascist)",
-          "elections are too predictable."
+          "Elections are too predictable."
         ],
         [
           "Bureaucrat",
@@ -999,7 +999,7 @@
         [
           "Detective",
           "A Liberal (party drawn at setup)",
-          "you want stronger investigations."
+          "You want stronger investigations."
         ]
       ],
       "caption": null,
