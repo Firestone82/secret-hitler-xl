@@ -9,6 +9,7 @@ All game content is in `public/`. The site reads three JSON files at start-up (`
 | `data/pieces.json` | Size and label of every printable piece. |
 | `pieces/*.pdf` | One small PDF per piece: page 1 front, page 2 back, cut size plus 3 mm bleed. The print builder places these on the sheets. |
 | `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. |
+| `rb/hd/` | Sharper copies of rulebook pictures, opened at full size. Made by `python3 tools/export/web_hd.py` from the piece PDFs. |
 | `preview/` | Small JPEGs of every piece (front `_0`, back `_1`) for the print builder's preview. Made from `pieces/` by `tools/export/web_previews.py`, with sharper copies in `preview/hd/` for full screen. `preview/briefing/` has the Role Briefing cards, made by `tools/export/briefing_previews.mts`. |
 | `fonts/` | Jost and Germania One, embedded into the generated PDFs. |
 | `pdf/` | The finished rulebook PDFs (A5 and A4, normal and booklet). |
@@ -90,7 +91,8 @@ Everything on the Rulebook page comes from this file, so the rules change withou
 
 - The seat tables are used twice: `seats` blocks draw them in the rulebook, and the print builder counts the pieces from them. Player counts from `experimentalFrom` up are marked as experimental.
 - Any block can carry `"experimental": true` to show it framed with an *Experimental* mark.
-- Block types: `part`, `h1`, `h2`, `h3`, `p`, `list`, `table`, `script`, `note`, `figure`, `wide`, `icons`, `wins`, `legislative` (the worked example, with its steps and tiles), `seats`, `role` (written from roles.json) and `credits`.
+- Block types: `part`, `h1`, `h2`, `h3`, `p`, `list`, `table`, `script`, `note`, `figure`, `wide`, `icons`, `wins`, `legislative` (the worked example, with its steps and tiles), `seats`, `role` (written from roles.json, with an optional `intro`: the sentences on who the role is, shown before the briefing sections) and `credits`.
+- Every `part`, `h1`, `h2`, `credits` and `role` block can be linked as `#/rules?section=<id>` (the heading id, or the role id). The page keeps that parameter on the section being read.
 
 ## pieces.json
 

@@ -88,20 +88,23 @@ async function printRules(page, size, pages) {
 
 let cachedEntries;
 async function entries(page) {
-  cachedEntries ??= await page.evaluate(() =>
-    [...document.querySelectorAll('article.rules .blk')].flatMap((blk) => {
+  cachedEntries ??= await page.evaluate(() => {
+    // heading text without the "#" section links next to it
+    const tx = (el) => { const c = el.cloneNode(true); c.querySelectorAll('.anchor').forEach((a) => a.remove()); return c.textContent.trim(); };
+    return [...document.querySelectorAll('article.rules .blk')].flatMap((blk) => {
       const part = blk.querySelector(':scope > header.part');
       if (part) {
         const sub = part.querySelector('p')?.textContent ?? '';
-        return [{ kind: 'part', key: part.querySelector('h1').textContent.trim(), label: part.querySelector('h1').textContent.trim(),
+        return [{ kind: 'part', key: tx(part.querySelector('h1')), label: tx(part.querySelector('h1')),
           find: part.querySelector('.num').textContent.trim(), players: (sub.match(/^\d+ to \d+ players/) ?? [''])[0] }];
       }
       const h1 = blk.querySelector(':scope > h1');
-      if (h1 && h1.id !== 'version-history') return [{ kind: 'h1', key: h1.textContent.trim(), label: h1.textContent.trim().replace(/\s+/, ' '), find: h1.textContent.trim() }];
+      if (h1 && h1.id !== 'version-history') return [{ kind: 'h1', key: tx(h1), label: tx(h1).replace(/\s+/, ' '), find: tx(h1) }];
       const cr = blk.querySelector(':scope > .credits h2');
-      if (cr) return [{ kind: 'h1', key: cr.textContent.trim(), label: cr.textContent.trim(), find: cr.textContent.trim() }];
+      if (cr) return [{ kind: 'h1', key: tx(cr), label: tx(cr), find: tx(cr) }];
       return [];
-    }));
+    });
+  });
   return cachedEntries;
 }
 

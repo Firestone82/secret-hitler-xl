@@ -6,7 +6,7 @@
     </a>
     <nav class="toc">
       @for (t of toc(); track t.i) {
-        <button [class]="t.b.type" [class.on]="active() === t.i" [attr.data-b]="t.i" [attr.aria-current]="active() === t.i ? 'location' : null" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b.type === 'part' ? t.b['title'] : plain(t.b['text']) }}</button>
+        <button [class]="t.b.type" [class.on]="active() === t.i" [attr.data-b]="t.i" [attr.aria-current]="active() === t.i ? 'location' : null" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b['title'] ?? plain(t.b['text']) }}</button>
       }
     </nav>
     @if (meta(); as m) {
@@ -33,15 +33,16 @@
     </div>
     <button class="btn primary print" (click)="printDialog.open()" [disabled]="!blocks().length || printing()">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></svg>
-      <span>{{ printing() ? 'Preparing…' : 'Print' }}</span>
+      @if (printing()) { <span>Preparing…</span> } @else { <span>Print<span class="long"> the rules</span></span> }
     </button>
   </div>
 
   <app-print-dialog #printDialog [booklets]="meta()?.booklets ?? {}" [version]="meta()?.version ?? ''" (print)="print($event)" />
 
   <app-lightbox />
+  <div class="copied" [class.on]="copied()" role="status" aria-live="polite">{{ copied() ? 'Link to this section copied' : '' }}</div>
 
-  <article class="rules" (click)="zoom($event)">
+  <article class="rules" (click)="onClick($event)">
     @if (meta(); as m) {
       <header class="print-head">
         <img src="icon.svg" alt="" />
@@ -58,12 +59,12 @@
           @case ('part') {
             <header class="part" [id]="b.id" [style.background]="b['color']">
               <div class="num">{{ b['num'] }}</div>
-              <h1>{{ b['title'] }}</h1>
+              <h1>{{ b['title'] }} <a class="anchor" [href]="sectionUrl(b.id)" [attr.data-section]="b.id" aria-label="Link to this section" title="Copy the link to this section">#</a></h1>
               <p [innerHTML]="b['sub'] | safeHtml"></p>
             </header>
           }
-          @case ('h1') { <h1 [id]="b.id" [innerHTML]="b['text'] | safeHtml"></h1> }
-          @case ('h2') { <h2 [id]="b.id" [innerHTML]="b['text'] | safeHtml"></h2> }
+          @case ('h1') { <h1 [id]="b.id"><span [innerHTML]="b['text'] | safeHtml"></span> <a class="anchor" [href]="sectionUrl(b.id)" [attr.data-section]="b.id" aria-label="Link to this section" title="Copy the link to this section">#</a></h1> }
+          @case ('h2') { <h2 [id]="b.id"><span [innerHTML]="b['text'] | safeHtml"></span> <a class="anchor" [href]="sectionUrl(b.id)" [attr.data-section]="b.id" aria-label="Link to this section" title="Copy the link to this section">#</a></h2> }
           @case ('h3') { <h3 [innerHTML]="b['text'] | safeHtml"></h3> }
           @case ('p') { <p [innerHTML]="b['html'] | safeHtml"></p> }
           @case ('list') {
@@ -162,10 +163,10 @@
               @if (b['caption']) { <p class="cap" [innerHTML]="b['caption'] | safeHtml"></p> }
             }
           }
-          @case ('role') { <app-role-box [id]="b['role']" /> }
+          @case ('role') { <app-role-box [id]="b['role']" [intro]="b['intro']" [link]="sectionUrl(b['role'])" /> }
           @case ('credits') {
             <section class="credits" [id]="b.id">
-              <h2>{{ b['title'] }}</h2>
+              <h2>{{ b['title'] }} <a class="anchor" [href]="sectionUrl(b.id)" [attr.data-section]="b.id" aria-label="Link to this section" title="Copy the link to this section">#</a></h2>
               <app-credits />
             </section>
           }
