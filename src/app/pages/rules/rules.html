@@ -2,7 +2,7 @@
   <aside [class.open]="tocOpen()">
     <nav class="toc">
       @for (t of toc(); track t.i) {
-        <button [class]="t.b.type" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b.type === 'part' ? t.b['title'] : plain(t.b['text']) }}</button>
+        <button [class]="t.b.type" [class.on]="active() === t.i" [attr.data-b]="t.i" [attr.aria-current]="active() === t.i ? 'location' : null" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b.type === 'part' ? t.b['title'] : plain(t.b['text']) }}</button>
       }
     </nav>
     <div class="dl">
@@ -42,7 +42,9 @@
 
   <app-print-dialog #printDialog [booklets]="meta()?.booklets ?? {}" [version]="meta()?.version ?? ''" (print)="print($event)" />
 
-  <article class="rules">
+  <app-lightbox />
+
+  <article class="rules" (click)="zoom($event)">
     @if (meta(); as m) {
       <header class="print-head">
         <img src="icon.svg" alt="" />
@@ -151,7 +153,7 @@
           @case ('seats') {
             @if (seatTable(b['table']); as t) {
               <div class="tw">
-                <table class="center seats">
+                <table class="center seats cols">
                   <thead><tr><th>Players</th>@for (c of t.cols; track c.n) { <th [class.x]="c.x">{{ c.n }}</th> }</tr></thead>
                   <tbody>
                     @for (row of t.rows; track row.label) {

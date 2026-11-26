@@ -198,8 +198,8 @@ export class PrintPage {
     if (!o.rulebook) return [];
     this.status.set('Adding the rulebook…');
     let rb = o.paper === 'A3'
-      ? ['Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf', 'Secret_Hitler_XL_Rulebook_A4.pdf', 'Secret_Hitler_XL_Rulings_one_sheet_A3.pdf']
-      : ['Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf', 'Secret_Hitler_XL_Rulebook_A5.pdf', 'Secret_Hitler_XL_Rulings_and_balance_notes.pdf'];
+      ? ['Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf', 'Secret_Hitler_XL_Rulebook_A4.pdf']
+      : ['Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf', 'Secret_Hitler_XL_Rulebook_A5.pdf'];
     if (o.output === 'pieces') rb = rb.filter((n) => !n.includes('booklet'));   // a print service binds the page-by-page version
     return Promise.all(rb.map(async (n) => ({ name: 'Rulebook/' + n, bytes: await fetchLoader('pdf/' + n) })));
   }

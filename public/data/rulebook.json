@@ -1,7 +1,20 @@
 {
- "version": "1.0.0",
- "date": "2026-11-25",
+ "version": "1.1.0",
+ "date": "2026-11-26",
  "changelog": [
+  {
+   "version": "1.1.0",
+   "date": "2026-11-26",
+   "changes": [
+    "17 players: 8 Liberals and 4 Communists (was 7 and 5).",
+    "The double-sided Ja!/Nein ballot card is optional. Players use the separate Ja! and Nein cards by default.",
+    "No Confidence: clearer wording, the veto lasts for the next government only.",
+    "Extra roles are laid out like their Role Briefing cards.",
+    "Night script: the Anarchist has a line of its own.",
+    "No separate rulings sheet any more. Everything is in this rulebook.",
+    "Redrawn Bugging and Five-year plan icons."
+   ]
+  },
   {
    "version": "1.0.0",
    "date": "2026-11-25",
@@ -27,10 +40,6 @@
   {
    "label": "A4 booklet on A3",
    "file": "pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
-  },
-  {
-   "label": "Rulings and balance notes",
-   "file": "pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf"
   }
  ],
  "booklets": {
@@ -104,7 +113,7 @@
     7,
     7,
     7,
-    7,
+    8,
     8,
     9
    ],
@@ -152,7 +161,7 @@
     3,
     3,
     4,
-    5,
+    4,
     5,
     5
    ],
@@ -335,51 +344,18 @@
    "id": "roles"
   },
   {
-   "type": "table",
-   "rows": [
-    [
-     "Players",
-     "5",
-     "6",
-     "7",
-     "8",
-     "9",
-     "10"
-    ],
-    [
-     "Liberals",
-     "3",
-     "4",
-     "4",
-     "5",
-     "5",
-     "6"
-    ],
-    [
-     "Fascists",
-     "1",
-     "1",
-     "2",
-     "2",
-     "3",
-     "3"
-    ],
-    [
-     "Hitler",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1",
-     "1"
-    ]
-   ],
-   "caption": null,
-   "center": true
+   "type": "seats",
+   "table": "base",
+   "caption": null
   },
   {
    "type": "p",
-   "html": "Fill one envelope per player with a Secret Role card, its <b>Role Briefing</b> card, the matching Party Membership card and a ballot card, with <b>Ja!</b> on one side and <b>Nein</b> on the other. The Role Briefing card explains that role on its own, so a new player can read it at the table. Liberal roles always go with a Liberal membership card. Fascist and Hitler roles always go with a Fascist membership card. Shuffle the envelopes and deal one to each player at random. Everyone looks at their role in secret."
+   "html": "Fill one envelope per player with a Secret Role card, its <b>Role Briefing</b> card, the matching Party Membership card, and one <b>Ja!</b> and one <b>Nein</b> ballot card. The Role Briefing card explains that role on its own, so a new player can read it at the table. Liberal roles always go with a Liberal membership card. Fascist and Hitler roles always go with a Fascist membership card. Shuffle the envelopes and deal one to each player at random. Everyone looks at their role in secret."
+  },
+  {
+   "type": "note",
+   "label": "Optional ballot card",
+   "html": "This edition can also print a single ballot card with <b>Ja!</b> on one side and <b>Nein</b> on the other. It is <b>optional</b> and not needed for the original game or for XL. If you use it, each player turns the chosen side up under the table and lays the card down when everyone votes."
   },
   {
    "type": "p",
@@ -388,7 +364,7 @@
   {
    "type": "note",
    "label": "Dictator card",
-   "html": "Some editions of the XL files include a <b>Dictator</b> role card. It is the <b>same role as Hitler</b> under another name, offered as an alternative for countries and groups where the original name is a problem. Every rule about Hitler applies to the Dictator unchanged. Use one or the other, never both."
+   "html": "The <b>Dictator</b> role card is the <b>same role as Hitler</b> under another name, offered as an alternative for countries and groups where the original name is a problem. Every rule about Hitler applies to the Dictator unchanged. Use one or the other, <b>never both</b>."
   },
   {
    "type": "h2",
@@ -439,7 +415,7 @@
    "items": [
     "<b>Pass the presidency.</b> The President placard moves clockwise to the next player, who is the new presidential candidate.",
     "<b>Nominate a Chancellor.</b> The candidate passes the Chancellor placard to any other eligible player. The candidate may discuss the options with the table.",
-    "<b>Vote.</b> When everyone is ready, every player, including both candidates, hides their ballot card in their hands, then at the same moment lays it down with <b>Ja!</b> or <b>Nein</b> facing up."
+    "<b>Vote.</b> When everyone is ready, every player, including both candidates, picks their <b>Ja!</b> or <b>Nein</b> ballot card and holds it face down. Everyone reveals their vote at the same moment."
    ]
   },
   {
@@ -467,7 +443,7 @@
     "The last <i>elected</i> President and the last <i>elected</i> Chancellor are term-limited and cannot be nominated as Chancellor.",
     "Term limits follow the last pair elected, not the last pair nominated.",
     "Term limits affect only the chancellorship. Anyone can be President, even the player who was just Chancellor.",
-    "If only five players are left in the game, only the last elected Chancellor is barred; the last President may be nominated."
+    "If only five players are left in the game, only the last elected Chancellor is barred. The last President may be nominated."
    ]
   },
   {
@@ -647,7 +623,7 @@
    "type": "list",
    "ordered": false,
    "items": [
-    "<b>Everyone should claim to be a Liberal.</b> The Liberal majority can shut out anyone who admits to being a Fascist. Liberals should usually tell the truth; they are solving a puzzle, and lying hurts their own team.",
+    "<b>Everyone should claim to be a Liberal.</b> The Liberal majority can shut out anyone who admits to being a Fascist. Liberals should usually tell the truth. They are solving a puzzle, and lying hurts their own team.",
     "<b>Hitler should be as Liberal as possible.</b> Enact Liberal policies, vote for Liberal governments, and let the other Fascists create openings. Fascists win by quiet manipulation, not by playing openly evil.",
     "<b>Liberals gain from slowing down</b> and discussing what is known. Fascists gain from rushed votes and confusion.",
     "<b>Fascists most often win by electing Hitler,</b> not by six policies. It is the core of their strategy, so Hitler needs the Liberals' trust when the time comes.",
@@ -670,7 +646,7 @@
   },
   {
    "type": "p",
-   "html": "XL is a kit of modules. Every part is optional; the table shows when each one is worth adding."
+   "html": "XL is a kit of modules. Every part is optional, and the table shows when each one is worth adding."
   },
   {
    "type": "table",
@@ -711,7 +687,7 @@
   },
   {
    "type": "p",
-   "html": "Each envelope holds three cards, plus the ballot card (<b>Ja!</b> on one side, <b>Nein</b> on the other). The <b>Secret Role</b> card says who you are. The <b>Role Briefing</b> card explains, on its own, how that role wins, what it knows and what it can do. The <b>Party Membership</b> card is what investigations see."
+   "html": "Each envelope holds three cards, plus the <b>Ja!</b> and <b>Nein</b> ballot cards. The <b>Secret Role</b> card says who you are. The <b>Role Briefing</b> card explains, on its own, how that role wins, what it knows and what it can do. The <b>Party Membership</b> card is what investigations see."
   },
   {
    "type": "figure",
@@ -729,7 +705,7 @@
     "Ballot: <b>Ja!</b>",
     "Ballot: <b>Nein</b>"
    ],
-   "caption": "A Communist's envelope: Secret Role, Role Briefing, Party Membership, and both sides of the ballot card."
+   "caption": "A Communist's envelope: Secret Role, Role Briefing, Party Membership, and the two ballot cards."
   },
   {
    "type": "h2",
@@ -739,7 +715,7 @@
   {
    "type": "seats",
    "table": "xl",
-   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental</b>; those counts and the emergency tiles follow the separate Rulings and balance notes sheet."
+   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental.</b> Those counts are a suggestion of this edition, not part of the XL rules."
   },
   {
    "type": "list",
@@ -839,8 +815,10 @@
     "Hitler, put your thumb out. Fascists, this is Hitler. Hitler, put your thumb away. (With only one Fascist, Hitler opens their eyes with them instead.)",
     "<span style=\"color:#c62f2a\"><b>Only with the Monarchist:</b></span> Monarchist, put your thumb out. Fascists, this is the Monarchist. Monarchist, put your thumb away.",
     "Fascists, close your eyes.",
-    "<span style=\"color:#c62f2a\"><b>Only with the Spies:</b></span> Liberal Spy, open your eyes. Fascists, put your thumbs out. [Pause] Thumbs away. Liberal Spy, close your eyes.",
-    "Communists, open your eyes and recognise each other. <span style=\"color:#c62f2a\"><b>Only with the Anarchist:</b></span> Anarchist, put your thumb out (with only one other Communist, open your eyes instead). Thumb away. Communists, close your eyes.",
+    "<span style=\"color:#c62f2a\"><b>Only with the Spies:</b></span> Liberal Spy, open your eyes. Fascists, put your thumbs out. Thumbs away. Liberal Spy, close your eyes.",
+    "Communists, open your eyes and recognise each other.",
+    "<span style=\"color:#c62f2a\"><b>Only with the Anarchist:</b></span> Anarchist, put your thumb out (with only one other Communist, open your eyes instead). Thumb away.",
+    "Communists, close your eyes.",
     "<span style=\"color:#c62f2a\"><b>Only with Centrists:</b></span> Centrists, open your eyes, recognise each other, close your eyes.",
     "Everybody put your hands down and open your eyes."
    ]
@@ -900,13 +878,13 @@
   },
   {
    "type": "p",
-   "html": "A Communist power is triggered when a Communist policy lands on its space, whoever the government is. <b>Radicalisation</b> and <b>Congress</b> are carried out by the Communists while everyone else has their eyes closed; a small <b>closed-eye icon</b> in the corner of the space marks them. The Anarchist never opens their eyes for these."
+   "html": "A Communist power is triggered when a Communist policy lands on its space, whoever the government is. <b>Radicalisation</b> and <b>Congress</b> are carried out by the Communists while everyone else has their eyes closed. A small <b>closed-eye icon</b> in the corner of the space marks them. The Anarchist never opens their eyes for these."
   },
   {
    "type": "icons",
    "items": [
     {
-     "icon": "cpo_bug.png",
+     "icon": "cpo_bug.svg",
      "name": "Bugging",
      "html": "No eyes are closed. The President and the Chancellor together look at one player's Party Membership card. The Capitalist chooses which of their two cards to show."
     },
@@ -916,7 +894,7 @@
      "html": "The Communists try to turn another player into a Communist. <b>Fascists cannot be radicalised</b>, and neither can a player whose card was already investigated by a Fascist-board power."
     },
     {
-     "icon": "cpo_plan.png",
+     "icon": "cpo_plan.svg",
      "name": "Five-year plan",
      "html": "Shuffle two Communist policies and one Liberal policy from the reserve into the draw deck."
     },
@@ -976,52 +954,52 @@
     [
      "Centrists (2 to 4)",
      "Liberals",
-     "Big games: the Liberals get a small group that trusts each other."
+     "the game is big and the Liberals need a small group that trusts each other."
     ],
     [
      "Capitalist",
      "A Liberal",
-     "<b>Communist policies pass too quickly</b>, or Radicalisation is too easy."
+     "Communist policies pass too quickly, or Radicalisation is too easy."
     ],
     [
      "Monarchist",
      "A Fascist",
-     "<b>The Fascists win too often.</b>"
+     "the Fascists win too often."
     ],
     [
      "Anarchist",
      "A Communist",
-     "The group knows the Communists well and <b>wants a wild card</b>."
+     "the group knows the Communists well and wants a wild card."
     ],
     [
      "Bodyguard",
      "A Fascist",
-     "<b>Hitler is found and executed too often.</b>"
+     "Hitler is found and executed too often."
     ],
     [
      "Fascist Spy + Liberal Spy",
      "A Fascist + a Liberal",
-     "You want a <b>hidden duel</b>. Always add both."
+     "you want a hidden duel. Always add both."
     ],
     [
      "Jester",
      "A Liberal",
-     "<b>Executions happen too easily.</b>"
+     "executions happen too easily."
     ],
     [
      "Propagandist",
      "Any party (usually Fascist)",
-     "Elections are <b>too predictable</b>."
+     "elections are too predictable."
     ],
     [
      "Bureaucrat",
      "Any party (usually Liberal)",
-     "Liberals are <b>fooled about discards</b> too often."
+     "Liberals are fooled about discards too often."
     ],
     [
      "Detective",
-     "A Liberal; party drawn at setup",
-     "You want <b>stronger investigations</b>."
+     "A Liberal (party drawn at setup)",
+     "you want stronger investigations."
     ]
    ],
    "caption": null,
@@ -1121,7 +1099,7 @@
     {
      "icon": "it_no_confidence.png",
      "name": "No Confidence",
-     "html": "Veto power is unlocked for the next government only."
+     "html": "The next elected government may use the veto power, just as after five Fascist policies. It lasts for that one government only. Once that government has finished its legislative session, the veto is gone again, unless five Fascist policies are enacted by then."
     },
     {
      "icon": "it_censorship.png",
@@ -1181,7 +1159,7 @@
   },
   {
    "type": "p",
-   "html": "Every side and every extra role has its own way to win. Find yours below; your Role Briefing card says the same."
+   "html": "Every side and every extra role has its own way to win. Find yours below. Your Role Briefing card says the same."
   },
   {
    "type": "wins",
@@ -1266,7 +1244,7 @@
     ],
     [
      "1  Election",
-     "The President placard moves clockwise. The candidate nominates a Chancellor; the last elected President and Chancellor are barred. Everyone votes <b>Ja!</b> or <b>Nein</b>. A majority of <b>Ja!</b> elects the government."
+     "The President placard moves clockwise. The candidate nominates a Chancellor. The last elected President and Chancellor are barred. Everyone votes <b>Ja!</b> or <b>Nein</b>. A majority of <b>Ja!</b> elects the government."
     ],
     [
      "Vote fails",
@@ -1286,7 +1264,7 @@
     ],
     [
      "Veto",
-     "After <b>five</b> Fascist policies (or for one government after No Confidence) the Chancellor may ask to veto; if the President agrees, both tiles are discarded and the tracker advances."
+     "After <b>five</b> Fascist policies, or for the next government only after No Confidence, the Chancellor may ask to veto. If the President agrees, both tiles are discarded and the tracker advances."
     ]
    ],
    "caption": null,
@@ -1310,7 +1288,7 @@
     ],
     [
      "Call Special Election",
-     "The President picks the next presidential candidate; then the order resumes."
+     "The President picks the next presidential candidate. Then the order resumes."
     ],
     [
      "Policy Peek",
@@ -1372,7 +1350,7 @@
     [
      {
       "title": "Secret Hitler",
-      "html": "Rules and art by Mike Boxleiter, Tommy Maranges and Max Temkin; art by Mac Schubert. <a href=\"https://www.secrethitler.com/\" target=\"_blank\">secrethitler.com</a>"
+      "html": "Game by Mike Boxleiter, Tommy Maranges and Max Temkin. Art by Mac Schubert. <a href=\"https://www.secrethitler.com/\" target=\"_blank\">secrethitler.com</a>"
      },
      {
       "title": "Secret Hitler Socialist expansion",
@@ -1401,7 +1379,7 @@
    "licence": {
     "image": "cc_by_nc_sa.png",
     "alt": "CC BY-NC-SA",
-    "html": "Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit; not for commercial use; adaptations use the same licence."
+    "html": "Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit, but not for commercial use. Adaptations use the same licence."
    }
   },
   {
