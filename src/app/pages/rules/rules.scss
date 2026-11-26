@@ -8,11 +8,11 @@ aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh -
 .toc .part { margin-top: .9rem; font-family: var(--display); font-size: 1.15rem; color: var(--c); }
 .toc .h1 { font-weight: 600; margin-top: .25rem; }
 .toc .h2 { padding-left: 1rem; font-size: .86rem; color: var(--muted); }
-.dl { margin-top: 1.2rem; padding: .8rem; background: var(--dark); border-radius: 10px; display: flex; flex-direction: column; gap: .2rem; }
-.dlh { color: var(--orange); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
-.dl a { color: var(--cream); font-size: .9rem; }
-.ver { margin-top: .6rem; padding-top: .5rem; border-top: 1px solid rgba(255,247,214,.15); color: #b9b6a6; font-size: .78rem; }
-.ver a { color: var(--cream); text-decoration: underline; }
+.vlink { display: flex; align-items: center; gap: .45rem; margin-top: .8rem; padding: .35rem .3rem .7rem; border-bottom: 1px solid var(--line);
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.vlink svg { width: 18px; height: 18px; fill: none; stroke: var(--orange); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.vlink:hover { color: var(--lib); }
+.ver { margin-top: 1.2rem; padding: .6rem .3rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
 .tocbtn { display: none; }
 .col { min-width: 0; max-width: 900px; }
 .rules { min-width: 0; }
