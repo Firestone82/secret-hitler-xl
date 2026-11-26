@@ -43,5 +43,5 @@ for key, r in BR.ROLES.items():
 pal = {k: dict(header=v[0], headerText=v[1], accent=v[2], paper=v[3]) for k, v in BR.TEAM.items()}
 json.dump(dict(palettes=pal, roles=roles,
                blank=dict(sections=[dict(label='YOU WIN IF', lines=3), dict(label='YOU KNOW', lines=2), dict(label='YOUR POWER', lines=3)])),
-          open('/home/claude/web/export/roles.json', 'w'), indent=1, ensure_ascii=False)
+          open('/home/claude/web/export/roles.json', 'w'), indent=2, ensure_ascii=False)
 print(len(roles), 'roles;', 'palettes', list(pal))

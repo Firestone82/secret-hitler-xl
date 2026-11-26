@@ -1,488 +1,488 @@
 {
- "t_p018": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Liberal policy"
- },
- "t_p005": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Fascist policy"
- },
- "t_p104": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Communist policy"
- },
- "t_p060": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Anti-Fascist policy"
- },
- "t_p014": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Anti-Communist policy"
- },
- "t_p129": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Social Democratic policy"
- },
- "t_pblank_liberal": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Blank Liberal policy"
- },
- "t_pblank_fascist": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Blank Fascist policy"
- },
- "t_pblank_communist": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Blank Communist policy"
- },
- "t_pblank_emergency": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Blank emergency power"
- },
- "t_e_investigate": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Investigate Loyalty"
- },
- "t_e_peek": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Policy Peek"
- },
- "t_e_special_election": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Special Election"
- },
- "t_e_execution": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Execution"
- },
- "t_e_propaganda": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Propaganda"
- },
- "t_e_no_confidence": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: No Confidence"
- },
- "t_e_censorship": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Censorship"
- },
- "t_e_enabling_act": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Enabling Act"
- },
- "t_e_article48": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Article 48"
- },
- "t_e_pardon": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Emergency: Pardon"
- },
- "t_lobby": {
-  "kind": "tile",
-  "w": 44,
-  "h": 68,
-  "label": "Lobby card (small)"
- },
- "c_h_061": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 061"
- },
- "c_h_062": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 062"
- },
- "c_h_063": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 063"
- },
- "c_h_064": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 064"
- },
- "c_h_065": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 065"
- },
- "c_h_067": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 067"
- },
- "c_h_068": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 068"
- },
- "c_h_080": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 080"
- },
- "c_h_081": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 081"
- },
- "c_h_082": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 082"
- },
- "c_h_083": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 083"
- },
- "c_h_085": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 085"
- },
- "c_h_093": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 093"
- },
- "c_h_094": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 094"
- },
- "c_h_095": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 095"
- },
- "c_h_097": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role 097"
- },
- "c_h_r_anarchist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_anarchist"
- },
- "c_h_r_bodyguard": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_bodyguard"
- },
- "c_h_r_bureaucrat": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_bureaucrat"
- },
- "c_h_r_capitalist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_capitalist"
- },
- "c_h_r_centrist_a": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_centrist_a"
- },
- "c_h_r_centrist_b": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_centrist_b"
- },
- "c_h_r_detective": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_detective"
- },
- "c_h_r_fascist_spy": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_fascist_spy"
- },
- "c_h_r_jester": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_jester"
- },
- "c_h_r_liberal_spy": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_liberal_spy"
- },
- "c_h_r_monarchist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_monarchist"
- },
- "c_h_r_propagandist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Secret Role r_propagandist"
- },
- "c_h_blank_liberal": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Blank Secret Role (liberal)"
- },
- "c_h_blank_fascist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Blank Secret Role (fascist)"
- },
- "c_h_blank_communist": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Blank Secret Role (communist)"
- },
- "c_h_blank_neutral": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Blank Secret Role (neutral)"
- },
- "c_069": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Liberal membership"
- },
- "c_086": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Fascist membership"
- },
- "c_098": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Communist membership"
- },
- "c_lobby": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Lobby card"
- },
- "c_m_blank": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Blank membership"
- },
- "c_ballot": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Ballot: Ja! / Nein"
- },
- "c_ja": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Ja! ballot"
- },
- "c_nein": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Nein ballot"
- },
- "c_draw": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Draw pile card"
- },
- "c_discard": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Discard pile card"
- },
- "c_bback": {
-  "kind": "card",
-  "w": 63.5,
-  "h": 88,
-  "label": "Role Briefing back"
- },
- "b_liberal": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Liberal board"
- },
- "i_liberal": {
-  "kind": "insert",
-  "w": 390.0,
-  "h": 130.0,
-  "label": "Liberal board (borderless)"
- },
- "b_fascist_5-6": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Fascist board 5-6 players"
- },
- "i_fascist_5-6": {
-  "kind": "insert",
-  "w": 390.0,
-  "h": 130.0,
-  "label": "Fascist board 5-6 players (borderless)"
- },
- "b_fascist_7-8": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Fascist board 7-8 players"
- },
- "i_fascist_7-8": {
-  "kind": "insert",
-  "w": 390.0,
-  "h": 130.0,
-  "label": "Fascist board 7-8 players (borderless)"
- },
- "b_fascist_9-10": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Fascist board 9+ players"
- },
- "i_fascist_9-10": {
-  "kind": "insert",
-  "w": 390.0,
-  "h": 130.0,
-  "label": "Fascist board 9+ players (borderless)"
- },
- "b_communist": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Communist board"
- },
- "i_communist": {
-  "kind": "insert",
-  "w": 390.0,
-  "h": 130.0,
-  "label": "Communist board (borderless)"
- },
- "r_setupnight": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Setup reference / night script card"
- },
- "r_round": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Round reference card"
- },
- "r_emerg": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Emergency powers / anti-policies card"
- },
- "r_compow": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Communist powers / powers and winning card"
- },
- "r_contents": {
-  "kind": "long",
-  "w": 395.0,
-  "h": 134.0,
-  "label": "Contents card"
- },
- "pl_president": {
-  "kind": "placard",
-  "w": 104.5,
-  "h": 176.0,
-  "label": "President placard"
- },
- "pl_chancellor": {
-  "kind": "placard",
-  "w": 104.5,
-  "h": 176.0,
-  "label": "Chancellor placard"
- }
+  "t_p018": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Liberal policy"
+  },
+  "t_p005": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Fascist policy"
+  },
+  "t_p104": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Communist policy"
+  },
+  "t_p060": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Anti-Fascist policy"
+  },
+  "t_p014": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Anti-Communist policy"
+  },
+  "t_p129": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Social Democratic policy"
+  },
+  "t_pblank_liberal": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Liberal policy"
+  },
+  "t_pblank_fascist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Fascist policy"
+  },
+  "t_pblank_communist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Communist policy"
+  },
+  "t_pblank_emergency": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank emergency power"
+  },
+  "t_e_investigate": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Investigate Loyalty"
+  },
+  "t_e_peek": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Policy Peek"
+  },
+  "t_e_special_election": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Special Election"
+  },
+  "t_e_execution": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Execution"
+  },
+  "t_e_propaganda": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Propaganda"
+  },
+  "t_e_no_confidence": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: No Confidence"
+  },
+  "t_e_censorship": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Censorship"
+  },
+  "t_e_enabling_act": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Enabling Act"
+  },
+  "t_e_article48": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Article 48"
+  },
+  "t_e_pardon": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Pardon"
+  },
+  "t_lobby": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Lobby card (small)"
+  },
+  "c_h_061": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 061"
+  },
+  "c_h_062": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 062"
+  },
+  "c_h_063": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 063"
+  },
+  "c_h_064": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 064"
+  },
+  "c_h_065": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 065"
+  },
+  "c_h_067": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 067"
+  },
+  "c_h_068": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 068"
+  },
+  "c_h_080": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 080"
+  },
+  "c_h_081": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 081"
+  },
+  "c_h_082": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 082"
+  },
+  "c_h_083": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 083"
+  },
+  "c_h_085": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 085"
+  },
+  "c_h_093": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 093"
+  },
+  "c_h_094": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 094"
+  },
+  "c_h_095": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 095"
+  },
+  "c_h_097": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role 097"
+  },
+  "c_h_r_anarchist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_anarchist"
+  },
+  "c_h_r_bodyguard": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_bodyguard"
+  },
+  "c_h_r_bureaucrat": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_bureaucrat"
+  },
+  "c_h_r_capitalist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_capitalist"
+  },
+  "c_h_r_centrist_a": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_centrist_a"
+  },
+  "c_h_r_centrist_b": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_centrist_b"
+  },
+  "c_h_r_detective": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_detective"
+  },
+  "c_h_r_fascist_spy": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_fascist_spy"
+  },
+  "c_h_r_jester": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_jester"
+  },
+  "c_h_r_liberal_spy": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_liberal_spy"
+  },
+  "c_h_r_monarchist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_monarchist"
+  },
+  "c_h_r_propagandist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Secret Role r_propagandist"
+  },
+  "c_h_blank_liberal": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (liberal)"
+  },
+  "c_h_blank_fascist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (fascist)"
+  },
+  "c_h_blank_communist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (communist)"
+  },
+  "c_h_blank_neutral": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (neutral)"
+  },
+  "c_069": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal membership"
+  },
+  "c_086": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist membership"
+  },
+  "c_098": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist membership"
+  },
+  "c_lobby": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Lobby card"
+  },
+  "c_m_blank": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank membership"
+  },
+  "c_ballot": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Ballot: Ja! / Nein"
+  },
+  "c_ja": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Ja! ballot"
+  },
+  "c_nein": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Nein ballot"
+  },
+  "c_draw": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Draw pile card"
+  },
+  "c_discard": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Discard pile card"
+  },
+  "c_bback": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Role Briefing back"
+  },
+  "b_liberal": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Liberal board"
+  },
+  "i_liberal": {
+    "kind": "insert",
+    "w": 390.0,
+    "h": 130.0,
+    "label": "Liberal board (borderless)"
+  },
+  "b_fascist_5-6": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 5-6 players"
+  },
+  "i_fascist_5-6": {
+    "kind": "insert",
+    "w": 390.0,
+    "h": 130.0,
+    "label": "Fascist board 5-6 players (borderless)"
+  },
+  "b_fascist_7-8": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 7-8 players"
+  },
+  "i_fascist_7-8": {
+    "kind": "insert",
+    "w": 390.0,
+    "h": 130.0,
+    "label": "Fascist board 7-8 players (borderless)"
+  },
+  "b_fascist_9-10": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 9+ players"
+  },
+  "i_fascist_9-10": {
+    "kind": "insert",
+    "w": 390.0,
+    "h": 130.0,
+    "label": "Fascist board 9+ players (borderless)"
+  },
+  "b_communist": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Communist board"
+  },
+  "i_communist": {
+    "kind": "insert",
+    "w": 390.0,
+    "h": 130.0,
+    "label": "Communist board (borderless)"
+  },
+  "r_setupnight": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Setup reference / night script card"
+  },
+  "r_round": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Round reference card"
+  },
+  "r_emerg": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Emergency powers / anti-policies card"
+  },
+  "r_compow": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Communist powers / powers and winning card"
+  },
+  "r_contents": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Contents card"
+  },
+  "pl_president": {
+    "kind": "placard",
+    "w": 104.5,
+    "h": 176.0,
+    "label": "President placard"
+  },
+  "pl_chancellor": {
+    "kind": "placard",
+    "w": 104.5,
+    "h": 176.0,
+    "label": "Chancellor placard"
+  }
 }
