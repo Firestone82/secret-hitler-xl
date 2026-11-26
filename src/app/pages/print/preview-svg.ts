@@ -12,13 +12,6 @@ import { PreviewItem } from '../../print/preview';
         <svg:g [attr.transform]="it.transform">
           @if (it.img) {
             <svg:image [attr.href]="it.img" [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah" preserveAspectRatio="none" />
-          } @else if (it.briefing; as b) {
-            <svg:rect [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah" [attr.fill]="b.paper" />
-            <svg:rect [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah * 0.3" [attr.fill]="b.header" />
-            <svg:text [attr.x]="-it.aw / 2 + 6" [attr.y]="-it.ah / 2 + it.ah * 0.2" [attr.fill]="b.headerText" font-size="8" font-family="Germania, serif">{{ b.name || '' }}</svg:text>
-            @for (l of lines; track l) {
-              <svg:rect [attr.x]="-it.aw / 2 + 6" [attr.y]="-it.ah / 2 + it.ah * 0.38 + l * 6" [attr.width]="it.aw - 12 - (l % 3) * 9" height="1.6" rx=".8" [attr.fill]="b.headerText" opacity=".25" />
-            }
           } @else {
             <svg:rect [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah" [attr.fill]="it.fill ?? '#ddd'" />
           }
@@ -34,5 +27,4 @@ import { PreviewItem } from '../../print/preview';
 export class PreviewSvg {
   items = input.required<PreviewItem[]>({ alias: 'appPreview' });
   cuts = input(true);
-  protected lines = [0, 1, 2, 3, 4, 5, 6, 7];
 }

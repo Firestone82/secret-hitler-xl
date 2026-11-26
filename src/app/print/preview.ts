@@ -15,7 +15,6 @@ export interface PreviewItem {
   aw: number; ah: number;
   img?: string;
   fill?: string;
-  briefing?: { header: string; headerText: string; paper: string; name: string };
   name: string;
   /** cut lines, relative to the clip box */
   cut: { x: number; y: number; w: number; h: number };
@@ -27,13 +26,14 @@ export interface PreviewSheet {
   items: PreviewItem[];
 }
 
-/** Lays one side of a sheet out for the on-screen preview, mirroring what render.ts draws. */
-export function previewSheet(sheet: Sheet, paper: Paper, back: boolean, data: RolesFile): PreviewSheet {
+/** Lays one side of a sheet out for the on-screen preview, mirroring what render.ts draws.
+ *  hd: the sharper pictures, for the full-screen view. */
+export function previewSheet(sheet: Sheet, paper: Paper, back: boolean, data: RolesFile, hd = false): PreviewSheet {
   const [PW, PH] = PAGE[paper];
-  return { title: sheet.title, w: PW, h: PH, items: sheet.items.map((it) => previewItem(it, PW, back, data)) };
+  return { title: sheet.title, w: PW, h: PH, items: sheet.items.map((it) => previewItem(it, PW, back, data, hd)) };
 }
 
-function previewItem(it: Item, PW: number, back: boolean, data: RolesFile): PreviewItem {
+function previewItem(it: Item, PW: number, back: boolean, data: RolesFile, hd = false): PreviewItem {
   const x = back ? PW - it.x - it.w : it.x;
   let [l, r, t, b] = it.free; if (back) [l, r] = [r, l];
   const X0 = x - BLEED * +l, X1 = x + it.w + BLEED * +r, Y0 = it.y - BLEED * +t, Y1 = it.y + it.h + BLEED * +b;
@@ -48,14 +48,13 @@ function previewItem(it: Item, PW: number, back: boolean, data: RolesFile): Prev
     cut: { x: x - X0, y: it.y - Y0, w: it.w, h: it.h },
   };
   if (f.type === 'piece') {
-    out.img = `preview/${f.id}_${f.page}.jpg`;
+    out.img = `preview/${hd ? 'hd/' : ''}${f.id}_${f.page}.jpg`;
     out.aw = d.w + 2 * PIECE_BLEED * d.scale; out.ah = d.h + 2 * PIECE_BLEED * d.scale;
   } else if (f.type === 'solid') {
     out.fill = `rgb(${f.rgb.join(',')})`;
   } else {
-    const role = f.type === 'briefing' ? data.roles.find((r) => r.id === f.role) : undefined;
-    const pal = data.palettes[role ? role.palette : f.type === 'blankBriefing' ? f.palette : 'neu'] ?? data.palettes['neu'];
-    out.briefing = { header: pal.header, headerText: pal.headerText, paper: pal.paper, name: role?.name ?? '' };
+    // pictures of the briefing cards with their text, made by tools/export/briefing_previews.mts
+    out.img = `preview/briefing/${f.type === 'briefing' ? f.role : 'blank_' + f.palette}.jpg`;
     out.aw = d.w + 2 * PIECE_BLEED; out.ah = d.h + 2 * PIECE_BLEED;
   }
   return out;

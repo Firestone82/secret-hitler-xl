@@ -46,7 +46,7 @@ export const SIZE: Record<Slot['size'], [number, number]> = {
 };
 /** Cut size of a slot in mm, with its scale applied. */
 export function slotSize(slot: Slot): [number, number] {
-  const [w, h] = SIZE[slot.size], s = slot.scale ?? 1;
+  const [w, h] = slot.mm ?? SIZE[slot.size], s = slot.scale ?? 1;
   return [+(w * s).toFixed(2), +(h * s).toFixed(2)];
 }
 const GUT = 3;
@@ -102,20 +102,27 @@ function notchFor(slot: Slot): [number, number, number] | undefined {
   return undefined;
 }
 
-/** A3: two long pieces side by side, upright. Placards fill a free half if there is one. */
+/** A3: long pieces upright, side by side, as many as fit across the sheet (two boards, three borderless boards).
+ *  Placards fill a free half if there is one. */
 function longSheetsA3(title: string, slots: Slot[], placards: Slot[]): Sheet[] {
-  const [PW, PH] = PAGE.A3, out: Sheet[] = [];
-  for (let i = 0; i < slots.length; i += 2) {
-    const pair = slots.slice(i, i + 2);
-    const [L, S] = slotSize(pair[0]);
-    const ox = (PW - (2 * S + 4)) / 2, y = (PH - L) / 2;
-    const items: Item[] = pair.map((slot, k) => ({
-      x: ox + k * (S + 4), y, w: S, h: L, name: slot.name,
-      front: draw(slot, 'front', -90), back: draw(slot, 'back', 90), free: [true, true, true, true], notch: notchFor(slot),
-    }));
-    const sheet: Sheet = { title: `${title}: ${pair.map((p) => p.name).join(' + ')}`, items, centre: [PH / 2] };
-    if (pair.length === 1 && placards.length) {
-      const [pw, ph] = SIZE.placard, px = ox + S + 4 + (S - pw) / 2, py = (PH - (2 * ph + 6)) / 2;
+  const [PW, PH] = PAGE.A3, out: Sheet[] = [], GAP = 4, ROOM = PW - 20;
+  for (let i = 0; i < slots.length;) {
+    const row = [slots[i]];
+    let w = slotSize(slots[i])[1];
+    while (i + row.length < slots.length && w + GAP + slotSize(slots[i + row.length])[1] <= ROOM) w += GAP + slotSize(slots[i + row.length])[1], row.push(slots[i + row.length]);
+    i += row.length;
+    const S0 = slotSize(row[0])[1], [pw, ph] = SIZE.placard;
+    const withPlacards = row.length === 1 && placards.length > 0 && S0 >= pw;
+    let x = withPlacards ? (PW - (2 * S0 + GAP)) / 2 : (PW - w) / 2;
+    const items: Item[] = row.map((slot) => {
+      const [L, S] = slotSize(slot);
+      const it: Item = { x, y: (PH - L) / 2, w: S, h: L, name: slot.name, front: draw(slot, 'front', -90), back: draw(slot, 'back', 90), free: [true, true, true, true], notch: notchFor(slot) };
+      x += S + GAP;
+      return it;
+    });
+    const sheet: Sheet = { title: `${title}: ${row.map((p) => p.name).join(' + ')}`, items, centre: [PH / 2] };
+    if (withPlacards) {
+      const px = x + (S0 - pw) / 2, py = (PH - (2 * ph + 6)) / 2;
       placards.forEach((p, k) => items.push({ x: px, y: py + k * (ph + 6), w: pw, h: ph, name: p.name, front: draw(p, 'front', 0), back: draw(p, 'back', 0), free: [true, true, true, true] }));
       sheet.fold = [px + pw / 2]; sheet.title += ' + placards (fold in half)';
       placards = [];
