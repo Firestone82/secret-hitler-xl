@@ -12,7 +12,7 @@
           @for (d of m.downloads; track d.file) { <a [href]="d.file" target="_blank">{{ d.label }}</a> }
         }
         <div class="ver">Version {{ m.version }} · {{ m.date | date: 'longDate' : 'UTC' }}
-          @if (m.changelog.length) { · <button class="link" (click)="goId('version-history')">history</button> }</div>
+          @if (m.changelog.length) { · <a routerLink="/versions">history</a> }</div>
       }
     </div>
   </aside>
@@ -171,18 +171,6 @@
               <h2>{{ b['title'] }}</h2>
               <app-credits />
             </section>
-          }
-          @case ('changelog') {
-            @if (meta(); as m) {
-              <div class="changelog">
-                @for (v of m.changelog; track v.version) {
-                  <div class="cv">
-                    <div class="cvh"><b>{{ v.version }}</b> <span>{{ v.date | date: 'longDate' : 'UTC' }}</span></div>
-                    <ul>@for (c of v.changes; track $index) { <li [innerHTML]="c | safeHtml"></li> }</ul>
-                  </div>
-                }
-              </div>
-            }
           }
         }
       </div>

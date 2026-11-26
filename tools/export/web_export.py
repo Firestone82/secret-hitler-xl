@@ -53,6 +53,6 @@ exec(content, ns)
 for b in B:                                                 # ids for the table of contents
     if b['type'] in ('h1', 'h2', 'part'):
         b['id'] = re.sub(r'[^a-z0-9]+', '-', re.sub('<[^>]+>', '', b.get('text') or b.get('title')).lower()).strip('-')
-json.dump({'blocks': B}, open(f'{OUT}/rulebook.json', 'w'), indent=1, ensure_ascii=False)
+json.dump({'blocks': B}, open(f'{OUT}/rulebook.json', 'w'), indent=2, ensure_ascii=False)
 print('rulebook blocks', len(B), 'roles in rulebook', len(ROLEBOXES))
-json.dump(ROLEBOXES, open('/tmp/roleboxes.json', 'w'), indent=1, ensure_ascii=False)
+json.dump(ROLEBOXES, open('/tmp/roleboxes.json', 'w'), indent=2, ensure_ascii=False)

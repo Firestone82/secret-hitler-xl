@@ -1,6 +1,6 @@
 import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
 import { ScrollService } from '../../core/scroll.service';
@@ -31,7 +31,7 @@ function blockText(b: Block): string {
 
 @Component({
   selector: 'app-rules',
-  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog, Lightbox],
+  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog, Lightbox, RouterLink],
   templateUrl: './rules.html',
   styleUrl: './rules.scss',
 })

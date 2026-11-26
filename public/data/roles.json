@@ -1,1055 +1,1055 @@
 {
- "palettes": {
-  "lib": {
-   "header": "#61c9d9",
-   "headerText": "#013a52",
-   "accent": "#01607f",
-   "paper": "#e6f6f9"
+  "palettes": {
+    "lib": {
+      "header": "#61c9d9",
+      "headerText": "#013a52",
+      "accent": "#01607f",
+      "paper": "#e6f6f9"
+    },
+    "fas": {
+      "header": "#ee9370",
+      "headerText": "#3d0d03",
+      "accent": "#a2260f",
+      "paper": "#fcebe3"
+    },
+    "com": {
+      "header": "#ec7d77",
+      "headerText": "#420000",
+      "accent": "#a50f0f",
+      "paper": "#fce6e5"
+    },
+    "cap": {
+      "header": "#c9c79a",
+      "headerText": "#2f2f17",
+      "accent": "#5d5c2e",
+      "paper": "#f2f1e4"
+    },
+    "neu": {
+      "header": "#c3b0d9",
+      "headerText": "#2a1b40",
+      "accent": "#5a3f7d",
+      "paper": "#f0ebf7"
+    },
+    "jes": {
+      "header": "#f3a9cb",
+      "headerText": "#4d0f2e",
+      "accent": "#a8235f",
+      "paper": "#fcebf3"
+    }
   },
-  "fas": {
-   "header": "#ee9370",
-   "headerText": "#3d0d03",
-   "accent": "#a2260f",
-   "paper": "#fcebe3"
-  },
-  "com": {
-   "header": "#ec7d77",
-   "headerText": "#420000",
-   "accent": "#a50f0f",
-   "paper": "#fce6e5"
-  },
-  "cap": {
-   "header": "#c9c79a",
-   "headerText": "#2f2f17",
-   "accent": "#5d5c2e",
-   "paper": "#f2f1e4"
-  },
-  "neu": {
-   "header": "#c3b0d9",
-   "headerText": "#2a1b40",
-   "accent": "#5a3f7d",
-   "paper": "#f0ebf7"
-  },
-  "jes": {
-   "header": "#f3a9cb",
-   "headerText": "#4d0f2e",
-   "accent": "#a8235f",
-   "paper": "#fcebf3"
+  "roles": [
+    {
+      "id": "liberal",
+      "name": "Liberal",
+      "module": "base",
+      "palette": "lib",
+      "party": "liberal",
+      "regular": true,
+      "seat": null,
+      "seatLabel": null,
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_061",
+        "h_062",
+        "h_063",
+        "h_064",
+        "h_065",
+        "h_067",
+        "h_068"
+      ],
+      "portrait": "n_061",
+      "crop": [
+        0.5,
+        0.46,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team Liberal",
+        "card": "Liberal",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Liberal board is full.",
+              "Hitler is executed."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Nobody. Any player could be lying to you."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Tell the truth: you are solving a puzzle.",
+              "Ask players to explain their votes and powers.",
+              "Slow the table down."
+            ]
+          }
+        ]
+      },
+      "rulebook": null
+    },
+    {
+      "id": "fascist",
+      "name": "Fascist",
+      "module": "base",
+      "palette": "fas",
+      "party": "fascist",
+      "regular": true,
+      "seat": null,
+      "seatLabel": null,
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_080",
+        "h_081",
+        "h_082",
+        "h_083"
+      ],
+      "portrait": "n_080",
+      "crop": [
+        0.55,
+        0.46,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team Fascist",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Fascist board is full.",
+              "Hitler is elected Chancellor after the 3rd Fascist policy."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "The other Fascists and Hitler.",
+              "The Monarchist, who shows you a thumb."
+            ]
+          },
+          {
+            "label": "GOOD TO KNOW",
+            "items": [
+              "You cannot be radicalised."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Claim to be a Liberal.",
+              "Spend your trust to make Hitler look trustworthy."
+            ]
+          }
+        ]
+      },
+      "rulebook": null
+    },
+    {
+      "id": "hitler",
+      "name": "Hitler",
+      "module": "base",
+      "palette": "fas",
+      "party": "fascist",
+      "regular": true,
+      "seat": null,
+      "seatLabel": null,
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_085"
+      ],
+      "portrait": "n_085",
+      "crop": [
+        0.48,
+        0.46,
+        0.7
+      ],
+      "briefing": {
+        "side": "Team Fascist",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Fascist board is full.",
+              "You are elected Chancellor after 3 Fascist policies."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Only the Fascist, when there is just one.",
+              "Otherwise nobody: show your thumb at setup."
+            ]
+          },
+          {
+            "label": "YOU MUST",
+            "items": [
+              "Say that you are Hitler when executed, or when elected Chancellor after 3 Fascist policies."
+            ]
+          },
+          {
+            "label": "GOOD TO KNOW",
+            "items": [
+              "A Bodyguard dies in your place, once.",
+              "You cannot be radicalised."
+            ]
+          }
+        ]
+      },
+      "rulebook": null
+    },
+    {
+      "id": "communist",
+      "name": "Communist",
+      "module": "communists",
+      "palette": "com",
+      "party": "communist",
+      "regular": true,
+      "seat": null,
+      "seatLabel": null,
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_093",
+        "h_094",
+        "h_095",
+        "h_097"
+      ],
+      "portrait": "n_093",
+      "crop": [
+        0.5,
+        0.45,
+        0.62
+      ],
+      "briefing": {
+        "side": "Team Communist",
+        "card": "Communist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Communist board is full.",
+              "Hitler is executed (the Liberals win too)."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "The other Communists, from the start.",
+              "The Anarchist, who shows you a thumb."
+            ]
+          },
+          {
+            "label": "YOUR POWERS",
+            "items": [
+              "<b>Radicalisation</b> and <b>Congress</b>: open your eyes with the Communists.",
+              "<b>Capitalist hunt:</b> before you execute a player as President, you may reveal your membership card. If you then execute the Capitalist, the Communists get an extra Radicalisation."
+            ]
+          }
+        ]
+      },
+      "rulebook": null
+    },
+    {
+      "id": "anarchist",
+      "name": "Anarchist",
+      "module": "roles",
+      "palette": "com",
+      "party": "communist",
+      "regular": false,
+      "seat": "communist",
+      "seatLabel": "A Communist",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": true,
+      "needsCommunists": true,
+      "extraMembership": null,
+      "art": [
+        "h_r_anarchist"
+      ],
+      "portrait": "n_r_anarchist",
+      "crop": [
+        0.53,
+        0.45,
+        0.62
+      ],
+      "briefing": {
+        "side": "Team Communist",
+        "card": "Communist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Communist board is full.",
+              "Hitler is executed (the Liberals win too)."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Nobody. At setup, show your thumb to the Communists.",
+              "With just one other Communist, open your eyes with them.",
+              "Keep your eyes closed at Radicalisation and Congress."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "<b>Assassination</b>, once per game: after a policy is enacted and before the next election, reveal your Secret Role card and execute a player."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Anarchist",
+        "teamLabel": "Team Communist",
+        "image": "r_anarchist.jpg",
+        "paragraphs": [
+          "Wins if the Communists win. At setup the Anarchist only shows a thumb, so the Communists know them but not the other way round, unless there is just one other Communist.",
+          "<b>Power:</b> once per game, after a policy is enacted and before the next election, the Anarchist may reveal their role and assassinate a player."
+        ],
+        "addWhen": "your group knows the Communists well and wants a wild card.",
+        "addWhenTable": "your group knows the Communists well and wants a wild card.",
+        "seatLabel": "A Communist",
+        "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
+      }
+    },
+    {
+      "id": "monarchist",
+      "name": "Monarchist",
+      "module": "roles",
+      "palette": "fas",
+      "party": "fascist",
+      "regular": false,
+      "seat": "fascist",
+      "seatLabel": "A Fascist",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": true,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_monarchist"
+      ],
+      "portrait": "n_r_monarchist",
+      "crop": [
+        0.52,
+        0.47,
+        0.62
+      ],
+      "briefing": {
+        "side": "Far right, own goals",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Fascist board is full.",
+              "Hitler is executed.",
+              "Not when Hitler becomes Chancellor."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Nobody. At setup, show your thumb to the Fascists."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "When <b>Call Special Election</b> is enacted, you may reveal yourself and become the next President.",
+              "The President who enacted it and you each name a Chancellor candidate.",
+              "Everyone gives their ballot card to one of them. Most cards wins. You break ties."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Monarchist",
+        "teamLabel": "Far right, own goals",
+        "image": "r_monarchist.jpg",
+        "paragraphs": [
+          "Wins if six Fascist policies are enacted or Hitler is executed, but not when Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
+          "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
+        ],
+        "addWhen": "the Fascists win too often.",
+        "addWhenTable": "the Fascists win too often.",
+        "seatLabel": "A Fascist",
+        "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
+      }
+    },
+    {
+      "id": "bodyguard",
+      "name": "Bodyguard",
+      "module": "roles",
+      "palette": "fas",
+      "party": "fascist",
+      "regular": false,
+      "seat": "fascist",
+      "seatLabel": "A Fascist",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_bodyguard"
+      ],
+      "portrait": "n_r_bodyguard",
+      "crop": [
+        0.45,
+        0.38,
+        0.64
+      ],
+      "briefing": {
+        "side": "Team Fascist",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Fascist board is full.",
+              "Hitler is elected Chancellor after the 3rd Fascist policy."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "The Fascists and Hitler: you open your eyes with the Fascists."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "The first time Hitler would be executed, reveal your Secret Role card.",
+              "You die instead, and Hitler lives."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Once you have saved Hitler, everyone knows who he is.",
+              "Push for a full Fascist board."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Bodyguard",
+        "teamLabel": "Team Fascist",
+        "image": "r_bodyguard.jpg",
+        "paragraphs": [
+          "Wins with the Fascists and opens their eyes with them. <b>The first time Hitler would be executed, the Bodyguard dies instead.</b> Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
+        ],
+        "addWhen": "Hitler is found and executed too often.",
+        "addWhenTable": "Hitler is found and executed too often.",
+        "seatLabel": "A Fascist",
+        "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
+      }
+    },
+    {
+      "id": "fascist_spy",
+      "name": "Fascist Spy",
+      "module": "roles",
+      "palette": "fas",
+      "party": "fascist",
+      "regular": false,
+      "seat": "fascist",
+      "seatLabel": "A Fascist",
+      "count": 1,
+      "countLabel": null,
+      "pair": "liberal_spy",
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_fascist_spy"
+      ],
+      "portrait": "n_r_fascist_spy",
+      "crop": [
+        0.58,
+        0.43,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team Fascist",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Fascist board is full.",
+              "Hitler is elected Chancellor after the 3rd Fascist policy."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "The Fascists and Hitler: you open your eyes with the Fascists."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "Once per game, at any moment: reveal your Secret Role card and execute a player.",
+              "If that player is the Liberal Spy, the game ends right away and the Fascist team wins."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Be certain before you shoot.",
+              "A miss leaves the Liberal Spy free to talk."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Fascist Spy",
+        "teamLabel": "Team Fascist",
+        "image": "r_fascist_spy.jpg",
+        "paragraphs": [
+          "Wins with the Fascists.",
+          "<b>Power:</b> once per game, at any moment, the Fascist Spy may reveal and execute a player. <b>If it is the Liberal Spy, the Fascists win at once.</b>"
+        ],
+        "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
+        "addWhenTable": "you want a hidden duel. Always add it together with the Liberal Spy.",
+        "seatLabel": "A Fascist",
+        "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
+      }
+    },
+    {
+      "id": "liberal_spy",
+      "name": "Liberal Spy",
+      "module": "roles",
+      "palette": "lib",
+      "party": "liberal",
+      "regular": false,
+      "seat": "liberal",
+      "seatLabel": "A Liberal",
+      "count": 1,
+      "countLabel": null,
+      "pair": "fascist_spy",
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_liberal_spy"
+      ],
+      "portrait": "n_r_liberal_spy",
+      "crop": [
+        0.5,
+        0.47,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team Liberal",
+        "card": "Liberal",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Liberal board is full.",
+              "Hitler is executed."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Every Fascist except Hitler: at setup they show you their thumbs."
+            ]
+          },
+          {
+            "label": "DANGER",
+            "items": [
+              "If a player of the Fascist team executes you, the game ends right away and the Fascists win."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Never say outright that you know the Fascists.",
+              "Steer the votes quietly."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Liberal Spy",
+        "teamLabel": "Team Liberal",
+        "image": "r_liberal_spy.jpg",
+        "paragraphs": [
+          "Wins with the Liberals. At setup the Liberal Spy sees the Fascists' thumbs, so they know every Fascist except Hitler. <b>If a player of the Fascist team executes the Liberal Spy, the Fascists win.</b> The Liberal Spy must help without giving themselves away."
+        ],
+        "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
+        "addWhenTable": "you want a hidden duel. Always add it together with the Fascist Spy.",
+        "seatLabel": "A Liberal",
+        "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
+      }
+    },
+    {
+      "id": "centrist",
+      "name": "Centrist",
+      "module": "roles",
+      "palette": "lib",
+      "party": "liberal",
+      "regular": false,
+      "seat": "liberal",
+      "seatLabel": "Liberals",
+      "count": 4,
+      "countLabel": "2 to 4",
+      "pair": null,
+      "withCommunists": true,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_centrist_a",
+        "h_r_centrist_b"
+      ],
+      "portrait": "n_r_centrist_a",
+      "crop": [
+        0.5,
+        0.42,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team Liberal",
+        "card": "Liberal",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Liberal board is full.",
+              "Hitler is executed."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "The other Centrists: you open your eyes together at setup."
+            ]
+          },
+          {
+            "label": "GOOD TO KNOW",
+            "items": [
+              "If you are radicalised, you join the Communists. The other Centrists are not told and may still trust you."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Wait before you reveal that you are Centrists.",
+              "Fascists will pretend to be Centrists.",
+              "The Communists will want to radicalise you."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "Centrists",
+        "teamLabel": "Team Liberal",
+        "image": "r_centrist_a.jpg",
+        "paragraphs": [
+          "Centrists are Liberals who know each other: they <b>open their eyes together</b> at setup. They hold Liberal cards, so they are targets for Radicalisation.",
+          "A radicalised Centrist joins the Communists, but the other Centrists are not told, so they may keep trusting them."
+        ],
+        "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
+        "addWhenTable": "the game is big and the Liberals need a small group that trusts each other.",
+        "seatLabel": "Liberals",
+        "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
+      }
+    },
+    {
+      "id": "capitalist",
+      "name": "Capitalist",
+      "module": "roles",
+      "palette": "cap",
+      "party": "liberal",
+      "regular": false,
+      "seat": "liberal",
+      "seatLabel": "A Liberal",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": true,
+      "needsCommunists": true,
+      "extraMembership": {
+        "fascist": 1,
+        "lobby": 1
+      },
+      "art": [
+        "h_r_capitalist"
+      ],
+      "portrait": "n_r_capitalist",
+      "crop": [
+        0.48,
+        0.53,
+        0.64
+      ],
+      "briefing": {
+        "side": "Team Liberal",
+        "card": "Liberal and Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The Liberal board is full.",
+              "Hitler is executed."
+            ]
+          },
+          {
+            "label": "TWO MEMBERSHIP CARDS",
+            "items": [
+              "At Radicalisation, show the Fascist one. You are never converted.",
+              "At Investigate Loyalty, show the Liberal one. At Bugging, you choose."
+            ]
+          },
+          {
+            "label": "LOBBY CARD",
+            "items": [
+              "At Radicalisation, give it to the player you trust most. They may vote three times with it, once."
+            ]
+          },
+          {
+            "label": "DANGER",
+            "items": [
+              "A revealed Communist President who executes you earns them a Radicalisation."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Capitalist",
+        "teamLabel": "Team Liberal",
+        "image": "r_capitalist.jpg",
+        "paragraphs": [
+          "Wins with the Liberals and can never be radicalised. The Capitalist holds <b>two</b> membership cards: the Fascist one is shown at Radicalisation, the Liberal one at Investigate Loyalty, and either one at Bugging.",
+          "<b>Lobby card:</b> during Radicalisation the Capitalist gives it to a trusted player, who may spend it once to vote three times.",
+          "<b>Danger:</b> a Communist President who reveals their membership card before an execution and then executes the Capitalist earns the Communists an extra Radicalisation."
+        ],
+        "addWhen": "Communist policies pass too quickly or Radicalisation is too easy.",
+        "addWhenTable": "Communist policies pass too quickly or Radicalisation is too easy.",
+        "seatLabel": "A Liberal",
+        "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
+      }
+    },
+    {
+      "id": "jester",
+      "name": "Jester",
+      "module": "roles",
+      "palette": "jes",
+      "party": "fascist",
+      "regular": false,
+      "seat": "liberal",
+      "seatLabel": "A Liberal",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": {
+        "fascist": 1
+      },
+      "art": [
+        "h_r_jester"
+      ],
+      "portrait": "n_r_jester",
+      "crop": [
+        0.47,
+        0.44,
+        0.56
+      ],
+      "briefing": {
+        "side": "No team, own goal",
+        "card": "Fascist",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "You are executed. The game ends at once and only you win."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "Nobody."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Look suspicious, but not too obviously.",
+              "Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy.",
+              "Never claim to be the Jester."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Jester",
+        "teamLabel": "No team",
+        "image": "r_jester.jpg",
+        "paragraphs": [
+          "Holds a Fascist card. <b>If the Jester is executed, the game ends and only the Jester wins.</b> Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
+        ],
+        "addWhen": "executions happen too easily.",
+        "addWhenTable": "executions happen too easily.",
+        "seatLabel": "A Liberal",
+        "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
+      }
+    },
+    {
+      "id": "propagandist",
+      "name": "Propagandist",
+      "module": "roles",
+      "palette": "neu",
+      "party": "any",
+      "regular": false,
+      "seat": "any",
+      "seatLabel": "Any party (usually Fascist)",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_propagandist"
+      ],
+      "portrait": "n_r_propagandist",
+      "crop": [
+        0.52,
+        0.42,
+        0.55
+      ],
+      "briefing": {
+        "side": "Team of your membership card",
+        "card": "Group decides",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The party on your Party Membership card wins."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "What that party knows: you open your eyes with it at setup."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "Once per game, reveal your Secret Role card and cast three votes in one election.",
+              "It stacks with the Lobby card."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Save your votes for the election that decides the game.",
+              "Revealing shows your role, never your party."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Propagandist",
+        "teamLabel": "Any party",
+        "image": "r_propagandist.jpg",
+        "paragraphs": [
+          "Belongs to the party on their membership card and wakes with it.",
+          "<b>Power:</b> once per game, the Propagandist may reveal and cast <b>three votes</b> in one election. It stacks with the Lobby card."
+        ],
+        "addWhen": "elections are too predictable.",
+        "addWhenTable": "elections are too predictable.",
+        "seatLabel": "Any party (usually Fascist)",
+        "pitch": "Casts <b>three votes</b> once, enough to swing one election."
+      }
+    },
+    {
+      "id": "bureaucrat",
+      "name": "Bureaucrat",
+      "module": "roles",
+      "palette": "neu",
+      "party": "any",
+      "regular": false,
+      "seat": "any",
+      "seatLabel": "Any party (usually Liberal)",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": null,
+      "art": [
+        "h_r_bureaucrat"
+      ],
+      "portrait": "n_r_bureaucrat",
+      "crop": [
+        0.52,
+        0.46,
+        0.55
+      ],
+      "briefing": {
+        "side": "Team of your membership card",
+        "card": "Group decides",
+        "sections": [
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The party on your Party Membership card wins."
+            ]
+          },
+          {
+            "label": "YOU KNOW",
+            "items": [
+              "What that party knows: you open your eyes with it at setup."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "Once per game, reveal your Secret Role card and look at the top two policies of the discard pile.",
+              "Afterwards you can never be nominated Chancellor."
+            ]
+          },
+          {
+            "label": "TIPS",
+            "items": [
+              "Look right after a government you doubt.",
+              "Revealing shows your role, never your party."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Bureaucrat",
+        "teamLabel": "Any party",
+        "image": "r_bureaucrat.jpg",
+        "paragraphs": [
+          "Belongs to the party on their membership card.",
+          "<b>Power:</b> once per game, the Bureaucrat may reveal and look at the <b>top two policies of the discard pile</b>, but can never be nominated Chancellor afterwards."
+        ],
+        "addWhen": "Liberals are too often fooled about which policies were discarded.",
+        "addWhenTable": "Liberals are too often fooled about which policies were discarded.",
+        "seatLabel": "Any party (usually Liberal)",
+        "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
+      }
+    },
+    {
+      "id": "detective",
+      "name": "Detective",
+      "module": "roles",
+      "palette": "neu",
+      "party": "drawn",
+      "regular": false,
+      "seat": "liberal",
+      "seatLabel": "A Liberal (party drawn at setup)",
+      "count": 1,
+      "countLabel": null,
+      "pair": null,
+      "withCommunists": false,
+      "needsCommunists": false,
+      "extraMembership": {
+        "liberal": 2,
+        "fascist": 1,
+        "communist": 1
+      },
+      "art": [
+        "h_r_detective"
+      ],
+      "portrait": "n_r_detective",
+      "crop": [
+        0.5,
+        0.45,
+        0.66
+      ],
+      "briefing": {
+        "side": "Team drawn at setup",
+        "card": "Drawn at setup",
+        "sections": [
+          {
+            "label": "SETUP",
+            "items": [
+              "You start with no membership card. At night, draw one from the spare deck: you join that party."
+            ]
+          },
+          {
+            "label": "YOU WIN IF",
+            "items": [
+              "The party you drew wins."
+            ]
+          },
+          {
+            "label": "YOUR POWER",
+            "items": [
+              "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal your Secret Role card and take the power over.",
+              "You alone choose the player. They secretly hand you their <b>Secret Role</b> card, not only their party.",
+              "At any other time you have no power."
+            ]
+          }
+        ]
+      },
+      "rulebook": {
+        "title": "The Detective",
+        "teamLabel": "Party drawn at setup",
+        "image": "r_detective.jpg",
+        "paragraphs": [
+          "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
+          "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. The Detective alone chooses the player, who secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
+          "Outside those two moments the Detective has no power and plays like any member of their party."
+        ],
+        "addWhen": "you want stronger investigations.",
+        "addWhenTable": "you want stronger investigations.",
+        "seatLabel": "A Liberal (party drawn at setup)",
+        "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
+      }
+    }
+  ],
+  "blank": {
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "lines": 3
+      },
+      {
+        "label": "YOU KNOW",
+        "lines": 2
+      },
+      {
+        "label": "YOUR POWER",
+        "lines": 3
+      }
+    ]
   }
- },
- "roles": [
-  {
-   "id": "liberal",
-   "name": "Liberal",
-   "module": "base",
-   "palette": "lib",
-   "party": "liberal",
-   "regular": true,
-   "seat": null,
-   "seatLabel": null,
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_061",
-    "h_062",
-    "h_063",
-    "h_064",
-    "h_065",
-    "h_067",
-    "h_068"
-   ],
-   "portrait": "n_061",
-   "crop": [
-    0.5,
-    0.46,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team Liberal",
-    "card": "Liberal",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Liberal board is full.",
-       "Hitler is executed."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Nobody. Any player could be lying to you."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Tell the truth: you are solving a puzzle.",
-       "Ask players to explain their votes and powers.",
-       "Slow the table down."
-      ]
-     }
-    ]
-   },
-   "rulebook": null
-  },
-  {
-   "id": "fascist",
-   "name": "Fascist",
-   "module": "base",
-   "palette": "fas",
-   "party": "fascist",
-   "regular": true,
-   "seat": null,
-   "seatLabel": null,
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_080",
-    "h_081",
-    "h_082",
-    "h_083"
-   ],
-   "portrait": "n_080",
-   "crop": [
-    0.55,
-    0.46,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team Fascist",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Fascist board is full.",
-       "Hitler is elected Chancellor after the 3rd Fascist policy."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "The other Fascists and Hitler.",
-       "The Monarchist, who shows you a thumb."
-      ]
-     },
-     {
-      "label": "GOOD TO KNOW",
-      "items": [
-       "You cannot be radicalised."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Claim to be a Liberal.",
-       "Spend your trust to make Hitler look trustworthy."
-      ]
-     }
-    ]
-   },
-   "rulebook": null
-  },
-  {
-   "id": "hitler",
-   "name": "Hitler",
-   "module": "base",
-   "palette": "fas",
-   "party": "fascist",
-   "regular": true,
-   "seat": null,
-   "seatLabel": null,
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_085"
-   ],
-   "portrait": "n_085",
-   "crop": [
-    0.48,
-    0.46,
-    0.7
-   ],
-   "briefing": {
-    "side": "Team Fascist",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Fascist board is full.",
-       "You are elected Chancellor after 3 Fascist policies."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Only the Fascist, when there is just one.",
-       "Otherwise nobody: show your thumb at setup."
-      ]
-     },
-     {
-      "label": "YOU MUST",
-      "items": [
-       "Say that you are Hitler when executed, or when elected Chancellor after 3 Fascist policies."
-      ]
-     },
-     {
-      "label": "GOOD TO KNOW",
-      "items": [
-       "A Bodyguard dies in your place, once.",
-       "You cannot be radicalised."
-      ]
-     }
-    ]
-   },
-   "rulebook": null
-  },
-  {
-   "id": "communist",
-   "name": "Communist",
-   "module": "communists",
-   "palette": "com",
-   "party": "communist",
-   "regular": true,
-   "seat": null,
-   "seatLabel": null,
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_093",
-    "h_094",
-    "h_095",
-    "h_097"
-   ],
-   "portrait": "n_093",
-   "crop": [
-    0.5,
-    0.45,
-    0.62
-   ],
-   "briefing": {
-    "side": "Team Communist",
-    "card": "Communist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Communist board is full.",
-       "Hitler is executed (the Liberals win too)."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "The other Communists, from the start.",
-       "The Anarchist, who shows you a thumb."
-      ]
-     },
-     {
-      "label": "YOUR POWERS",
-      "items": [
-       "<b>Radicalisation</b> and <b>Congress</b>: open your eyes with the Communists.",
-       "<b>Capitalist hunt:</b> before you execute a player as President, you may reveal your membership card. If you then execute the Capitalist, the Communists get an extra Radicalisation."
-      ]
-     }
-    ]
-   },
-   "rulebook": null
-  },
-  {
-   "id": "anarchist",
-   "name": "Anarchist",
-   "module": "roles",
-   "palette": "com",
-   "party": "communist",
-   "regular": false,
-   "seat": "communist",
-   "seatLabel": "A Communist",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": true,
-   "needsCommunists": true,
-   "extraMembership": null,
-   "art": [
-    "h_r_anarchist"
-   ],
-   "portrait": "n_r_anarchist",
-   "crop": [
-    0.53,
-    0.45,
-    0.62
-   ],
-   "briefing": {
-    "side": "Team Communist",
-    "card": "Communist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Communist board is full.",
-       "Hitler is executed (the Liberals win too)."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Nobody. At setup, show your thumb to the Communists.",
-       "With just one other Communist, open your eyes with them.",
-       "Keep your eyes closed at Radicalisation and Congress."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "<b>Assassination</b>, once per game: after a policy is enacted and before the next election, reveal your Secret Role card and execute a player."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Anarchist",
-    "teamLabel": "Team Communist",
-    "image": "r_anarchist.jpg",
-    "paragraphs": [
-     "Wins if the Communists win. At setup the Anarchist only shows a thumb, so the Communists know them but not the other way round, unless there is just one other Communist.",
-     "<b>Power:</b> once per game, after a policy is enacted and before the next election, the Anarchist may reveal their role and assassinate a player."
-    ],
-    "addWhen": "your group knows the Communists well and wants a wild card.",
-    "addWhenTable": "your group knows the Communists well and wants a wild card.",
-    "seatLabel": "A Communist",
-    "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
-   }
-  },
-  {
-   "id": "monarchist",
-   "name": "Monarchist",
-   "module": "roles",
-   "palette": "fas",
-   "party": "fascist",
-   "regular": false,
-   "seat": "fascist",
-   "seatLabel": "A Fascist",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": true,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_monarchist"
-   ],
-   "portrait": "n_r_monarchist",
-   "crop": [
-    0.52,
-    0.47,
-    0.62
-   ],
-   "briefing": {
-    "side": "Far right, own goals",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Fascist board is full.",
-       "Hitler is executed.",
-       "Not when Hitler becomes Chancellor."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Nobody. At setup, show your thumb to the Fascists."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "When <b>Call Special Election</b> is enacted, you may reveal yourself and become the next President.",
-       "The President who enacted it and you each name a Chancellor candidate.",
-       "Everyone gives their ballot card to one of them. Most cards wins. You break ties."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Monarchist",
-    "teamLabel": "Far right, own goals",
-    "image": "r_monarchist.jpg",
-    "paragraphs": [
-     "Wins if six Fascist policies are enacted or Hitler is executed, but not when Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
-     "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
-    ],
-    "addWhen": "the Fascists win too often.",
-    "addWhenTable": "the Fascists win too often.",
-    "seatLabel": "A Fascist",
-    "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
-   }
-  },
-  {
-   "id": "bodyguard",
-   "name": "Bodyguard",
-   "module": "roles",
-   "palette": "fas",
-   "party": "fascist",
-   "regular": false,
-   "seat": "fascist",
-   "seatLabel": "A Fascist",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_bodyguard"
-   ],
-   "portrait": "n_r_bodyguard",
-   "crop": [
-    0.45,
-    0.38,
-    0.64
-   ],
-   "briefing": {
-    "side": "Team Fascist",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Fascist board is full.",
-       "Hitler is elected Chancellor after the 3rd Fascist policy."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "The Fascists and Hitler: you open your eyes with the Fascists."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "The first time Hitler would be executed, reveal your Secret Role card.",
-       "You die instead, and Hitler lives."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Once you have saved Hitler, everyone knows who he is.",
-       "Push for a full Fascist board."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Bodyguard",
-    "teamLabel": "Team Fascist",
-    "image": "r_bodyguard.jpg",
-    "paragraphs": [
-     "Wins with the Fascists and opens their eyes with them. <b>The first time Hitler would be executed, the Bodyguard dies instead.</b> Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
-    ],
-    "addWhen": "Hitler is found and executed too often.",
-    "addWhenTable": "Hitler is found and executed too often.",
-    "seatLabel": "A Fascist",
-    "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
-   }
-  },
-  {
-   "id": "fascist_spy",
-   "name": "Fascist Spy",
-   "module": "roles",
-   "palette": "fas",
-   "party": "fascist",
-   "regular": false,
-   "seat": "fascist",
-   "seatLabel": "A Fascist",
-   "count": 1,
-   "countLabel": null,
-   "pair": "liberal_spy",
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_fascist_spy"
-   ],
-   "portrait": "n_r_fascist_spy",
-   "crop": [
-    0.58,
-    0.43,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team Fascist",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Fascist board is full.",
-       "Hitler is elected Chancellor after the 3rd Fascist policy."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "The Fascists and Hitler: you open your eyes with the Fascists."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "Once per game, at any moment: reveal your Secret Role card and execute a player.",
-       "If that player is the Liberal Spy, the game ends right away and the Fascist team wins."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Be certain before you shoot.",
-       "A miss leaves the Liberal Spy free to talk."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Fascist Spy",
-    "teamLabel": "Team Fascist",
-    "image": "r_fascist_spy.jpg",
-    "paragraphs": [
-     "Wins with the Fascists.",
-     "<b>Power:</b> once per game, at any moment, the Fascist Spy may reveal and execute a player. <b>If it is the Liberal Spy, the Fascists win at once.</b>"
-    ],
-    "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
-    "addWhenTable": "you want a hidden duel. Always add it together with the Liberal Spy.",
-    "seatLabel": "A Fascist",
-    "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
-   }
-  },
-  {
-   "id": "liberal_spy",
-   "name": "Liberal Spy",
-   "module": "roles",
-   "palette": "lib",
-   "party": "liberal",
-   "regular": false,
-   "seat": "liberal",
-   "seatLabel": "A Liberal",
-   "count": 1,
-   "countLabel": null,
-   "pair": "fascist_spy",
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_liberal_spy"
-   ],
-   "portrait": "n_r_liberal_spy",
-   "crop": [
-    0.5,
-    0.47,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team Liberal",
-    "card": "Liberal",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Liberal board is full.",
-       "Hitler is executed."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Every Fascist except Hitler: at setup they show you their thumbs."
-      ]
-     },
-     {
-      "label": "DANGER",
-      "items": [
-       "If a player of the Fascist team executes you, the game ends right away and the Fascists win."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Never say outright that you know the Fascists.",
-       "Steer the votes quietly."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Liberal Spy",
-    "teamLabel": "Team Liberal",
-    "image": "r_liberal_spy.jpg",
-    "paragraphs": [
-     "Wins with the Liberals. At setup the Liberal Spy sees the Fascists' thumbs, so they know every Fascist except Hitler. <b>If a player of the Fascist team executes the Liberal Spy, the Fascists win.</b> The Liberal Spy must help without giving themselves away."
-    ],
-    "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
-    "addWhenTable": "you want a hidden duel. Always add it together with the Fascist Spy.",
-    "seatLabel": "A Liberal",
-    "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
-   }
-  },
-  {
-   "id": "centrist",
-   "name": "Centrist",
-   "module": "roles",
-   "palette": "lib",
-   "party": "liberal",
-   "regular": false,
-   "seat": "liberal",
-   "seatLabel": "Liberals",
-   "count": 4,
-   "countLabel": "2 to 4",
-   "pair": null,
-   "withCommunists": true,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_centrist_a",
-    "h_r_centrist_b"
-   ],
-   "portrait": "n_r_centrist_a",
-   "crop": [
-    0.5,
-    0.42,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team Liberal",
-    "card": "Liberal",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Liberal board is full.",
-       "Hitler is executed."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "The other Centrists: you open your eyes together at setup."
-      ]
-     },
-     {
-      "label": "GOOD TO KNOW",
-      "items": [
-       "If you are radicalised, you join the Communists. The other Centrists are not told and may still trust you."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Wait before you reveal that you are Centrists.",
-       "Fascists will pretend to be Centrists.",
-       "The Communists will want to radicalise you."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "Centrists",
-    "teamLabel": "Team Liberal",
-    "image": "r_centrist_a.jpg",
-    "paragraphs": [
-     "Centrists are Liberals who know each other: they <b>open their eyes together</b> at setup. They hold Liberal cards, so they are targets for Radicalisation.",
-     "A radicalised Centrist joins the Communists, but the other Centrists are not told, so they may keep trusting them."
-    ],
-    "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
-    "addWhenTable": "the game is big and the Liberals need a small group that trusts each other.",
-    "seatLabel": "Liberals",
-    "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
-   }
-  },
-  {
-   "id": "capitalist",
-   "name": "Capitalist",
-   "module": "roles",
-   "palette": "cap",
-   "party": "liberal",
-   "regular": false,
-   "seat": "liberal",
-   "seatLabel": "A Liberal",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": true,
-   "needsCommunists": true,
-   "extraMembership": {
-    "fascist": 1,
-    "lobby": 1
-   },
-   "art": [
-    "h_r_capitalist"
-   ],
-   "portrait": "n_r_capitalist",
-   "crop": [
-    0.48,
-    0.53,
-    0.64
-   ],
-   "briefing": {
-    "side": "Team Liberal",
-    "card": "Liberal and Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The Liberal board is full.",
-       "Hitler is executed."
-      ]
-     },
-     {
-      "label": "TWO MEMBERSHIP CARDS",
-      "items": [
-       "At Radicalisation, show the Fascist one. You are never converted.",
-       "At Investigate Loyalty, show the Liberal one. At Bugging, you choose."
-      ]
-     },
-     {
-      "label": "LOBBY CARD",
-      "items": [
-       "At Radicalisation, give it to the player you trust most. They may vote three times with it, once."
-      ]
-     },
-     {
-      "label": "DANGER",
-      "items": [
-       "A revealed Communist President who executes you earns them a Radicalisation."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Capitalist",
-    "teamLabel": "Team Liberal",
-    "image": "r_capitalist.jpg",
-    "paragraphs": [
-     "Wins with the Liberals and can never be radicalised. The Capitalist holds <b>two</b> membership cards: the Fascist one is shown at Radicalisation, the Liberal one at Investigate Loyalty, and either one at Bugging.",
-     "<b>Lobby card:</b> during Radicalisation the Capitalist gives it to a trusted player, who may spend it once to vote three times.",
-     "<b>Danger:</b> a Communist President who reveals their membership card before an execution and then executes the Capitalist earns the Communists an extra Radicalisation."
-    ],
-    "addWhen": "Communist policies pass too quickly or Radicalisation is too easy.",
-    "addWhenTable": "Communist policies pass too quickly or Radicalisation is too easy.",
-    "seatLabel": "A Liberal",
-    "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
-   }
-  },
-  {
-   "id": "jester",
-   "name": "Jester",
-   "module": "roles",
-   "palette": "jes",
-   "party": "fascist",
-   "regular": false,
-   "seat": "liberal",
-   "seatLabel": "A Liberal",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": {
-    "fascist": 1
-   },
-   "art": [
-    "h_r_jester"
-   ],
-   "portrait": "n_r_jester",
-   "crop": [
-    0.47,
-    0.44,
-    0.56
-   ],
-   "briefing": {
-    "side": "No team, own goal",
-    "card": "Fascist",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "You are executed. The game ends at once and only you win."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "Nobody."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Look suspicious, but not too obviously.",
-       "Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy.",
-       "Never claim to be the Jester."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Jester",
-    "teamLabel": "No team",
-    "image": "r_jester.jpg",
-    "paragraphs": [
-     "Holds a Fascist card. <b>If the Jester is executed, the game ends and only the Jester wins.</b> Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
-    ],
-    "addWhen": "executions happen too easily.",
-    "addWhenTable": "executions happen too easily.",
-    "seatLabel": "A Liberal",
-    "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
-   }
-  },
-  {
-   "id": "propagandist",
-   "name": "Propagandist",
-   "module": "roles",
-   "palette": "neu",
-   "party": "any",
-   "regular": false,
-   "seat": "any",
-   "seatLabel": "Any party (usually Fascist)",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_propagandist"
-   ],
-   "portrait": "n_r_propagandist",
-   "crop": [
-    0.52,
-    0.42,
-    0.55
-   ],
-   "briefing": {
-    "side": "Team of your membership card",
-    "card": "Group decides",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The party on your Party Membership card wins."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "What that party knows: you open your eyes with it at setup."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "Once per game, reveal your Secret Role card and cast three votes in one election.",
-       "It stacks with the Lobby card."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Save your votes for the election that decides the game.",
-       "Revealing shows your role, never your party."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Propagandist",
-    "teamLabel": "Any party",
-    "image": "r_propagandist.jpg",
-    "paragraphs": [
-     "Belongs to the party on their membership card and wakes with it.",
-     "<b>Power:</b> once per game, the Propagandist may reveal and cast <b>three votes</b> in one election. It stacks with the Lobby card."
-    ],
-    "addWhen": "elections are too predictable.",
-    "addWhenTable": "elections are too predictable.",
-    "seatLabel": "Any party (usually Fascist)",
-    "pitch": "Casts <b>three votes</b> once, enough to swing one election."
-   }
-  },
-  {
-   "id": "bureaucrat",
-   "name": "Bureaucrat",
-   "module": "roles",
-   "palette": "neu",
-   "party": "any",
-   "regular": false,
-   "seat": "any",
-   "seatLabel": "Any party (usually Liberal)",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": null,
-   "art": [
-    "h_r_bureaucrat"
-   ],
-   "portrait": "n_r_bureaucrat",
-   "crop": [
-    0.52,
-    0.46,
-    0.55
-   ],
-   "briefing": {
-    "side": "Team of your membership card",
-    "card": "Group decides",
-    "sections": [
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The party on your Party Membership card wins."
-      ]
-     },
-     {
-      "label": "YOU KNOW",
-      "items": [
-       "What that party knows: you open your eyes with it at setup."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "Once per game, reveal your Secret Role card and look at the top two policies of the discard pile.",
-       "Afterwards you can never be nominated Chancellor."
-      ]
-     },
-     {
-      "label": "TIPS",
-      "items": [
-       "Look right after a government you doubt.",
-       "Revealing shows your role, never your party."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Bureaucrat",
-    "teamLabel": "Any party",
-    "image": "r_bureaucrat.jpg",
-    "paragraphs": [
-     "Belongs to the party on their membership card.",
-     "<b>Power:</b> once per game, the Bureaucrat may reveal and look at the <b>top two policies of the discard pile</b>, but can never be nominated Chancellor afterwards."
-    ],
-    "addWhen": "Liberals are too often fooled about which policies were discarded.",
-    "addWhenTable": "Liberals are too often fooled about which policies were discarded.",
-    "seatLabel": "Any party (usually Liberal)",
-    "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
-   }
-  },
-  {
-   "id": "detective",
-   "name": "Detective",
-   "module": "roles",
-   "palette": "neu",
-   "party": "drawn",
-   "regular": false,
-   "seat": "liberal",
-   "seatLabel": "A Liberal (party drawn at setup)",
-   "count": 1,
-   "countLabel": null,
-   "pair": null,
-   "withCommunists": false,
-   "needsCommunists": false,
-   "extraMembership": {
-    "liberal": 2,
-    "fascist": 1,
-    "communist": 1
-   },
-   "art": [
-    "h_r_detective"
-   ],
-   "portrait": "n_r_detective",
-   "crop": [
-    0.5,
-    0.45,
-    0.66
-   ],
-   "briefing": {
-    "side": "Team drawn at setup",
-    "card": "Drawn at setup",
-    "sections": [
-     {
-      "label": "SETUP",
-      "items": [
-       "You start with no membership card. At night, draw one from the spare deck: you join that party."
-      ]
-     },
-     {
-      "label": "YOU WIN IF",
-      "items": [
-       "The party you drew wins."
-      ]
-     },
-     {
-      "label": "YOUR POWER",
-      "items": [
-       "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal your Secret Role card and take the power over.",
-       "You alone choose the player. They secretly hand you their <b>Secret Role</b> card, not only their party.",
-       "At any other time you have no power."
-      ]
-     }
-    ]
-   },
-   "rulebook": {
-    "title": "The Detective",
-    "teamLabel": "Party drawn at setup",
-    "image": "r_detective.jpg",
-    "paragraphs": [
-     "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
-     "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. The Detective alone chooses the player, who secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
-     "Outside those two moments the Detective has no power and plays like any member of their party."
-    ],
-    "addWhen": "you want stronger investigations.",
-    "addWhenTable": "you want stronger investigations.",
-    "seatLabel": "A Liberal (party drawn at setup)",
-    "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
-   }
-  }
- ],
- "blank": {
-  "sections": [
-   {
-    "label": "YOU WIN IF",
-    "lines": 3
-   },
-   {
-    "label": "YOU KNOW",
-    "lines": 2
-   },
-   {
-    "label": "YOUR POWER",
-    "lines": 3
-   }
-  ]
- }
 }

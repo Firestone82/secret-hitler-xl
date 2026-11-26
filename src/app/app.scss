@@ -20,10 +20,11 @@
 @keyframes fade-in { from { opacity: 0; } }
 
 .top {
-  position: sticky; top: 0; z-index: 10; view-transition-name: site-header; height: 56px; display: flex; align-items: center; gap: 1rem;
-  padding: 0 clamp(.8rem, 3vw, 2rem); background: var(--dark); border-bottom: 3px solid var(--orange);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, .18);
+  position: sticky; top: 0; z-index: 10; view-transition-name: site-header; height: 56px;
+  background: var(--dark); border-bottom: 3px solid var(--orange); box-shadow: 0 2px 12px rgba(0, 0, 0, .18);
 }
+/* the bar spans the window, its content keeps to the page width */
+.top-in { height: 100%; max-width: 1240px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; padding: 0 clamp(.8rem, 3vw, 2rem); }
 .brand { display: flex; align-items: center; gap: .6rem; color: var(--cream); text-decoration: none; font-family: var(--display); font-size: 1.45rem; margin-right: auto; }
 .brand em { font-style: normal; color: var(--orange); }
 .brand .name { white-space: nowrap; }
@@ -59,7 +60,9 @@ main { flex: 1; }
 
 .foot {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-  padding: 1rem clamp(.8rem, 3vw, 2rem); font-size: .8rem; color: #a9a693; background: var(--dark);
+  /* same content width as the header */
+  padding: 1rem max(clamp(.8rem, 3vw, 2rem), calc((100% - 1240px) / 2 + clamp(.8rem, 3vw, 2rem)));
+  font-size: .8rem; color: #a9a693; background: var(--dark);
 }
 .foot .fl { display: flex; align-items: center; gap: .7rem; }
 .foot .fl img { flex: none; }

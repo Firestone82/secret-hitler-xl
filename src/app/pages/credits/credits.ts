@@ -17,6 +17,8 @@ import { Credits } from '../../shared/credits';
       <section class="box">
         <h2>This website</h2>
         <ul>
+          <li>Website, print builder and print layout by <a href="https://github.com/Firestone82" target="_blank" rel="noopener">Pavel Mikula (Firestone82)</a>,
+            who put this edition online and adjusted the cards, boards and sheets for printing.</li>
           <li>Built with <a href="https://angular.dev/" target="_blank" rel="noopener">Angular</a>. The print PDFs are made in your browser with
             <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener">pdf-lib</a> and packed with
             <a href="https://stuk.github.io/jszip/" target="_blank" rel="noopener">JSZip</a>.</li>

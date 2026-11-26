@@ -72,6 +72,6 @@ for nm in ('president', 'chancellor'):
             c.drawImage(src, (BL+(w-dw)/2)*mm, (BL+(h-dh)/2)*mm, dw*mm, dh*mm)
         c.showPage()
     c.save(); man[pid] = dict(kind='placard', w=w, h=h, label=nm.capitalize()+' placard')
-json.dump(man, open('/home/claude/web/export/pieces.json', 'w'), indent=1)
+json.dump(man, open('/home/claude/web/export/pieces.json', 'w'), indent=2)
 tot = sum(os.path.getsize(f'{OUT}/{p}.pdf') for p in man)
 print(len(man), 'pieces', round(tot/1e6, 1), 'MB')

@@ -1,5 +1,6 @@
-import { Component, computed, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, ElementRef, afterNextRender, computed, effect, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
 import { GithubStars } from '../../shared/github-stars';
 import { Reveal } from '../../shared/reveal';
@@ -80,13 +81,54 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
             <li><b>Extra roles</b> like the Monarchist, the Jester or the Detective twist every game.</li>
             <li><b>Anti-policies and emergency powers</b> keep the board moving at big tables.</li>
           </ul>
-          <a routerLink="/about">More about the project</a>
+          <a routerLink="/rules">Read the XL rules</a>
         </div>
         <div class="box soon">
-          <span class="chip">Coming soon</span>
-          <h2>3D printing</h2>
+          <div class="row"><h2>3D printing</h2><span class="chip">Coming soon</span></div>
           <p>Printable models to go with your paper copy. The files, print settings and photos will appear here once they are ready.</p>
           <a routerLink="/3d-printing">See what is planned</a>
+        </div>
+      </section>
+
+      <section class="original" appReveal>
+        <img src="cards/b_back.jpg" alt="" loading="lazy" />
+        <div class="txt">
+          <h2>The original Secret Hitler</h2>
+          <p>
+            Secret Hitler is made by Goat, Wolf &amp; Cabbage. Their website sells the boxed game and also offers a free
+            print-and-play version of the base game. This edition does not change any of its rules: it brings the same game in full colour,
+            together with the XL expansion, so you can print one matching set for up to 19 players.
+          </p>
+        </div>
+        <a class="btn primary" href="https://www.secrethitler.com/" target="_blank" rel="noopener">Open secrethitler.com <i aria-hidden="true">↗</i></a>
+      </section>
+
+      <section class="about" id="about" appReveal>
+        <h2>About</h2>
+        <p class="lead2">
+          <b>Secret Hitler</b> is a social deduction game for 5 to 10 players: Liberals against Fascists, with Hitler hidden among them.
+          <b>Secret Hitler XL</b> is a fan expansion that takes it to 19 players with a third party, the Communists, extra roles,
+          anti-policies and emergency powers. This site holds the complete rules of both and everything you need to print your own copy.
+        </p>
+        <div class="cols">
+          <div class="box">
+            <h3>How it works</h3>
+            <ul>
+              <li>Everything runs in your browser. The PDFs are put together on your computer and nothing is uploaded.</li>
+              <li>All the game text lives in plain JSON files, so one change updates the rulebook, the roles page and the printed cards together.</li>
+              <li>Print at 100 % (no "fit to page"), double-sided, flipping on the long edge, then cut along the crop marks.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Licence</h3>
+            <p>Secret Hitler and Secret Hitler XL are released under
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>, and so is this edition:
+              share and adapt it freely with credit, but not for money. This is a fan project and is not affiliated with the publishers of Secret Hitler.
+              See the <a routerLink="/credits">credits</a> for everyone who made it.</p>
+            <h3>Feedback</h3>
+            <p>Found a typo, a rules question or a broken card? Open an issue on
+              <a href="https://github.com/Firestone82/secret-hitler-xl/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+          </div>
         </div>
       </section>
 
@@ -174,7 +216,28 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .box p { margin: 0 0 .8rem; color: var(--muted); }
     .box a { font-weight: 600; }
     .soon { background: repeating-linear-gradient(135deg, #fff, #fff 14px, #fbf7ea 14px, #fbf7ea 28px); }
-    .soon .chip { background: var(--orange); color: #2a1206; margin-bottom: .5rem; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-bottom: .4rem; }
+    .row h2 { margin: 0; }
+    .soon .chip { background: var(--orange); color: #2a1206; flex: none; }
+
+    .original { display: flex; align-items: center; gap: 1.4rem; margin-top: 1.2rem; padding: 1.2rem 1.4rem; border-radius: 16px;
+      background: var(--dark); color: var(--cream); }
+    .original img { flex: none; width: 84px; border-radius: 8px; box-shadow: 0 6px 16px rgba(0, 0, 0, .4); transform: rotate(-4deg); }
+    .original .txt { padding: 0; }
+    .original h2 { margin: 0 0 .3rem; font-size: 1.6rem; }
+    .original p { margin: 0; color: #d8d2b8; max-width: 46rem; }
+    .original .btn { flex: none; text-decoration: none; padding: .65rem 1.1rem; transition: background .15s; }
+    .original .btn:hover { background: #f0924f; }
+    .original .btn i { font-style: normal; }
+
+    .about { margin-top: 2.5rem; scroll-margin-top: 80px; }
+    .about > h2 { font-size: 2.2rem; margin: 0 0 .3rem; }
+    .lead2 { max-width: 760px; font-size: 1.05rem; margin: 0 0 1rem; }
+    .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .cols h3 { margin: 0 0 .3rem; font-size: 1.35rem; }
+    .cols h3:not(:first-child) { margin-top: 1rem; }
+    .cols p { margin: 0; color: inherit; }
+    .about code { background: #ece6d3; padding: 0 .3rem; border-radius: 4px; }
 
     .oss { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; padding: 1.4rem 1.6rem;
       border-radius: 16px; background: #ece6d3; }
@@ -185,7 +248,9 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
       .hero-in { grid-template-columns: 1fr; }
       .fan { height: 230px; order: -1; margin-bottom: .8rem; }
       .card { --w: 120px; }
-      .tiles, .split { grid-template-columns: 1fr; }
+      .tiles, .split, .cols { grid-template-columns: 1fr; }
+      .original { flex-direction: column; align-items: flex-start; }
+      .original img { display: none; }
       .stats { grid-template-columns: repeat(2, 1fr); }
     }
   `,
@@ -195,4 +260,17 @@ export class HomePage {
   readonly cards = HERO_CARDS;
   readonly roleCount = computed(() => this.data.roles()?.roles.length ?? 15);
   readonly version = computed(() => this.data.rulebookMeta()?.version);
+
+  constructor() {
+    // the page scrolls inside SimpleBar, so the router does not jump to #about by itself
+    const host = inject(ElementRef<HTMLElement>);
+    const fragment = toSignal(inject(ActivatedRoute).fragment);
+    let ready = false;
+    const jump = (smooth: boolean) => {
+      const id = fragment();
+      if (id) host.nativeElement.querySelector('#' + CSS.escape(id))?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+    };
+    afterNextRender(() => { ready = true; jump(false); });
+    effect(() => { fragment(); if (ready) jump(true); });
+  }
 }
