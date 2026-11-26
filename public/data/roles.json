@@ -736,7 +736,8 @@
             "label": "TWO MEMBERSHIP CARDS",
             "items": [
               "At Radicalisation, show the Fascist one. You are never converted.",
-              "At Investigate Loyalty, show the Liberal one. At Bugging, you choose."
+              "At Investigate Loyalty, show the Liberal one.",
+              "At Bugging, show either one."
             ]
           },
           {
