@@ -69,6 +69,7 @@ import { GithubStars } from './shared/github-stars';
         <a routerLink="/versions">Versions</a>
         <a routerLink="/" fragment="credits">Credits</a>
         <a href="https://github.com/Firestone82/secret-hitler-xl" target="_blank" rel="noopener">Source</a>
+        <span class="by">Made by <a href="https://github.com/Firestone82" target="_blank" rel="noopener">Pavel Mikula</a></span>
       </div>
     </footer>
     </div>
