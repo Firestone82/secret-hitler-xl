@@ -53,7 +53,7 @@ export class RulesPage {
     this.blocks().forEach((b, i) => {
       if (b.type === 'h1' || b.type === 'h2') where = strip(b['text']);
       let t = strip(blockText(b));
-      if (b.type === 'role') { const r = this.data.role(b['role']); t = strip([r?.name, ...(r?.rulebook?.paragraphs ?? [])].join(' ')); }
+      if (b.type === 'role') { const r = this.data.role(b['role']); t = strip([r?.name, ...(r?.briefing.sections ?? []).flatMap((x) => [x.label, ...x.items]), r?.rulebook?.addWhen].join(' ')); }
       const k = t.toLowerCase().indexOf(q);
       if (k >= 0) out.push({ i, where, snippet: (k > 40 ? '…' : '') + t.slice(Math.max(0, k - 40), k + q.length + 70) + '…' });
     });
