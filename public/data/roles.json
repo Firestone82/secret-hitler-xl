@@ -95,7 +95,39 @@
           }
         ]
       },
-      "rulebook": null
+      "rulebook": null,
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Liberal team, the majority at the table. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>. With the Communists in the game, a Hitler execution is a win for them too."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Nothing. You get no information at setup and keep your eyes closed through the whole night. Every other player could be lying to you, and everything you learn comes from votes, claims, enacted policies and powers."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "You have no power of your own. When you are President you use the board powers like anyone else, and Investigate Loyalty, Policy Peek and Execution are your best tools to find the Fascists and Hitler."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "With the Communists in the game, your Liberal membership card makes you a target for <b>Radicalisation</b>. If the Communists swap it for a Communist card, you become a Communist and win only if the Communists win. Check your card after every Radicalisation. A player whose card was already looked at by a Fascist-board power cannot be radicalised."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Tell the truth: you are solving a puzzle, and a lie only confuses your own team. Ask players to explain their votes and powers, slow the table down when someone rushes a vote, and remember that when a Fascist policy appears, only the President, the Chancellor or the deck can be to blame."
+          ]
+        }
+      ]
     },
     {
       "id": "fascist",
@@ -157,7 +189,45 @@
           }
         ]
       },
-      "rulebook": null
+      "rulebook": null,
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Fascist team. You win when the <b>Fascist board is full</b> or when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>. With the Spies in the game, your team also wins at once if one of you executes the Liberal Spy."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "You open your eyes with the other Fascists at setup, and Hitler shows you a thumb, so you know your whole team. With the Monarchist in the game, the Monarchist shows you a thumb too, but plays for their own goal, not for you."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "You have no power of your own. When you are President, the Fascist-board powers are yours to use for the team: investigate a player and lie about the result, or execute the Liberal who sees through you."
+          ]
+        },
+        {
+          "label": "Cannot be radicalised",
+          "text": [
+            "Your membership card says Fascist, so a Radicalisation that picks you fails and you stay a Fascist."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Your membership card is the proof against you. Any Investigate Loyalty or Bugging that looks at you shows Fascist, and a Confession shows it to the whole table."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Claim to be a Liberal. Spend your own trust to make Hitler look trustworthy, because electing Hitler as Chancellor is how the Fascists win most often. Create confusion and push for quick votes."
+          ]
+        }
+      ]
     },
     {
       "id": "hitler",
@@ -216,7 +286,45 @@
           }
         ]
       },
-      "rulebook": null
+      "rulebook": null,
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You lead the Fascist team. You win when the <b>Fascist board is full</b> or when <b>you are elected Chancellor after the 3rd Fascist policy</b>."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Usually nobody. At setup you keep your eyes closed and show a thumb, so the Fascists learn who you are, but you do not learn who they are. Only when there is exactly one Fascist do the two of you open your eyes together."
+          ]
+        },
+        {
+          "label": "You must tell the truth",
+          "text": [
+            "If you are executed, or if you are elected Chancellor after 3 Fascist policies, you must say that you are Hitler. These are the only moments in the game when a player may not lie."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "If you are executed, the game ends and the Liberals win, with the Communists and the Monarchist. A Bodyguard who is still alive dies in your place, once, but then everyone knows who you are. After the 3rd Fascist policy, every newly elected Chancellor is asked whether they are Hitler, so each election you survive clears your name a little."
+          ]
+        },
+        {
+          "label": "Cannot be radicalised",
+          "text": [
+            "Your membership card says Fascist, so Radicalisation never turns you."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Be as Liberal as possible: enact Liberal policies, vote for Liberal governments and let the other Fascists take the risks. You need the trust of the table at the moment it counts, when you are nominated Chancellor after the 3rd Fascist policy."
+          ]
+        }
+      ]
     },
     {
       "id": "communist",
@@ -272,7 +380,40 @@
           }
         ]
       },
-      "rulebook": null
+      "rulebook": null,
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Communists, a third hidden party with its own board. You win when the <b>Communist board is full</b> or when <b>Hitler is executed</b>, which is a win for the Liberals too."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "The other Communists: you open your eyes together at setup. With the Anarchist in the game, the Anarchist shows you a thumb, or opens their eyes with you when there is just one other Communist. Players you radicalise later learn who you are only at Congress."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "Communist policies give powers to the Communists, whoever the government is. At <b>Radicalisation</b> you open your eyes together and look at one player's face-down membership card. A Liberal card is swapped for a Communist card, and that player joins you. A Fascist card stays, and the attempt fails. At <b>Congress</b> you open your eyes again, so the new Communists learn who the original ones are.",
+            "<b>Capitalist hunt:</b> when you are President and about to execute a player, you may first reveal your membership card. If the player you then execute is the Capitalist, the Communists get an extra Radicalisation."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Both other parties play against you. Revealing your card for the Capitalist hunt shows the whole table your party, and any investigation of your membership card shows Communist."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Claim to be a Liberal, and let Liberals and Fascists suspect each other. Radicalise the players the table trusts most, and remember that a failed Radicalisation tells you that card was Fascist."
+          ]
+        }
+      ]
     },
     {
       "id": "anarchist",
@@ -329,15 +470,43 @@
         "title": "The Anarchist",
         "teamLabel": "Team Communist",
         "image": "r_anarchist.jpg",
-        "paragraphs": [
-          "Wins if the Communists win. At setup the Anarchist only shows a thumb, so the Communists know them but not the other way round, unless there is just one other Communist.",
-          "<b>Power:</b> once per game, after a policy is enacted and before the next election, the Anarchist may reveal their role and assassinate a player."
-        ],
         "addWhen": "your group knows the Communists well and wants a wild card.",
         "addWhenTable": "Your group knows the Communists well and wants a wild card.",
         "seatLabel": "A Communist",
         "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Communists. You win when the <b>Communist board is full</b> or when <b>Hitler is executed</b>, which is a win for the Liberals too."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Usually nobody. At setup you keep your eyes closed and show the Communists a thumb, so they know you, but you do not know them. Only when there is just one other Communist do you open your eyes with them. You keep your eyes closed at Radicalisation and Congress as well."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "<b>Assassination</b>, once per game. After a policy is enacted and before the next election, you may reveal your Secret Role card and execute any player. It counts as an execution in every way: shooting Hitler ends the game in a win for the Communists and Liberals, and shooting the Jester hands the Jester the win."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Once you reveal, everyone knows you are on the Communist side, and the Liberals and Fascists will see you as a target. The Communists cannot confirm you openly without giving themselves away."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Wait until you are sure. The best shot removes a player the Communists cannot otherwise get rid of, or ends the game by finding Hitler."
+          ]
+        }
+      ]
     },
     {
       "id": "monarchist",
@@ -389,10 +558,9 @@
           {
             "label": "YOUR POWER",
             "items": [
-              "On <b>Call Special Election</b>, you may reveal and replace the President's pick.",
+              "At <b>Call Special Election</b>, once the President names a pick, you may reveal and become President instead.",
               "You and the outgoing President each name a Chancellor candidate.",
-              "Everyone gives their ballot card to one. Most cards wins, you break ties.",
-              "The round after, the order goes on as usual."
+              "Everyone hands a ballot card to their choice. Most cards wins, you break ties."
             ]
           }
         ]
@@ -401,15 +569,45 @@
         "title": "The Monarchist",
         "teamLabel": "Far right, own goals",
         "image": "r_monarchist.jpg",
-        "paragraphs": [
-          "Wins if six Fascist policies are enacted or Hitler is executed, and loses if Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
-          "<b>Power:</b> there is only ever one President. When Special Election is enacted, the Monarchist may reveal their role and become the next President, instead of the player the President would have picked. The Monarchist and the outgoing President each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties. The round after, the President placard returns to the left of the President who enacted Special Election, as after any Special Election."
-        ],
         "addWhen": "the Fascists win too often.",
         "addWhenTable": "The Fascists win too often.",
         "seatLabel": "A Fascist",
         "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You are far right, but you play for your own goal. You win when the <b>Fascist board is full</b> or when <b>Hitler is executed</b>. You lose if <b>Hitler is elected Chancellor</b> after the 3rd Fascist policy: the Fascists win then, but you do not."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Nobody. At setup you keep your eyes closed and show a thumb, so the Fascists (not Hitler) know who you are. You do not learn who the Fascists or Hitler are."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "There is only ever one President. When a President uses <b>Call Special Election</b> and names the next presidential candidate, you may reveal your Secret Role card. You then become the next President instead of that player.",
+            "The Chancellor is chosen differently in that round. You and the outgoing President (the one who called the Special Election) each name a Chancellor candidate. Every player hands one ballot card to the candidate they back, and the candidate with the most cards becomes Chancellor. If there is a tie, you decide. Then the legislative session goes on as usual.",
+            "The round after, the President placard returns to the left of the President who called the Special Election, as after any Special Election."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "You want Fascist policies but not Hitler in power, so you have to find Hitler without help: the Fascists know you, but they will not tell you who Hitler is. Every time a Chancellor is elected after the 3rd Fascist policy, you could lose."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Push Fascist policies, but block any Chancellor you suspect of being Hitler, and steer executions towards him. Save your power for the government that matters most."
+          ]
+        }
+      ]
     },
     {
       "id": "bodyguard",
@@ -472,15 +670,43 @@
         "title": "The Bodyguard",
         "teamLabel": "Team Fascist",
         "image": "r_bodyguard.jpg",
-        "paragraphs": [
-          "Wins with the Fascists and opens their eyes with them.",
-          "<b>Power:</b> the first time Hitler would be executed, the Bodyguard reveals their role and dies instead. Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
-        ],
         "addWhen": "Hitler is found and executed too often.",
         "addWhenTable": "Hitler is found and executed too often.",
         "seatLabel": "A Fascist",
         "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Fascist team. You win when the <b>Fascist board is full</b> or when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "The Fascists and Hitler: you open your eyes with the Fascists at setup and see Hitler's thumb."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "The first time Hitler would be executed, by any kind of execution, reveal your Secret Role card. You die instead, Hitler lives, and the game goes on. It works once, and only while you are alive."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Saving Hitler shows everyone who Hitler is, so he will never be elected Chancellor again. After that, the Fascists can win only by filling their board. If you are executed before Hitler is, the protection is gone."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Stay alive and unsuspected, so the shield is still there when Hitler is found. Once you have saved him, push for a full Fascist board."
+          ]
+        }
+      ]
     },
     {
       "id": "fascist_spy",
@@ -543,15 +769,43 @@
         "title": "The Fascist Spy",
         "teamLabel": "Team Fascist",
         "image": "r_fascist_spy.jpg",
-        "paragraphs": [
-          "Wins with the Fascists.",
-          "<b>Power:</b> once per game, at any moment, the Fascist Spy may reveal and execute a player. <b>If it is the Liberal Spy, the Fascists win at once.</b>"
-        ],
         "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
         "addWhenTable": "You want a hidden duel. Always add it together with the Liberal Spy.",
         "seatLabel": "A Fascist",
         "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Fascist team. You win when the <b>Fascist board is full</b>, when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>, or when a player of your team executes the Liberal Spy."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "The Fascists and Hitler: you open your eyes with the Fascists at setup. Like every Fascist, you show your thumb to the Liberal Spy, so the Liberal Spy knows you."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "Once per game, at any moment, you may reveal your Secret Role card and execute a player. If that player is the Liberal Spy, the game ends at once and the Fascist team wins. It counts as an execution in every way, so shooting the Jester hands the Jester the win."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "A miss reveals you as a Fascist and leaves the Liberal Spy free to steer the table against your team."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Watch who seems to know too much: the Liberal Spy knows the Fascists and will try to vote against them quietly. Be certain before you shoot."
+          ]
+        }
+      ]
     },
     {
       "id": "liberal_spy",
@@ -613,14 +867,43 @@
         "title": "The Liberal Spy",
         "teamLabel": "Team Liberal",
         "image": "r_liberal_spy.jpg",
-        "paragraphs": [
-          "Wins with the Liberals. At setup the Liberal Spy sees the Fascists' thumbs, so they know every Fascist except Hitler. <b>If a player of the Fascist team executes the Liberal Spy, the Fascists win.</b> The Liberal Spy must help without giving themselves away."
-        ],
         "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
         "addWhenTable": "You want a hidden duel. Always add it together with the Fascist Spy.",
         "seatLabel": "A Liberal",
         "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Every Fascist except Hitler: at setup you open your eyes while the Fascists show their thumbs. The Monarchist does not show a thumb to you."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "If any player of the Fascist team executes you, as President, with Confession or with the Fascist Spy's shot, the game ends at once and the Fascists win. The Fascists know that a Liberal Spy is in the game and will look for you."
+          ]
+        },
+        {
+          "label": "Help quietly",
+          "text": [
+            "Your knowledge is only worth something while nobody knows that you have it. Use it to steer votes and nominations, never to accuse openly."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Never say outright that you know the Fascists. Vote against Fascist governments as if by instinct, and let other Liberals draw the conclusions."
+          ]
+        }
+      ]
     },
     {
       "id": "centrist",
@@ -684,15 +967,43 @@
         "title": "Centrists",
         "teamLabel": "Team Liberal",
         "image": "r_centrist_a.jpg",
-        "paragraphs": [
-          "Centrists are Liberals who know each other: they <b>open their eyes together</b> at setup. They hold Liberal cards, so they are targets for Radicalisation.",
-          "A radicalised Centrist joins the Communists, but the other Centrists are not told, so they may keep trusting them."
-        ],
         "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
         "addWhenTable": "The game is big and the Liberals need a small group that trusts each other.",
         "seatLabel": "Liberals",
         "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "The other Centrists: there are 2 to 4 of you, and you open your eyes together at setup. You know nothing about anyone else."
+          ]
+        },
+        {
+          "label": "Radicalisation",
+          "text": [
+            "You hold a Liberal membership card, so the Communists can radicalise you. A radicalised Centrist joins the Communists and wins only if the Communists win. The other Centrists are not told, so they may keep trusting a player who no longer plays for them."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Fascists and Communists will claim to be Centrists. A claim proves nothing to the rest of the table, and only the real Centrists know who is lying."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Wait before you reveal that you are Centrists: a known group is easy to target. Use your trust to form governments, and check your card after every Radicalisation."
+          ]
+        }
+      ]
     },
     {
       "id": "capitalist",
@@ -758,16 +1069,49 @@
         "title": "The Capitalist",
         "teamLabel": "Team Liberal",
         "image": "r_capitalist.jpg",
-        "paragraphs": [
-          "Wins with the Liberals and can never be radicalised. The Capitalist holds <b>two</b> membership cards: the Fascist one is shown at Radicalisation, the Liberal one at Investigate Loyalty, and either one at Bugging.",
-          "<b>Lobby card:</b> during Radicalisation the Capitalist gives it to a trusted player, who may spend it once to vote three times.",
-          "<b>Danger:</b> a Communist President who reveals their membership card before an execution and then executes the Capitalist earns the Communists an extra Radicalisation."
-        ],
         "addWhen": "Communist policies pass too quickly or Radicalisation is too easy.",
         "addWhenTable": "Communist policies pass too quickly or Radicalisation is too easy.",
         "seatLabel": "A Liberal",
         "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Nobody. You open your eyes only during Radicalisation, after the Communists have closed theirs, to hand out the Lobby card."
+          ]
+        },
+        {
+          "label": "Two membership cards",
+          "text": [
+            "You hold a Fascist and a Liberal card. At Radicalisation you put out the Fascist one, so you can never be radicalised. At Investigate Loyalty you show the Liberal one. At Bugging you choose which one to show."
+          ]
+        },
+        {
+          "label": "Lobby card",
+          "text": [
+            "During each Radicalisation you open your eyes and place the Lobby card on the card of the player you trust most. That player may spend it once to vote three times in one election."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "The Communists hunt you. A Communist President who reveals their membership card before an execution and then executes you earns the Communists an extra Radicalisation."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Give the Lobby card to a player you are sure of, and keep your role hidden so the Communists cannot aim at you."
+          ]
+        }
+      ]
     },
     {
       "id": "jester",
@@ -825,14 +1169,43 @@
         "title": "The Jester",
         "teamLabel": "No team",
         "image": "r_jester.jpg",
-        "paragraphs": [
-          "Holds a Fascist card. <b>If the Jester is executed, the game ends and only the Jester wins.</b> Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
-        ],
         "addWhen": "executions happen too easily.",
         "addWhenTable": "Executions happen too easily.",
         "seatLabel": "A Liberal",
         "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You play for nobody. You win if you are <b>executed</b>: the game ends at once and only you win. Every execution counts, by a President, by Confession, by the Anarchist or by the Fascist Spy."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "Nobody. You keep your eyes closed through the whole night."
+          ]
+        },
+        {
+          "label": "Your Fascist card",
+          "text": [
+            "You hold a Fascist membership card, so any investigation shows Fascist and Radicalisation never turns you. That is your best tool for looking guilty."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "If any team wins before someone executes you, you lose. A player who works out that you are the Jester will never shoot you."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Look suspicious, but not too obviously. Never claim to be the Jester."
+          ]
+        }
+      ]
     },
     {
       "id": "propagandist",
@@ -894,15 +1267,43 @@
         "title": "The Propagandist",
         "teamLabel": "Any party",
         "image": "r_propagandist.jpg",
-        "paragraphs": [
-          "Belongs to the party on their membership card and wakes with it.",
-          "<b>Power:</b> once per game, the Propagandist may reveal and cast <b>three votes</b> in one election. It stacks with the Lobby card."
-        ],
         "addWhen": "elections are too predictable.",
         "addWhenTable": "Elections are too predictable.",
         "seatLabel": "Any party (usually Fascist)",
         "pitch": "Casts <b>three votes</b> once, enough to swing one election."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You belong to the party on your membership card, which the group chooses at setup, and you win when that party wins."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "What that party knows: you open your eyes with it at setup. As a Liberal you learn nothing."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "Once per game, you may reveal your Secret Role card and cast <b>three votes</b> in one election. If you also hold the Lobby card, you may use both in the same election."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Revealing shows your role but never your party. From then on the table knows a big vote is gone, and every side will try to work out which party you used it for."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Save your votes for the election that decides the game, such as a Hitler Chancellor vote after the 3rd Fascist policy."
+          ]
+        }
+      ]
     },
     {
       "id": "bureaucrat",
@@ -964,15 +1365,43 @@
         "title": "The Bureaucrat",
         "teamLabel": "Any party",
         "image": "r_bureaucrat.jpg",
-        "paragraphs": [
-          "Belongs to the party on their membership card.",
-          "<b>Power:</b> once per game, the Bureaucrat may reveal and look at the <b>top two policies of the discard pile</b>, but can never be nominated Chancellor afterwards."
-        ],
         "addWhen": "Liberals are too often fooled about which policies were discarded.",
         "addWhenTable": "Liberals are too often fooled about which policies were discarded.",
         "seatLabel": "Any party (usually Liberal)",
         "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
-      }
+      },
+      "details": [
+        {
+          "label": "Goal",
+          "text": [
+            "You belong to the party on your membership card, which the group chooses at setup, and you win when that party wins."
+          ]
+        },
+        {
+          "label": "What you know",
+          "text": [
+            "What that party knows: you open your eyes with it at setup. As a Liberal you learn nothing."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "Once per game, you may reveal your Secret Role card and look at the <b>top two policies of the discard pile</b>. You may tell the table what you saw, or lie about it."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "The price: once you have used the power, you can never be nominated Chancellor again. Revealing shows your role but never your party."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Look right after a government you doubt, while its discards are still on top of the pile."
+          ]
+        }
+      ]
     },
     {
       "id": "detective",
@@ -1009,7 +1438,7 @@
           {
             "label": "SETUP",
             "items": [
-              "At night, draw a membership card from the spare deck: you join that party."
+              "At night, draw a membership card from the spare deck. You join that party."
             ]
           },
           {
@@ -1021,10 +1450,10 @@
           {
             "label": "YOUR POWER",
             "items": [
-              "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal yourself.",
-              "Then the power is yours alone: you choose the player instead of the President, and only you look.",
-              "They secretly hand you their <b>Secret Role</b> card, not only their party.",
-              "At any other time you have no power."
+              "When <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are President or Chancellor, you may reveal and take it over.",
+              "You alone choose the player and look.",
+              "They show you their <b>Secret Role</b> card, not their party.",
+              "No power at any other time."
             ]
           }
         ]
@@ -1033,16 +1462,45 @@
         "title": "The Detective",
         "teamLabel": "Party drawn at setup",
         "image": "r_detective.jpg",
-        "paragraphs": [
-          "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
-          "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. Taking it over means the Detective alone uses it: the Detective chooses the player (not the President, and not the President and Chancellor together), and that player secretly hands the Detective their <b>Secret Role</b> card instead of their Party Membership card. Nobody else sees it.",
-          "Outside those two moments the Detective has no power and plays like any member of their party."
-        ],
         "addWhen": "you want stronger investigations.",
         "addWhenTable": "You want stronger investigations.",
         "seatLabel": "A Liberal (party drawn at setup)",
         "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
-      }
+      },
+      "details": [
+        {
+          "label": "Setup",
+          "text": [
+            "You start without a membership card. At the very start of the night you open your eyes alone and take the top card of the spare membership deck (2 Liberal, 1 Fascist and 1 Communist card). You now belong to that party: put the card in your envelope and wake with that party later in the night."
+          ]
+        },
+        {
+          "label": "Goal",
+          "text": [
+            "You win when the party you drew wins."
+          ]
+        },
+        {
+          "label": "Power",
+          "text": [
+            "Your power works only in two moments: when <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are the sitting President or Chancellor. You may then reveal your Secret Role card and take that power over.",
+            "Taking it over means you alone use it. You choose the player, not the President, and not the President and Chancellor together. That player secretly hands you their <b>Secret Role</b> card instead of their membership card, and nobody else sees it. You may tell the truth about what you saw, or lie.",
+            "At any other time you have no power and play like any member of your party."
+          ]
+        },
+        {
+          "label": "Danger",
+          "text": [
+            "Revealing tells everyone you are the Detective, but not which party you drew. Whatever you announce, the side it hurts will call you a liar, and may try to execute you."
+          ]
+        },
+        {
+          "label": "How to play it",
+          "text": [
+            "Save your reveal for the investigation that matters most. A Secret Role card tells you far more than a party card: it can unmask Hitler or a hidden extra role."
+          ]
+        }
+      ]
     }
   ],
   "blank": {

@@ -4,11 +4,11 @@ All game content is in `public/`. The site reads three JSON files at start-up (`
 
 | Path | What it is |
 |---|---|
-| `data/roles.json` | Every role: name, module, palette, seat, art, portrait crop, **briefing card text** and **rulebook text**. Edit it to change both. |
+| `data/roles.json` | Every role: name, module, palette, seat, art, portrait crop, **briefing card text**, the long **description** on the roles page and **rulebook text**. Edit it to change them all. |
 | `data/rulebook.json` | The rest of the rulebook: version and changelog, PDF downloads, seat tables, and the text as blocks (headings, paragraphs, tables, scripts, notes, figures, credits). |
 | `data/pieces.json` | Size and label of every printable piece. |
 | `pieces/*.pdf` | One small PDF per piece: page 1 front, page 2 back, cut size plus 3 mm bleed. The print builder places these on the sheets. |
-| `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. |
+| `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. `cards/hd/` has sharper copies of each role's Secret Role card for the full-size view on the roles page, rendered from `pieces/c_<art>.pdf` at 330 dpi without the bleed. |
 | `preview/` | Small JPEGs of every piece (front `_0`, back `_1`) for the print builder's preview. Made from `pieces/` by `tools/export/web_previews.py`, with sharper copies in `preview/hd/` for full screen. `preview/briefing/` has the Role Briefing cards, made by `tools/export/briefing_previews.mts`. |
 | `fonts/` | Jost and Germania One, embedded into the generated PDFs. |
 | `pdf/` | The finished rulebook PDFs (A5 and A4, normal and booklet). |
@@ -44,11 +44,13 @@ Keep the JSON files indented with 2 spaces. Text fields may use simple HTML such
         "card": "Fascist",
         "sections": [{ "label": "YOU WIN IF", "items": ["..."] }]
       },
+      "details": [                    // the long description on the roles page: brief on the card, everything here
+        { "label": "Goal", "text": ["..."] },   // then What you know, Power, Danger, any special rule, How to play it
+      ],
       "rulebook": {                   // the role's section in the rulebook
         "title": "The Jester",
         "teamLabel": "No team",
         "image": "r_jester.jpg",
-        "paragraphs": ["..."],
         "addWhen": "...",             // "Add it when" in the rulebook
         "addWhenTable": "...",        // the same, in the table of optional roles
         "pitch": "..."                // "What it does" in the print builder

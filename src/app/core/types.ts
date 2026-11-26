@@ -14,7 +14,6 @@ export interface RoleRulebook {
   title: string;
   teamLabel: string;
   image: string;
-  paragraphs: string[];
   /** continues an inline "Add it when …" sentence, so it starts lowercase */
   addWhen: string;
   /** the same advice on its own under an "Add it when" heading (print builder), so it starts uppercase */
@@ -44,6 +43,8 @@ export interface Role {
   portrait: string;
   crop: [number, number, number];
   briefing: { side: string; card: string; sections: BriefingSection[] };
+  /** the long description on the roles page, in sections (Goal, What you know, Power, Danger, …); text may hold <b> */
+  details: { label: string; text: string[] }[];
   rulebook: RoleRulebook | null;
 }
 
