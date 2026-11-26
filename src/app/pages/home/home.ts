@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
 import { GithubStars } from '../../shared/github-stars';
+import { Credits } from '../../shared/credits';
 import { Reveal } from '../../shared/reveal';
 
 /** card art shown fanned out in the hero, left to right */
@@ -10,7 +11,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, GithubStars, Reveal],
+  imports: [RouterLink, GithubStars, Reveal, Credits],
   template: `
     <section class="hero">
       <div class="hero-in">
@@ -124,11 +125,33 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
             <p>Secret Hitler and Secret Hitler XL are released under
               <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>, and so is this edition:
               share and adapt it freely with credit, but not for money. This is a fan project and is not affiliated with the publishers of Secret Hitler.
-              See the <a routerLink="/credits">credits</a> for everyone who made it.</p>
+              See the <a routerLink="/" fragment="credits">credits</a> for everyone who made it.</p>
             <h3>Feedback</h3>
             <p>Found a typo, a rules question or a broken card? Open an issue on
               <a href="https://github.com/Firestone82/secret-hitler-xl/issues" target="_blank" rel="noopener">GitHub</a>.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="credits" id="credits" appReveal>
+        <h2>Credits</h2>
+        <p class="lead2">Secret Hitler + XL is the work of many people. This edition only collects, re-sets and rewords what they made.</p>
+        <div class="box">
+          <h3>The game and the expansion</h3>
+          <app-credits />
+        </div>
+        <div class="box">
+          <h3>This website</h3>
+          <ul>
+            <li>Website, print builder and print layout by <a href="https://github.com/Firestone82" target="_blank" rel="noopener">Pavel Mikula (Firestone82)</a>,
+              who put this edition online and adjusted the cards, boards and sheets for printing.</li>
+            <li>Built with <a href="https://angular.dev/" target="_blank" rel="noopener">Angular</a>. The print PDFs are made in your browser with
+              <a href="https://pdf-lib.js.org/" target="_blank" rel="noopener">pdf-lib</a> and packed with
+              <a href="https://stuk.github.io/jszip/" target="_blank" rel="noopener">JSZip</a>.</li>
+            <li>Typefaces: <a href="https://fonts.google.com/specimen/Jost" target="_blank" rel="noopener">Jost</a> by Owen Earl and
+              <a href="https://fonts.google.com/specimen/Germania+One" target="_blank" rel="noopener">Germania One</a> by John Vargas Beltrán,
+              both under the SIL Open Font License.</li>
+          </ul>
         </div>
       </section>
 
@@ -147,7 +170,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .hero { background: var(--dark); color: var(--cream); overflow: hidden; position: relative; }
     .hero::before { content: ''; position: absolute; inset: 0; opacity: .5;
       background: radial-gradient(60% 80% at 85% 50%, rgba(232, 129, 58, .25), transparent 70%); }
-    .hero-in { position: relative; max-width: 1240px; margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(.8rem, 3vw, 2rem);
+    .hero-in { position: relative; max-width: var(--page-w); margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(.8rem, 3vw, 2rem);
       display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 2rem; }
     .kicker { margin: 0; text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; font-weight: 600; color: var(--orange); }
     h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); margin: .3rem 0 .6rem; }
@@ -237,6 +260,12 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .cols h3 { margin: 0 0 .3rem; font-size: 1.35rem; }
     .cols h3:not(:first-child) { margin-top: 1rem; }
     .cols p { margin: 0; color: inherit; }
+    .credits { margin-top: 2.5rem; scroll-margin-top: 80px; }
+    .credits > h2 { font-size: 2.2rem; margin: 0 0 .3rem; }
+    .credits .box + .box { margin-top: 1.2rem; }
+    .credits h3 { margin: 0 0 .3rem; font-size: 1.35rem; }
+    .credits ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+    .credits li { margin: .35rem 0; }
     .about code { background: #ece6d3; padding: 0 .3rem; border-radius: 4px; }
 
     .oss { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; padding: 1.4rem 1.6rem;
@@ -262,7 +291,7 @@ export class HomePage {
   readonly version = computed(() => this.data.rulebookMeta()?.version);
 
   constructor() {
-    // the page scrolls inside SimpleBar, so the router does not jump to #about by itself
+    // the page scrolls inside SimpleBar, so the router does not jump to #about or #credits by itself
     const host = inject(ElementRef<HTMLElement>);
     const fragment = toSignal(inject(ActivatedRoute).fragment);
     let ready = false;

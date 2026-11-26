@@ -10,7 +10,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
   selector: 'app-roles',
   imports: [BriefingCard, SafeHtmlPipe],
   template: `
-    <div class="page wide">
+    <div class="page">
       <h1>Roles</h1>
       <p class="lead">Every Secret Role with its Role Briefing card. The text comes from <code>data/roles.json</code>; the same file
         writes the role sections of the rulebook and the briefing cards in the printed PDF. The download button next to a role's name
@@ -98,7 +98,6 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .filters { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
     .filters button { border: 0; border-radius: 99px; padding: .4rem .9rem; background: #ece6d3; font-weight: 600; }
     .filters button.on { background: var(--dark); color: var(--cream); }
-    .wide { max-width: 1480px; }
     .layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
     .toc { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; display: flex; flex-direction: column; gap: 1px;
       padding: .7rem .5rem; background: #fff; border-radius: 14px; }

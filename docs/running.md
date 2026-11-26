@@ -24,7 +24,7 @@ The app uses hash URLs (`#/rules`) and a relative base href, so it works under a
 
 | Path | What it is |
 |---|---|
-| `src/app/pages/` | One folder per page: home, rules, roles, print, versions, credits, 3D printing. |
+| `src/app/pages/` | One folder per page: home (with the About and Credits sections), rules, roles, print, versions, 3D printing. |
 | `src/app/shared/` | Components used on several pages (briefing card, role box, credits…). |
 | `src/app/core/` | Data loading (`data.service.ts`), types and the scroll service. |
 | `src/app/print/` | The print builder's PDF generator. See [Print builder](print-builder.md). |

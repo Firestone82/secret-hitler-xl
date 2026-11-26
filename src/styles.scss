@@ -1,6 +1,7 @@
 :root {
   --dark: #363835; --darker: #2b2c2a; --cream: #fff7d6; --paper: #fbf7ea; --ink: #2b2c2a; --muted: #6d6b61;
   --orange: #e8813a; --lib: #2b8a99; --fas: #c0391b; --com: #c62f2a; --line: #e2dccb;
+  --page-w: 1400px; /* content width of the header, footer and the main pages */
   --display: 'Germania', 'Jost', serif; --body: 'Jost', system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -13,7 +14,7 @@ button { font: inherit; cursor: pointer; }
 .btn:disabled { opacity: .5; cursor: default; }
 .btn.primary { background: var(--orange); color: #2a1206; }
 .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
-.page { max-width: 1240px; margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
+.page { max-width: var(--page-w); margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
 .chip { display: inline-block; padding: .1rem .55rem; border-radius: 99px; font-size: .78rem; font-weight: 600; background: #ece6d3; color: #4a483f; }
 
 /* ---- scrolling: the page scrolls inside SimpleBar (App), with an always-visible overlay bar ---- */

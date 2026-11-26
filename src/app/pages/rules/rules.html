@@ -1,20 +1,17 @@
 <div class="wrap">
   <aside [class.open]="tocOpen()">
+    <a class="vlink" routerLink="/versions">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+      Version history
+    </a>
     <nav class="toc">
       @for (t of toc(); track t.i) {
         <button [class]="t.b.type" [class.on]="active() === t.i" [attr.data-b]="t.i" [attr.aria-current]="active() === t.i ? 'location' : null" (click)="go(t.i)" [style.--c]="t.b['color']">{{ t.b.type === 'part' ? t.b['title'] : plain(t.b['text']) }}</button>
       }
     </nav>
-    <div class="dl">
-      @if (meta(); as m) {
-        @if (m.downloads.length) {
-          <div class="dlh">Download the rulebook</div>
-          @for (d of m.downloads; track d.file) { <a [href]="d.file" target="_blank">{{ d.label }}</a> }
-        }
-        <div class="ver">Version {{ m.version }} · {{ m.date | date: 'longDate' : 'UTC' }}
-          @if (m.changelog.length) { · <a routerLink="/versions">history</a> }</div>
-      }
-    </div>
+    @if (meta(); as m) {
+      <div class="ver">Version {{ m.version }} · {{ m.date | date: 'longDate' : 'UTC' }}</div>
+    }
   </aside>
   <button class="tocbtn" (click)="tocOpen.set(!tocOpen())">{{ tocOpen() ? 'Close' : 'Contents' }}</button>
 
