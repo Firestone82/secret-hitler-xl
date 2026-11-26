@@ -164,7 +164,7 @@
               <span><b>One file per copy</b><small>Off: each design once, with the count in the file name and in manifest.csv. On: four Liberal cards are four pairs of files.</small></span></label>
           }
           <label class="sw"><input type="checkbox" [checked]="opts().rulebook" (change)="set('rulebook', $any($event.target).checked)" />
-            <span><b>Add the rulebook</b><small>{{ opts().paper === 'A3' ? 'A4 booklet on A3' : 'A5 booklet on A4' }}, reading version and rulings sheet.</small></span></label>
+            <span><b>Add the rulebook</b><small>{{ opts().paper === 'A3' ? 'A4 booklet on A3' : 'A5 booklet on A4' }} and the page-by-page version.</small></span></label>
           <button class="mini" (click)="reset()">Reset all options</button>
         </section>
       </div>

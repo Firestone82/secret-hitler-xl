@@ -27,10 +27,6 @@
   {
    "label": "A4 booklet on A3",
    "file": "pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
-  },
-  {
-   "label": "Rulings and balance notes",
-   "file": "pdf/Secret_Hitler_XL_Rulings_and_balance_notes.pdf"
   }
  ],
  "booklets": {
@@ -737,7 +733,7 @@
   {
    "type": "seats",
    "table": "xl",
-   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental</b>; those counts and the emergency tiles follow the separate Rulings and balance notes sheet."
+   "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental.</b> Those counts are a suggestion of this edition, not part of the XL rules."
   },
   {
    "type": "list",

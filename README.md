@@ -37,7 +37,7 @@ All game content is in `public/`:
 | `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. |
 | `preview/` | Small JPEGs of every piece (front `_0`, back `_1`) for the print builder's preview. Made from `pieces/` by `tools/export/web_previews.py`. |
 | `fonts/` | Jost and Germania One, embedded into the generated PDFs. |
-| `pdf/` | The finished rulebook PDFs (A5 and A4, normal and booklet) and the rulings sheet. |
+| `pdf/` | The finished rulebook PDFs (A5 and A4, normal and booklet). |
 
 ### roles.json
 
