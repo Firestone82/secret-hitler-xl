@@ -904,7 +904,7 @@
    "type": "icons",
    "items": [
     {
-     "icon": "cpo_bug.png",
+     "icon": "cpo_bug.svg",
      "name": "Bugging",
      "html": "No eyes are closed. The President and the Chancellor together look at one player's Party Membership card. The Capitalist chooses which of their two cards to show."
     },
@@ -914,7 +914,7 @@
      "html": "The Communists try to turn another player into a Communist. <b>Fascists cannot be radicalised</b>, and neither can a player whose card was already investigated by a Fascist-board power."
     },
     {
-     "icon": "cpo_plan.png",
+     "icon": "cpo_plan.svg",
      "name": "Five-year plan",
      "html": "Shuffle two Communist policies and one Liberal policy from the reserve into the draw deck."
     },
