@@ -13,6 +13,7 @@ import { GithubStars } from './shared/github-stars';
     <div class="shell" #shell>
     <div class="frame">
     <header class="top" [class.open]="menuOpen()">
+      <div class="top-in">
       <a class="brand" routerLink="/" aria-label="Secret Hitler + XL, home">
         <img src="icon.svg" alt="" class="logo" width="36" height="36" />
         <span class="name">Secret Hitler <em>+ XL</em></span>
@@ -33,18 +34,23 @@ import { GithubStars } from './shared/github-stars';
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="11" height="15" rx="2" /><path d="M17 6.5l2.6.7a2 2 0 0 1 1.4 2.4l-2.6 9.8a2 2 0 0 1-2.4 1.4L13 20" /><circle cx="8.5" cy="10.5" r="2" /><path d="M5.5 16.5a3 3 0 0 1 6 0" /></svg>
             Roles
           </a>
+          <a routerLink="/3d-printing" routerLinkActive="on">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8 4.5v10l-8 4.5-8-4.5V7z" /><path d="M12 12l8-5M12 12v9.5M12 12L4 7" /></svg>
+            3D printing
+          </a>
           <a routerLink="/print" routerLinkActive="on" class="cta">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></svg>
             Print builder
           </a>
         </div>
         <div class="minor">
-          <a routerLink="/about" routerLinkActive="on">About</a>
-          <a routerLink="/3d-printing" routerLinkActive="on">3D printing</a>
+          <a routerLink="/" fragment="about">About</a>
+          <a routerLink="/versions" routerLinkActive="on">Versions</a>
           <a routerLink="/credits" routerLinkActive="on">Credits</a>
         </div>
         <app-github-stars class="gh nav" />
       </nav>
+      </div>
     </header>
     @if (error) {
       <p class="err">Could not load the game data: {{ error }}</p>
@@ -62,9 +68,10 @@ import { GithubStars } from './shared/github-stars';
       </div>
       <div class="fr">
         @if (version(); as v) {
-          <a class="ver" routerLink="/rules" fragment="version-history" title="Rulebook version history">Rulebook v{{ v.version }} · {{ v.date }}</a>
+          <a class="ver" routerLink="/versions" title="Rulebook version history">Rulebook v{{ v.version }} · {{ v.date }}</a>
         }
-        <a routerLink="/about">About</a>
+        <a routerLink="/" fragment="about">About</a>
+        <a routerLink="/versions">Versions</a>
         <a routerLink="/credits">Credits</a>
         <a href="https://github.com/Firestone82/secret-hitler-xl" target="_blank" rel="noopener">Source</a>
       </div>
