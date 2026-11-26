@@ -389,9 +389,10 @@
           {
             "label": "YOUR POWER",
             "items": [
-              "When <b>Call Special Election</b> is enacted, you may reveal yourself and become President.",
-              "You and the President who enacted it each name a Chancellor candidate.",
-              "Everyone gives their ballot card to one of them. Most cards wins. You break ties."
+              "On <b>Call Special Election</b>, you may reveal yourself and become the next President.",
+              "You and the outgoing President each name a Chancellor candidate.",
+              "Everyone gives their ballot card to one of them. Most cards wins. You break ties.",
+              "The round after is normal again."
             ]
           }
         ]
@@ -402,7 +403,7 @@
         "image": "r_monarchist.jpg",
         "paragraphs": [
           "Wins if six Fascist policies are enacted or Hitler is executed, and loses if Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
-          "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
+          "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President, in place of the player the President would have picked. There is still only one President that round. The Monarchist and the outgoing President each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties. After that round the President placard returns to the left of the President who enacted Special Election, as after any Special Election."
         ],
         "addWhen": "the Fascists win too often.",
         "addWhenTable": "The Fascists win too often.",
