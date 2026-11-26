@@ -1,6 +1,6 @@
 import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inject, signal, viewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, Location } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
 import { ScrollService } from '../../core/scroll.service';
@@ -10,6 +10,9 @@ import { Lightbox } from '../../shared/lightbox';
 import { RoleBox } from '../../shared/role-box';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 import { PrintChoice, PrintDialog } from './print-dialog';
+
+/** the ?section= value of a block: the heading id, or the role id for an extra role */
+const sectionId = (b: Block): string | null => (b.type === 'role' ? b['role'] : b.id) ?? null;
 
 const strip = (s: string) => (s ?? '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -38,7 +41,17 @@ function blockText(b: Block): string {
 export class RulesPage {
   data = inject(DataService);
   private host = inject(ElementRef<HTMLElement>);
-  private fragment = toSignal(inject(ActivatedRoute).fragment);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private location = inject(Location);
+  private fragment = toSignal(this.route.fragment);
+  /** the ?section= the page was opened with: jumped to once the rules are loaded */
+  private startSection = this.route.snapshot.queryParamMap.get('section');
+  /** set while the page jumps to a linked section, so the scroll tracking does not rewrite the link meanwhile */
+  private restoring = !!this.startSection;
+  /** "Link copied" note after a section link is clicked */
+  copied = signal(false);
+  private copiedTimer?: ReturnType<typeof setTimeout>;
   query = signal('');
   tocOpen = signal(false);
   printing = signal(false);
@@ -48,7 +61,9 @@ export class RulesPage {
   private lightbox = viewChild.required(Lightbox);
 
   blocks = computed(() => this.data.rulebook() ?? []);
-  toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => b.type === 'part' || b.type === 'h1' || b.type === 'h2'));
+  toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => ['part', 'h1', 'h2', 'credits'].includes(b.type)));
+  /** every place a link can point to: the contents entries plus each extra role, as ?section=<id> */
+  anchors = computed(() => this.blocks().map((b, i) => ({ i, id: sectionId(b) })).filter((a): a is { i: number; id: string } => !!a.id));
   results = computed(() => {
     const q = this.query().trim().toLowerCase();
     if (q.length < 3) return [];
@@ -69,7 +84,32 @@ export class RulesPage {
       const f = this.fragment(), n = this.blocks().length;
       if (f && n) setTimeout(() => this.host.nativeElement.querySelector('#' + CSS.escape(f))?.scrollIntoView({ behavior: 'smooth' }), 50);
     });
+    effect(() => {
+      const id = this.startSection;
+      if (!id || !this.blocks().length) return;
+      this.startSection = null;
+      // wait for the blocks to render, then jump without animation: the reader asked for this place
+      setTimeout(() => {
+        const i = this.anchors().find((a) => a.id === id)?.i;
+        const el = i == null ? null : this.host.nativeElement.querySelector('#b' + i);
+        el?.scrollIntoView({ behavior: 'instant', block: 'start' });
+        setTimeout(() => (this.restoring = false), 150);
+      }, 60);
+    });
     this.trackActive();
+  }
+
+  /** Keeps ?section= on the section being read, so a refresh comes back to it and the address can be shared. */
+  private setSection(id: string | null) {
+    const tree = this.router.createUrlTree([], { relativeTo: this.route, queryParams: { section: id }, queryParamsHandling: 'merge' });
+    const url = this.router.serializeUrl(tree);
+    if (url !== this.location.path()) this.location.replaceState(url);
+  }
+
+  /** The address of a section, for sharing. */
+  sectionUrl(id: string | undefined): string {
+    if (!id) return '';
+    return window.location.href.split('#')[0] + '#' + this.router.serializeUrl(this.router.createUrlTree(['/rules'], { queryParams: { section: id } }));
   }
 
   /** Follows the scroll position and marks the chapter or section being read in the sidebar. */
@@ -80,18 +120,23 @@ export class RulesPage {
       frame = 0;
       const root = this.host.nativeElement as HTMLElement;
       // a heading counts as reached once it passes under the sticky bar
-      let cur = -1;
-      for (const t of this.toc()) {
-        const el = root.querySelector('#b' + t.i);
+      let cur = -1, section: string | null = null;
+      for (const a of this.anchors()) {
+        const el = root.querySelector('#b' + a.i);
         if (!el) continue;
         if (el.getBoundingClientRect().top > 160) break;
-        cur = t.i;
+        cur = a.i;
+        section = a.id;
       }
-      if (cur < 0 && this.toc().length) cur = this.toc()[0].i;
-      if (cur !== this.active()) {
-        this.active.set(cur);
-        this.revealInToc(cur);
+      // the sidebar marks the last contents entry at or above the section (roles are not in the contents)
+      let tocCur = -1;
+      for (const t of this.toc()) { if (t.i > cur) break; tocCur = t.i; }
+      if (tocCur < 0 && this.toc().length) tocCur = this.toc()[0].i;
+      if (tocCur !== this.active()) {
+        this.active.set(tocCur);
+        this.revealInToc(tocCur);
       }
+      if (!this.restoring) this.setSection(section);
     };
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
     effect((onCleanup) => {
@@ -114,10 +159,32 @@ export class RulesPage {
     else if (top > aside.scrollTop + aside.clientHeight - pad) aside.scrollTo({ top: top - aside.clientHeight + pad, behavior: 'smooth' });
   }
 
-  /** Pictures of the rulebook open at full size; icons and the cover do not. */
-  zoom(e: MouseEvent) {
-    const img = (e.target as HTMLElement).closest('img');
-    if (img && img.closest('figure, .legis, app-role-box')) this.lightbox().open(img.currentSrc || img.src, img.alt);
+  /**
+   * Clicks in the rules: a section link copies its address and scrolls there; pictures of the
+   * rulebook open at full size (icons and the cover do not), with the sharper copy from rb/hd/ when there is one.
+   */
+  onClick(e: MouseEvent) {
+    const t = e.target as HTMLElement;
+    const link = t.closest<HTMLAnchorElement>('a.anchor');
+    if (link) {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      const id = link.dataset['section']!;
+      void navigator.clipboard?.writeText(this.sectionUrl(id)).then(() => {
+        this.copied.set(true);
+        clearTimeout(this.copiedTimer);
+        this.copiedTimer = setTimeout(() => this.copied.set(false), 1800);
+      }, () => {});
+      const blk = link.closest('.blk');
+      blk?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.setSection(id);
+      return;
+    }
+    const img = t.closest('img');
+    if (img && img.closest('figure, .legis, app-role-box')) {
+      const src = img.currentSrc || img.src;
+      this.lightbox().open(src, img.alt, src.replace(/\/rb\/([^/]+\.jpg)$/, '/rb/hd/$1'));
+    }
   }
 
   /** A seat table of rulebook.json as columns and rows, with the experimental player counts marked. */
