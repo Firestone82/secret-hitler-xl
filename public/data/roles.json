@@ -389,10 +389,10 @@
           {
             "label": "YOUR POWER",
             "items": [
-              "On <b>Call Special Election</b>, you may reveal yourself and become the next President.",
+              "On <b>Call Special Election</b>, you may reveal and replace the President's pick.",
               "You and the outgoing President each name a Chancellor candidate.",
-              "Everyone gives their ballot card to one of them. Most cards wins. You break ties.",
-              "The round after is normal again."
+              "Everyone gives their ballot card to one. Most cards wins, you break ties.",
+              "The round after, the order goes on as usual."
             ]
           }
         ]
@@ -403,7 +403,7 @@
         "image": "r_monarchist.jpg",
         "paragraphs": [
           "Wins if six Fascist policies are enacted or Hitler is executed, and loses if Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
-          "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President, in place of the player the President would have picked. There is still only one President that round. The Monarchist and the outgoing President each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties. After that round the President placard returns to the left of the President who enacted Special Election, as after any Special Election."
+          "<b>Power:</b> there is only ever one President. When Special Election is enacted, the Monarchist may reveal their role and become the next President, instead of the player the President would have picked. The Monarchist and the outgoing President each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties. The round after, the President placard returns to the left of the President who enacted Special Election, as after any Special Election."
         ],
         "addWhen": "the Fascists win too often.",
         "addWhenTable": "The Fascists win too often.",
@@ -1009,7 +1009,7 @@
           {
             "label": "SETUP",
             "items": [
-              "You start with no membership card. At night, draw one from the spare deck: you join that party."
+              "At night, draw a membership card from the spare deck: you join that party."
             ]
           },
           {
@@ -1021,8 +1021,9 @@
           {
             "label": "YOUR POWER",
             "items": [
-              "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal your Secret Role card and take the power over.",
-              "You alone choose the player. They secretly hand you their <b>Secret Role</b> card, not only their party.",
+              "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal yourself.",
+              "Then the power is yours alone: you choose the player instead of the President, and only you look.",
+              "They secretly hand you their <b>Secret Role</b> card, not only their party.",
               "At any other time you have no power."
             ]
           }
@@ -1034,7 +1035,7 @@
         "image": "r_detective.jpg",
         "paragraphs": [
           "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
-          "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. The Detective alone chooses the player, who secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
+          "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. Taking it over means the Detective alone uses it: the Detective chooses the player (not the President, and not the President and Chancellor together), and that player secretly hands the Detective their <b>Secret Role</b> card instead of their Party Membership card. Nobody else sees it.",
           "Outside those two moments the Detective has no power and plays like any member of their party."
         ],
         "addWhen": "you want stronger investigations.",
