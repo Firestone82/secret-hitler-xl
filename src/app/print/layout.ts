@@ -170,11 +170,13 @@ export function layout(plan: Plan, paper: Paper, split: boolean): PrintFile[] {
   const tiles = a3 ? cardSheets('Policy tiles', plan.tiles, paper, true, 3, 8, GUT, GUT) : cardSheets('Policy tiles', plan.tiles, paper, false, 4, 4, GUT, 0);
   const cardS = a3 ? cardSheets('Cards', cards, paper, true, 3, 6, GUT, GUT) : cardSheets('Cards', cards, paper, false, 3, 3, 0, GUT);
   const longs = (a3 ? longSheetsA3 : longSheetsA4)('Boards', plan.longs, plan.placards);
+  // small reference cards: four stacked on A3, two side by side on A4
+  const refs = a3 ? cardSheets('Reference cards', plan.refs, paper, false, 1, 4, 4, 4) : cardSheets('Reference cards', plan.refs, paper, true, 2, 1, 4, 4);
   const ballotS = a3 ? cardSheets('Ballots', ballotsOwn, paper, true, 3, 6, GUT, GUT) : cardSheets('Ballots', ballotsOwn, paper, false, 3, 3, 0, GUT);
   const insertS = (a3 ? longSheetsA3 : longSheetsA4)('Borderless boards', plan.inserts, []);
 
   const files: PrintFile[] = [];
-  const main = [...tiles, ...cardS, ...longs];
+  const main = [...tiles, ...cardS, ...longs, ...refs];
   if (split) {
     if (main.length) files.push({ key: 'main', name: `Secret_Hitler_XL_${paper}_duplex.pdf`, title: 'Tiles, cards, boards, reference cards, placards', sheets: main });
     if (ballotS.length) files.push({ key: 'ballots', name: `Secret_Hitler_XL_${paper}_ballots_duplex.pdf`, title: 'Ballot cards', sheets: ballotS });

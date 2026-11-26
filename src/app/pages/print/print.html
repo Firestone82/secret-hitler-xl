@@ -33,6 +33,8 @@
             <label class="sw"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().antiPolicies" (change)="set('antiPolicies', $any($event.target).checked)" />
               <span><b>Anti-policies</b><small>Three tiles that undo a board space.</small></span></label>
           </div>
+          <label class="sw" [class.dim]="!opts().xl"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().base" (change)="set('base', $any($event.target).checked)" />
+            <span><b>Original game pieces</b><small>Off: only what XL adds, for playing with your own copy of Secret Hitler. Leaves out what its box already has: 17 policy tiles, 10 roles, 10 memberships, 20 ballots, the Liberal and Fascist boards, placards and pile cards.</small></span></label>
         </section>
 
         <section [class.dim]="!opts().xl">
@@ -48,12 +50,10 @@
                   <span class="rhead"><b>{{ groupName(g) }}@if (g[0].countLabel) { <small> ×{{ g[0].countLabel }}</small> }</b>
                     <small class="seat">Takes the seat of {{ groupSeat(g) }}</small></span>
                   @if (g[0].needsCommunists) {
-                    <span class="needs" [class.missing]="opts().xl && !opts().communists">
-                      <span class="ico" aria-hidden="true">☭</span> Needs the Communists
-                      @if (opts().xl && !opts().communists) {
-                        <button type="button" (click)="$event.preventDefault(); $event.stopPropagation(); set('communists', true)">Turn them on</button>
-                      }
-                    </span>
+                    <span class="needs" [class.missing]="opts().xl && !opts().communists"><span class="ico" aria-hidden="true">☭</span> Needs the Communists</span>
+                    @if (opts().xl && !opts().communists) {
+                      <button type="button" class="turn-on" (click)="$event.preventDefault(); $event.stopPropagation(); set('communists', true)">Turn the Communists on</button>
+                    }
                   }
                   @if (g[0].rulebook?.addWhenTable; as when) {
                     <span class="why"><em>Add it when</em><span [innerHTML]="when | safeHtml"></span></span>
@@ -83,20 +83,21 @@
               </button>
             }
           </div>
-          @if (opts().boardStyle !== 'border') {
-            <label class="range scale">
-              <span>Borderless boards at <b>{{ opts().insertScale }} %</b>: {{ (390 * opts().insertScale / 100).toFixed(1) }} × {{ (130 * opts().insertScale / 100).toFixed(1) }} mm
-                @if (opts().insertScale !== 100) { <button type="button" class="mini" (click)="set('insertScale', 100)">Full size</button> }</span>
-              <input type="range" min="80" max="100" step="0.5" [value]="opts().insertScale" (input)="set('insertScale', num($any($event.target).value))" />
-              <small>Make them smaller to fit inside your frame. Measure the frame's opening and leave about 1 mm of play.</small>
-            </label>
-          }
 
           <div class="refs" [class.dim]="!opts().xl">
-            <div class="h3row"><b>Reference cards</b><small>Same size as a board. Set 0 to leave one out.</small></div>
+            <div class="h3row"><b>Reference cards</b><small>Click a card to see it full size. Set 0 to leave one out.</small></div>
+            <div class="seg2" role="radiogroup" aria-label="Reference card size">
+              @for (z of refSizes; track z.k) {
+                <button type="button" role="radio" [attr.aria-checked]="opts().refSize === z.k" [class.on]="opts().refSize === z.k" (click)="set('refSize', z.k)">
+                  <b>{{ z.label }}</b><span>{{ z.hint }}</span>
+                </button>
+              }
+            </div>
             @for (r of refCards; track r.id) {
               <div class="ref" [class.off]="!refAllowed(r)">
-                <img [src]="'preview/' + r.id + '_0.jpg'" alt="" loading="lazy" />
+                <button type="button" class="ref-thumb" (click)="openRef(r)" [attr.aria-label]="'Show ' + r.label + ' full size'">
+                  <img [src]="'preview/' + r.id + '_0.jpg'" alt="" loading="lazy" /><span class="zoom-hint">⤢</span>
+                </button>
                 <span class="rlabel"><b>{{ r.label }}</b><small>{{ r.hint }}</small></span>
                 <span class="stepper">
                   <button type="button" (click)="setRef(r.id, opts().refCards[r.id] - 1)" [disabled]="!refAllowed(r) || !opts().refCards[r.id]" aria-label="Fewer">−</button>
@@ -112,8 +113,9 @@
           <h2>Components</h2>
           <div class="flags">
             @for (f of flags; track f.k) {
-              <label class="sw"><input type="checkbox" [checked]="opts()[f.k]" (change)="set(f.k, $any($event.target).checked)" />
-                <span><b>{{ f.label }}</b><small>{{ f.hint }}</small></span></label>
+              @let owned = f.original && !opts().base;
+              <label class="sw" [class.dim]="owned"><input type="checkbox" [disabled]="owned" [checked]="opts()[f.k] && !owned" (change)="set(f.k, $any($event.target).checked)" />
+                <span><b>{{ f.label }}</b><small>{{ owned ? 'Already in your original box.' : f.hint }}</small></span></label>
             }
           </div>
           <div class="ballots">
@@ -241,6 +243,16 @@
           <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
           <g [appPreview]="sp.items" />
         </svg>
+      </div>
+    }
+    @if (refZoom(); as rz) {
+      <div class="zoom" (click)="refZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="rz.label">
+        <div class="zbar" (click)="$event.stopPropagation()">
+          <span class="ztitle">{{ rz.label }}</span>
+          <span class="seg"><button [class.on]="!refZoomBack()" (click)="refZoomBack.set(false)">Front</button><button [class.on]="refZoomBack()" (click)="refZoomBack.set(true)">Back</button></span>
+          <button class="mini close" (click)="refZoom.set(null)" aria-label="Close">✕</button>
+        </div>
+        <img class="zimg" [src]="'preview/large/' + rz.id + '_' + (refZoomBack() ? 1 : 0) + '.jpg'" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
       </div>
     }
   } @else { <p>Loading…</p> }

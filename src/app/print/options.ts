@@ -1,5 +1,7 @@
 export type Paper = 'A3' | 'A4';
 export type BoardStyle = 'border' | 'borderless' | 'both';
+/** board: as large as a board; small: 280 × 95 mm, stacked on A3 or two to an A4 sheet */
+export type RefSize = 'board' | 'small';
 export type SpareKind = 'tiles' | 'roles' | 'memberships' | 'ballots';
 
 /** The reference cards, in print order, with what each needs and how many a table usually wants. */
@@ -22,6 +24,8 @@ export interface PrintOptions {
   paper: Paper;
   /** largest table the set must cover */
   players: number;
+  /** the pieces the original Secret Hitler box already has; off prints only what XL adds on top */
+  base: boolean;
   xl: boolean;
   communists: boolean;
   emergency: boolean;
@@ -32,10 +36,9 @@ export interface PrintOptions {
   ballots: 'double' | 'separate';
   /** border: the classic boards; borderless: for the 3D-printed frames; both */
   boardStyle: BoardStyle;
-  /** borderless boards printed at this percentage of 390 × 130 mm, to fit a frame */
-  insertScale: number;
   /** copies of each reference card, by piece id (r_round…); 0 leaves it out */
   refCards: Record<string, number>;
+  refSize: RefSize;
   /** spare copies on top of what the table needs, by kind */
   spares: Record<SpareKind, number>;
   placards: boolean;
@@ -53,6 +56,7 @@ export interface PrintOptions {
 export const DEFAULT_OPTIONS: PrintOptions = {
   paper: 'A3',
   players: 19,
+  base: true,
   xl: true,
   communists: true,
   emergency: true,
@@ -61,8 +65,8 @@ export const DEFAULT_OPTIONS: PrintOptions = {
   briefings: true,
   ballots: 'double',
   boardStyle: 'border',
-  insertScale: 100,
   refCards: Object.fromEntries(REF_CARDS.map((r) => [r.id, r.copies])),
+  refSize: 'board',
   spares: { tiles: 0, roles: 0, memberships: 0, ballots: 0 },
   placards: true,
   pileCards: true,
@@ -75,9 +79,11 @@ export const DEFAULT_OPTIONS: PrintOptions = {
 
 /** Keeps the options consistent: what the rules allow at this table size and with these modules. */
 export function normalise(o: PrintOptions, needsCommunists: (id: string) => boolean): PrintOptions {
-  const n: PrintOptions = { ...o, roles: { ...o.roles }, refCards: { ...DEFAULT_OPTIONS.refCards, ...o.refCards }, spares: { ...DEFAULT_OPTIONS.spares, ...o.spares } };
+  const { insertScale: _, ...rest } = o as PrintOptions & { insertScale?: number };   // no longer an option
+  const n: PrintOptions = { ...rest, roles: { ...o.roles }, refCards: { ...DEFAULT_OPTIONS.refCards, ...o.refCards }, spares: { ...DEFAULT_OPTIONS.spares, ...o.spares } };
   if (!['border', 'borderless', 'both'].includes(n.boardStyle)) n.boardStyle = 'border';
-  n.insertScale = Math.min(100, Math.max(80, Math.round((Number(n.insertScale) || 100) * 2) / 2));
+  if (n.refSize !== 'small') n.refSize = 'board';
+  n.base = n.base !== false || !n.xl;
   const clamp = (v: unknown, max: number) => Math.min(max, Math.max(0, Math.round(Number(v) || 0)));
   for (const k of Object.keys(n.refCards)) n.refCards[k] = clamp(n.refCards[k], 9);
   for (const k of Object.keys(n.spares) as SpareKind[]) n.spares[k] = clamp(n.spares[k], 9);

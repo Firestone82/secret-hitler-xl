@@ -30,6 +30,8 @@ export interface Plan {
   ballots: Slot[];
   longs: Slot[];
   inserts: Slot[];
+  /** small reference cards, laid out on their own sheets; board-sized ones go with the boards */
+  refs: Slot[];
   placards: Slot[];
   counts: CountLine[];
   minPlayers: number;
@@ -50,6 +52,11 @@ export function setSeatTables(t: { base: Seats; xl: Seats }) {
   BASE = t.base;
   XL = t.xl;
 }
+
+/** What the original Secret Hitler box already holds: left out when only the XL additions are printed. */
+const ORIGINAL = { libTiles: 6, fasTiles: 11, libRoles: 6, fasRoles: 3, hitler: 1, libMembers: 6, fasMembers: 4, ballots: 10 };
+/** Small reference cards: 280 × 95 mm instead of 395 × 134. */
+export const SMALL_REF_SCALE = 280 / 395;
 
 const EMERGENCY = ['e_investigate', 'e_peek', 'e_special_election', 'e_execution', 'e_propaganda', 'e_no_confidence', 'e_censorship', 'e_enabling_act', 'e_article48', 'e_pardon'];
 const PLACARD_BACK: [number, number, number] = [224, 146, 39];
@@ -79,8 +86,9 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
 
   // ---- policy tiles
   const tiles: Slot[] = [];
-  const sp = o.spares;
-  const nLib = 6 + (o.communists ? 1 : 0) + sp.tiles, nFas = 11 + sp.tiles, nCom = o.communists ? 10 + sp.tiles : 0;
+  const sp = o.spares, own = o.base ? null : ORIGINAL;
+  const less = (n: number, owned = 0) => Math.max(0, n - owned);
+  const nLib = less(6, own?.libTiles) + (o.communists ? 1 : 0) + sp.tiles, nFas = less(11, own?.fasTiles) + sp.tiles, nCom = o.communists ? 10 + sp.tiles : 0;
   tiles.push(...times(nLib, () => both('t_p018', 'Liberal policy', 'tile')));
   tiles.push(...times(nFas, () => both('t_p005', 'Fascist policy', 'tile')));
   tiles.push(...times(nCom, () => both('t_p104', 'Communist policy', 'tile')));
@@ -94,23 +102,28 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
     tiles.push(...b.map((id) => both(id, 'Blank tile', 'tile'))); count('Policy tiles', 'Blank tiles', b.length);
   }
 
-  // ---- role cards: enough regular roles for the largest table, plus one card per optional role
-  const roleCards: { role: Role; art: string }[] = [];
-  const regular = (id: string, n: number) => { const r = byId(id); for (let i = 0; i < n; i++) roleCards.push({ role: r, art: r.art[i % r.art.length] }); };
-  regular('liberal', s.lib + sp.roles); regular('fascist', s.fas + sp.roles); regular('hitler', 1);
-  if (o.communists) regular('communist', s.com + sp.roles);
-  for (const r of extras) for (let i = 0; i < r.count; i++) roleCards.push({ role: r, art: r.art[i % r.art.length] });
-  count('Roles', 'Liberal roles', s.lib + sp.roles); count('Roles', 'Fascist roles', s.fas + sp.roles); count('Roles', 'Hitler', 1);
-  if (o.communists) count('Roles', 'Communist roles', s.com + sp.roles);
+  // ---- role cards: enough regular roles for the largest table, plus one card per optional role.
+  // Without the original pieces the cards its box holds are not printed, but they still get a briefing.
+  const roleCards: { role: Role; art: string; owned: boolean }[] = [];
+  const regular = (id: string, n: number, owned = 0) => {
+    const r = byId(id);
+    for (let i = 0; i < n; i++) roleCards.push({ role: r, art: r.art[i % r.art.length], owned: i < owned });
+    return less(n, owned);
+  };
+  const nLibR = regular('liberal', s.lib + sp.roles, own?.libRoles), nFasR = regular('fascist', s.fas + sp.roles, own?.fasRoles), nHit = regular('hitler', 1, own?.hitler);
+  const nComR = o.communists ? regular('communist', s.com + sp.roles) : 0;
+  for (const r of extras) for (let i = 0; i < r.count; i++) roleCards.push({ role: r, art: r.art[i % r.art.length], owned: false });
+  count('Roles', 'Liberal roles', nLibR); count('Roles', 'Fascist roles', nFasR); count('Roles', 'Hitler', nHit);
+  count('Roles', 'Communist roles', nComR);
   for (const r of extras) count('Roles', r.name + (r.count > 1 ? 's' : ''), r.count);
 
   const cards: Slot[] = [];
-  const roleSlots = roleCards.map(({ role, art }) => ({ front: piece('c_' + art, 0), back: piece('c_' + art, 1), name: role.name + ' role', size: 'card' as const }));
+  const roleSlots = roleCards.filter((c) => !c.owned).map(({ role, art }) => ({ front: piece('c_' + art, 0), back: piece('c_' + art, 1), name: role.name + ' role', size: 'card' as const }));
   const briefSlots = o.briefings ? roleCards.map(({ role }) => ({ front: { type: 'briefing', role: role.id } as Face, back: piece('c_bback', 0), name: role.name + ' briefing', size: 'card' as const })) : [];
   if (o.briefings) count('Roles', 'Role Briefing cards', briefSlots.length);
 
   // ---- party membership: every seat plus the cards the rules hand out on top
-  const mem = { liberal: s.lib + sp.memberships, fascist: s.fas + 1 + sp.memberships, communist: o.communists ? s.com + 2 + sp.memberships : 0, lobby: 0 };
+  const mem = { liberal: less(s.lib, own?.libMembers) + sp.memberships, fascist: less(s.fas + 1, own?.fasMembers) + sp.memberships, communist: o.communists ? s.com + 2 + sp.memberships : 0, lobby: 0 };
   for (const r of extras) for (const [k, v] of Object.entries(r.extraMembership ?? {})) (mem as any)[k] += v;
   const memSlots: Slot[] = [
     ...times(mem.liberal, () => both('c_069', 'Liberal membership', 'card')),
@@ -122,7 +135,7 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   count('Party Membership', 'Communist', mem.communist); count('Party Membership', 'Lobby card', mem.lobby);
 
   // ---- ballots: one per player and a spare, plus any extra spares
-  const ballots: Slot[] = [], nBallot = o.players + 1 + sp.ballots;
+  const ballots: Slot[] = [], nBallot = less(o.players + 1, own?.ballots) + sp.ballots;
   if (o.ballots === 'double') {
     ballots.push(...times(nBallot, () => both('c_ballot', 'Ballot', 'card')));
     count('Ballots', 'Ballots, Ja! front / Nein back', nBallot);
@@ -132,7 +145,7 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   }
 
   const extraCards: Slot[] = [];
-  if (o.pileCards) { extraCards.push(both('c_draw', 'Draw pile card', 'card'), both('c_discard', 'Discard pile card', 'card')); count('Other cards', 'Draw and discard pile cards', 2); }
+  if (o.pileCards && o.base) { extraCards.push(both('c_draw', 'Draw pile card', 'card'), both('c_discard', 'Discard pile card', 'card')); count('Other cards', 'Draw and discard pile cards', 2); }
   if (o.blanks) {
     const pals: [string, string][] = [['liberal', 'lib'], ['fascist', 'fas'], ...(o.communists ? [['communist', 'com'] as [string, string]] : []), ['neutral', 'neu']];
     for (const [k] of pals) extraCards.push(both('c_h_blank_' + k, 'Blank role', 'card'));
@@ -145,26 +158,33 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
 
   // ---- boards and reference cards
   const longs: Slot[] = [];
-  const boards: [string, string][] = [['liberal', 'Liberal board']];
-  if (s.from <= 6) boards.push(['fascist_5-6', 'Fascist board 5-6']);
-  if (o.players >= 7) boards.push(['fascist_7-8', 'Fascist board 7-8']);
-  if (o.players >= 9) boards.push(['fascist_9-10', 'Fascist board 9+']);
-  if (o.communists) boards.push(['communist', 'Communist board']);
+  // the original box has the Liberal and Fascist boards, but not the borderless ones for the frames
+  const boards: [string, string, boolean][] = [['liberal', 'Liberal board', true]];
+  if (s.from <= 6) boards.push(['fascist_5-6', 'Fascist board 5-6', true]);
+  if (o.players >= 7) boards.push(['fascist_7-8', 'Fascist board 7-8', true]);
+  if (o.players >= 9) boards.push(['fascist_9-10', 'Fascist board 9+', true]);
+  if (o.communists) boards.push(['communist', 'Communist board', false]);
   const border = o.boardStyle !== 'borderless', borderless = o.boardStyle !== 'border';
-  if (border) { for (const [k, n] of boards) longs.push(both('b_' + k, n, 'long')); count('Boards', 'Boards with border', boards.length); }
-  const inserts: Slot[] = borderless ? boards.map(([k, n]) => ({ ...both('i_' + k, n + ' (borderless)', 'insert'), scale: o.insertScale / 100 })) : [];
+  if (border) {
+    const printed = boards.filter(([, , original]) => o.base || !original);
+    for (const [k, n] of printed) longs.push(both('b_' + k, n, 'long'));
+    count('Boards', 'Boards with border', printed.length);
+  }
+  const inserts: Slot[] = borderless ? boards.map(([k, n]) => both('i_' + k, n + ' (borderless)', 'insert')) : [];
   if (borderless) count('Boards', 'Borderless boards', inserts.length);
+  const refs: Slot[] = [], small = o.refSize === 'small';
   for (const r of REF_CARDS) {
     const n = refCardAllowed(r, o) ? o.refCards[r.id] ?? 0 : 0;
-    longs.push(...times(n, () => both(r.id, 'Reference card', 'long')));
+    const slot = (): Slot => (small ? { ...both(r.id, 'Reference card', 'long'), scale: SMALL_REF_SCALE } : both(r.id, 'Reference card', 'long'));
+    (small ? refs : longs).push(...times(n, slot));
     count('Reference cards', r.label, n);
   }
-  const placards: Slot[] = o.placards
+  const placards: Slot[] = o.placards && o.base
     ? (['chancellor', 'president'] as const).map((n) => ({ front: piece('pl_' + n, 0), back: { type: 'solid', rgb: PLACARD_BACK } as Face, name: n + ' placard', size: 'placard' as const }))
     : [];
-  if (o.placards) count('Boards', 'Placards', 2);
+  count('Boards', 'Placards', placards.length);
 
-  return { tiles, cards, ballots, longs, inserts, placards, counts, minPlayers: s.from };
+  return { tiles, cards, ballots, longs, inserts, refs, placards, counts, minPlayers: s.from };
 }
 
 /** A piece that the plan needs, once per distinct design, with the number of copies. */
@@ -174,7 +194,7 @@ export interface UniquePiece { group: string; slot: Slot; copies: number }
 export function uniquePieces(plan: Plan): UniquePiece[] {
   const groups: [string, Slot[]][] = [
     ['tiles', plan.tiles], ['cards', plan.cards], ['ballots', plan.ballots],
-    ['boards', plan.longs], ['borderless_boards', plan.inserts], ['placards', plan.placards],
+    ['boards', plan.longs], ['borderless_boards', plan.inserts], ['reference_cards', plan.refs], ['placards', plan.placards],
   ];
   const out: UniquePiece[] = [];
   for (const [group, slots] of groups) {
