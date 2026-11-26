@@ -1401,14 +1401,6 @@
     "alt": "CC BY-NC-SA",
     "html": "Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit; not for commercial use; adaptations use the same licence."
    }
-  },
-  {
-   "type": "h1",
-   "text": "Version history",
-   "id": "version-history"
-  },
-  {
-   "type": "changelog"
   }
  ]
 }
