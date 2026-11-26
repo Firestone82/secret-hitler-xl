@@ -1,4 +1,4 @@
-.wrap { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 2rem; max-width: 1240px; margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
+.wrap { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 2rem; max-width: var(--page-w); margin: 0 auto; padding: 1.5rem clamp(.8rem, 3vw, 2rem) 3rem; }
 aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh - 80px); overflow: auto; padding-right: .4rem; }
 .toc { display: flex; flex-direction: column; margin-top: .8rem; }
 .toc button { text-align: left; border: 0; background: none; padding: .22rem .3rem; border-radius: 4px; color: var(--ink); }
@@ -14,7 +14,7 @@ aside { position: sticky; top: 64px; align-self: start; max-height: calc(100vh -
 .vlink:hover { color: var(--lib); }
 .ver { margin-top: 1.2rem; padding: .6rem .3rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
 .tocbtn { display: none; }
-.col { min-width: 0; max-width: 900px; }
+.col { min-width: 0; }
 .rules { min-width: 0; }
 
 /* sticky bar: wide search and the print button stay in reach while reading */

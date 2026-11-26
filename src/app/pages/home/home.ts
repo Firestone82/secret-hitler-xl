@@ -170,7 +170,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .hero { background: var(--dark); color: var(--cream); overflow: hidden; position: relative; }
     .hero::before { content: ''; position: absolute; inset: 0; opacity: .5;
       background: radial-gradient(60% 80% at 85% 50%, rgba(232, 129, 58, .25), transparent 70%); }
-    .hero-in { position: relative; max-width: 1240px; margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(.8rem, 3vw, 2rem);
+    .hero-in { position: relative; max-width: var(--page-w); margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(.8rem, 3vw, 2rem);
       display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 2rem; }
     .kicker { margin: 0; text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; font-weight: 600; color: var(--orange); }
     h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); margin: .3rem 0 .6rem; }
