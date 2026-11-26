@@ -43,11 +43,6 @@ import { GithubStars } from './shared/github-stars';
             Print builder
           </a>
         </div>
-        <div class="minor">
-          <a routerLink="/" fragment="about">About</a>
-          <a routerLink="/versions" routerLinkActive="on">Versions</a>
-          <a routerLink="/credits" routerLinkActive="on">Credits</a>
-        </div>
         <app-github-stars class="gh nav" />
       </nav>
       </div>
@@ -72,7 +67,7 @@ import { GithubStars } from './shared/github-stars';
         }
         <a routerLink="/" fragment="about">About</a>
         <a routerLink="/versions">Versions</a>
-        <a routerLink="/credits">Credits</a>
+        <a routerLink="/" fragment="credits">Credits</a>
         <a href="https://github.com/Firestone82/secret-hitler-xl" target="_blank" rel="noopener">Source</a>
       </div>
     </footer>

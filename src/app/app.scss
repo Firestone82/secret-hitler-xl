@@ -32,8 +32,7 @@
 .brand:hover .logo { transform: rotate(-6deg) scale(1.06); }
 
 nav { display: flex; align-items: center; gap: .9rem; }
-nav .main, nav .minor { display: flex; align-items: center; gap: .2rem; }
-nav .minor { padding-left: .9rem; border-left: 1px solid rgba(255, 247, 214, .18); }
+nav .main { display: flex; align-items: center; gap: .2rem; }
 nav a {
   position: relative; display: flex; align-items: center; gap: .45rem; color: var(--cream); text-decoration: none;
   padding: .42rem .75rem; border-radius: 8px; font-weight: 600; white-space: nowrap; transition: background .15s, color .15s;
@@ -42,8 +41,6 @@ nav a svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-
 nav a:hover { background: rgba(255, 247, 214, .08); }
 nav a.on { background: rgba(255, 247, 214, .12); }
 nav a.on::after { content: ''; position: absolute; left: .75rem; right: .75rem; bottom: -9px; height: 3px; border-radius: 3px 3px 0 0; background: var(--cream); }
-nav .minor a { font-weight: 500; color: #d8d2b8; font-size: .93rem; }
-nav .minor a.on, nav .minor a:hover { color: var(--cream); }
 nav a.cta { background: var(--orange); color: #2a1206; margin-left: .25rem; }
 nav a.cta:hover { background: #f0924f; }
 nav a.cta.on::after { display: none; }
@@ -79,8 +76,7 @@ main { flex: 1; }
     padding: .6rem clamp(.8rem, 3vw, 2rem) 1rem; background: var(--dark); border-bottom: 3px solid var(--orange); box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
   }
   .top.open nav { display: flex; }
-  nav .main, nav .minor { flex-direction: column; align-items: stretch; }
-  nav .minor { border-left: 0; padding-left: 0; padding-top: .4rem; border-top: 1px solid rgba(255, 247, 214, .18); }
+  nav .main { flex-direction: column; align-items: stretch; }
   nav a { padding: .7rem .8rem; }
   nav a.cta { margin: .2rem 0 0; }
   nav a.on::after { display: none; }
