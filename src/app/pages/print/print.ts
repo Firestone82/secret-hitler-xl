@@ -1,7 +1,7 @@
 import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
-import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
+import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
 import { CountLine, Slot, makePlan, uniquePieces } from '../../print/plan';
 import { layout } from '../../print/layout';
 import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
@@ -72,10 +72,11 @@ export class PrintPage {
     if (extra.length) tags.push('Adds cards: ' + extra.join(', '));
     return tags;
   }
-  flags: { k: Flag; label: string; hint: string }[] = [
+  /** original: part of the original game, so left out when only the XL additions are printed */
+  flags: { k: Flag; label: string; hint: string; original?: boolean }[] = [
     { k: 'briefings', label: 'Role Briefing cards', hint: 'One per Secret Role card: explains that role on its own.' },
-    { k: 'placards', label: 'President and Chancellor placards', hint: 'Fold-in-half tents.' },
-    { k: 'pileCards', label: 'Draw and discard pile cards', hint: 'Card size; the tile decks sit on them.' },
+    { k: 'placards', label: 'President and Chancellor placards', hint: 'Fold-in-half tents.', original: true },
+    { k: 'pileCards', label: 'Draw and discard pile cards', hint: 'Card size; the tile decks sit on them.', original: true },
     { k: 'blanks', label: 'Blank cards', hint: 'Tiles, roles, briefings and memberships to write your own.' },
   ];
 
@@ -105,10 +106,18 @@ export class PrintPage {
   // ---- boards, reference cards, spares
   boardStyles: { k: BoardStyle; label: string; hint: string }[] = [
     { k: 'border', label: 'With border', hint: 'The classic boards, 395 × 134 mm.' },
-    { k: 'borderless', label: 'Borderless', hint: 'For the 3D-printed frames, 390 × 130 mm.' },
+    { k: 'borderless', label: 'Borderless', hint: 'For the 3D-printed frames, 390 × 130 mm, with the title left blank.' },
     { k: 'both', label: 'Both', hint: 'Every board in both versions.' },
   ];
+  refSizes: { k: RefSize; label: string; hint: string }[] = [
+    { k: 'board', label: 'Board size', hint: '395 × 134 mm, laid out like the boards.' },
+    { k: 'small', label: 'Small', hint: '280 × 95 mm: four stacked on A3, two side by side on A4.' },
+  ];
   refCards = REF_CARDS;
+  /** the reference card shown full size, and which side */
+  refZoom = signal<{ id: string; label: string } | null>(null);
+  refZoomBack = signal(false);
+  openRef(r: (typeof REF_CARDS)[number]) { this.refZoomBack.set(false); this.refZoom.set({ id: r.id, label: r.label }); }
   spareKinds = SPARE_KINDS;
   refAllowed(r: (typeof REF_CARDS)[number]) { return refCardAllowed(r, this.opts()); }
   setRef(id: string, v: number) { this.raw.update((o) => ({ ...o, refCards: { ...o.refCards, [id]: v } })); }
@@ -125,6 +134,13 @@ export class PrintPage {
   zoom = signal(false);
   @HostListener('document:keydown', ['$event'])
   onKey(e: KeyboardEvent) {
+    if (this.refZoom()) {
+      if (e.key === 'Escape') this.refZoom.set(null);
+      else if (e.key === 'f' || e.key === 'b') this.refZoomBack.set(!this.refZoomBack());
+      else return;
+      e.preventDefault();
+      return;
+    }
     if (!this.zoom()) return;
     if (e.key === 'Escape') this.zoom.set(false);
     else if (e.key === 'ArrowRight') this.pickSheet(this.sheetIndex() + 1);
@@ -202,10 +218,11 @@ function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
   return [
     'SECRET HITLER + XL - PIECES FOR A PRINT SERVICE', '',
     `Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`,
+    ...(o.base ? [] : ['Only what XL adds to the original box: play it together with your copy of Secret Hitler.']),
     `${pieces} different pieces, ${copies} copies in total.`, '',
     'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
     o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
-    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards 395 x 134 mm, borderless boards ${(3.9 * o.insertScale).toFixed(1)} x ${(1.3 * o.insertScale).toFixed(1)} mm, placards 104.5 x 176 mm (fold in half).`, '',
+    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards 395 x 134 mm, borderless boards 390 x 130 mm, reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
     'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
     'Licensed CC BY-NC-SA 4.0: not for commercial use.',
   ].join('\n');
@@ -214,7 +231,8 @@ function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
 function readme(o: PrintOptions, files: string[]): string {
   return [
     'SECRET HITLER + XL - PRINT SET', '',
-    `Paper: ${o.paper}. Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`, '',
+    `Paper: ${o.paper}. Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`,
+    ...(o.base ? [] : ['Only what XL adds to the original box: play it together with your copy of Secret Hitler.']), '',
     ...files, '',
     'Print at 100 % (no "fit to page"), double-sided, flip on the long edge.',
     'Odd pages are fronts, even pages are backs. Cut along the crop marks.',
