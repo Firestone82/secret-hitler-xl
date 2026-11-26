@@ -1,6 +1,10 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 
-/** Shows one picture as large as the screen allows. Click anywhere or press Esc to close. */
+/**
+ * Shows one picture as large as the screen allows. Click anywhere or press Esc to close.
+ * Given a sharper copy (`hd`), it shows the picture at once and swaps in the sharper one when it has loaded;
+ * if that copy is missing, the picture stays as it is.
+ */
 @Component({
   selector: 'app-lightbox',
   template: `
@@ -24,10 +28,15 @@ export class Lightbox {
   src = signal<string | null>(null);
   alt = signal('');
 
-  open(src: string, alt = '') {
+  open(src: string, alt = '', hd?: string) {
     this.src.set(src);
     this.alt.set(alt);
     this.dlg().nativeElement.showModal();
+    if (hd && hd !== src) {
+      const big = new Image();
+      big.onload = () => { if (this.src() === src) this.src.set(hd); };
+      big.src = hd;
+    }
   }
 
   close() {

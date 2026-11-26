@@ -37,15 +37,33 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
 
     <div class="page">
       <section class="stats" appReveal>
-        <div><b>5–19</b><span>players</span></div>
-        <div><b>3</b><span>parties</span></div>
-        <div><b>{{ roleCount() }}</b><span>secret roles</span></div>
-        <div><b>{{ version() ? 'v' + version() : '…' }}</b><span>rulebook</span></div>
+        <div>
+          <svg class="wm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20v-1.5A5.5 5.5 0 0 1 8 13h2a5.5 5.5 0 0 1 5.5 5.5V20"/><circle cx="17" cy="8.5" r="2.8"/><path d="M17.5 13.2a4.6 4.6 0 0 1 4 4.6V20"/></svg>
+          <b>5–19</b><span>players</span>
+        </div>
+        <div>
+          <svg class="wm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V3"/><path d="M3 3h5.5L7 5.5 8.5 8H3"/><path d="M11 21V7"/><path d="M11 7h5.5L15 9.5l1.5 2.5H11"/><path d="M19 21v-10"/><path d="M19 11h3l-1 2 1 2h-3"/><path d="M1.5 21h21"/></svg>
+          <b>3</b><span>parties</span>
+        </div>
+        <div>
+          <svg class="wm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18"/><path d="M5.5 11l1.6-5.6a1.5 1.5 0 0 1 1.9-1l1.9.6a3.5 3.5 0 0 0 2.2 0l1.9-.6a1.5 1.5 0 0 1 1.9 1L18.5 11"/><circle cx="7.5" cy="17" r="3"/><circle cx="16.5" cy="17" r="3"/><path d="M10.5 16.5a2.5 2.5 0 0 1 3 0"/></svg>
+          <b>{{ roleCount() }}</b><span>secret roles</span>
+        </div>
+        <div>
+          <svg class="wm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7.5 4.5 3 4.5v14c4.5 0 7 .5 9 2 2-1.5 4.5-2 9-2v-14c-4.5 0-7 .5-9 2z"/><path d="M12 6.5v14"/><path d="M6 8.5c1.6 0 2.9.2 4 .6M6 12c1.6 0 2.9.2 4 .6M14 9.1c1.1-.4 2.4-.6 4-.6M14 12.6c1.1-.4 2.4-.6 4-.6"/></svg>
+          <b>{{ version() ? 'v' + version() : '…' }}</b><span>rulebook</span>
+        </div>
       </section>
 
       <section class="tiles">
         <a class="tile lib" routerLink="/rules" appReveal>
-          <div class="pic"><img src="rb/board_liberal.jpg" alt="" loading="lazy" /></div>
+          <div class="pic book">
+            <img class="board" src="rb/board_liberal.jpg" alt="" loading="lazy" />
+            <img class="pg" src="home/rulebook_p3.jpg" alt="" loading="lazy" />
+            <img class="pg" src="home/rulebook_p5.jpg" alt="" loading="lazy" />
+            <img class="pg" src="home/rulebook_p1.jpg" alt="" loading="lazy" />
+            <img class="pol" src="rb/p005.jpg" alt="" loading="lazy" />
+          </div>
           <div class="txt">
             <h2>Rulebook</h2>
             <p>Every rule of the base game and XL, with search, a table of contents and the finished PDFs to download.</p>
@@ -200,7 +218,16 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-radius: 14px; overflow: hidden; margin-top: -0.5rem; }
-    .stats div { background: #fff; padding: 1rem; text-align: center; }
+    .stats div { position: relative; overflow: hidden; background: #fff; padding: 1rem; text-align: center; }
+    /* faint line icon behind each number so the cells do not look empty */
+    .stats .wm { position: absolute; right: 8%; top: 50%; width: 5.2rem; height: 5.2rem; transform: translateY(-50%) rotate(-8deg);
+      fill: none; stroke: var(--dark); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; opacity: .1;
+      transition: opacity .3s, transform .3s; pointer-events: none; }
+    .stats div:hover .wm { opacity: .18; transform: translateY(-50%) rotate(0deg) scale(1.06); }
+    .stats div:nth-child(2) .wm { stroke: var(--fas); }
+    .stats div:nth-child(3) .wm { stroke: var(--com); }
+    .stats div:nth-child(4) .wm { stroke: var(--lib); }
+    .stats b, .stats span { position: relative; }
     .stats b { display: block; font-family: var(--display); font-weight: 400; font-size: 2rem; line-height: 1.1; color: var(--dark); }
     .stats span { color: var(--muted); font-size: .9rem; }
 
@@ -215,6 +242,20 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .pic { height: 150px; background: #ece6d3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
     .tile:hover .pic img { transform: scale(1.05); }
+    /* rulebook: the cover and two inner pages fanned over a dimmed board, with a policy card on top */
+    .pic.book { position: relative; background: var(--dark); }
+    .pic.book .board { position: absolute; inset: 0; opacity: .35; filter: blur(1.5px) saturate(.8); transform: scale(1.1); }
+    .pic.book .pg, .pic.book .pol { position: absolute; top: 14%; left: 50%; width: auto; height: 118%; object-fit: contain;
+      border-radius: 3px; box-shadow: 0 6px 16px rgba(0, 0, 0, .45); transition: transform .4s cubic-bezier(.2, .7, .3, 1); }
+    .pic.book .pg:nth-child(2) { transform: translateX(-112%) rotate(-10deg); }
+    .pic.book .pg:nth-child(3) { transform: translateX(12%) rotate(10deg); }
+    .pic.book .pg:nth-child(4) { transform: translateX(-50%) translateY(-4%); }
+    .pic.book .pol { top: 34%; height: 62%; border-radius: 6px; transform: translateX(105%) rotate(14deg); }
+    .tile:hover .pic.book .board { transform: scale(1.15); }
+    .tile:hover .pic.book .pg:nth-child(2) { transform: translateX(-128%) rotate(-14deg); }
+    .tile:hover .pic.book .pg:nth-child(3) { transform: translateX(28%) rotate(14deg); }
+    .tile:hover .pic.book .pg:nth-child(4) { transform: translateX(-50%) translateY(-10%); }
+    .tile:hover .pic.book .pol { transform: translateX(150%) rotate(20deg) translateY(-6%); }
     .pic.cards { gap: .5rem; padding: 1rem .8rem 0; align-items: flex-start; }
     .pic.cards img { width: auto; height: 120%; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .2)); }
     .pic.cards img:nth-child(1) { transform: rotate(-8deg) translateY(6%); }
@@ -248,14 +289,15 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .original img { flex: none; width: 84px; border-radius: 8px; box-shadow: 0 6px 16px rgba(0, 0, 0, .4); transform: rotate(-4deg); }
     .original .txt { padding: 0; }
     .original h2 { margin: 0 0 .3rem; font-size: 1.6rem; }
-    .original p { margin: 0; color: #d8d2b8; max-width: 46rem; }
+    .original .txt { flex: 1; }
+    .original p { margin: 0; color: #d8d2b8; }
     .original .btn { flex: none; text-decoration: none; padding: .65rem 1.1rem; transition: background .15s; }
     .original .btn:hover { background: #f0924f; }
     .original .btn i { font-style: normal; }
 
     .about { margin-top: 2.5rem; scroll-margin-top: 80px; }
     .about > h2 { font-size: 2.2rem; margin: 0 0 .3rem; }
-    .lead2 { max-width: 760px; font-size: 1.05rem; margin: 0 0 1rem; }
+    .lead2 { font-size: 1.05rem; margin: 0 0 1rem; }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
     .cols h3 { margin: 0 0 .3rem; font-size: 1.35rem; }
     .cols h3:not(:first-child) { margin-top: 1rem; }
@@ -271,7 +313,8 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
     .oss { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; padding: 1.4rem 1.6rem;
       border-radius: 16px; background: #ece6d3; }
     .oss h2 { margin: 0 0 .2rem; font-size: 1.6rem; }
-    .oss p { margin: 0; color: #4a483f; max-width: 40rem; }
+    .oss > div { flex: 1 1 24rem; }
+    .oss p { margin: 0; color: #4a483f; }
 
     @media (max-width: 900px) {
       .hero-in { grid-template-columns: 1fr; }
