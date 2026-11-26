@@ -2,6 +2,8 @@ export type Paper = 'A3' | 'A4';
 export type BoardStyle = 'border' | 'borderless' | 'both';
 /** board: as large as a board; small: 280 × 95 mm, stacked on A3 or two to an A4 sheet */
 export type RefSize = 'board' | 'small';
+/** full: 395 × 134 mm as designed; fit: 95 %, so the slots hold a sleeved policy tile with a little play */
+export type BoardSize = 'full' | 'fit';
 export type SpareKind = 'tiles' | 'roles' | 'memberships' | 'ballots';
 
 /** The reference cards, in print order, with what each needs and how many a table usually wants. */
@@ -33,9 +35,12 @@ export interface PrintOptions {
   /** optional XL roles that are switched on, by role id */
   roles: Record<string, boolean>;
   briefings: boolean;
+  /** which Hitler card art to print: one art id, or 'all' for every version */
+  hitlerArt: string;
   ballots: 'double' | 'separate';
   /** border: the classic boards; borderless: for the 3D-printed frames; both */
   boardStyle: BoardStyle;
+  boardSize: BoardSize;
   /** copies of each reference card, by piece id (r_round…); 0 leaves it out */
   refCards: Record<string, number>;
   refSize: RefSize;
@@ -63,10 +68,12 @@ export const DEFAULT_OPTIONS: PrintOptions = {
   antiPolicies: true,
   roles: Object.fromEntries(['centrist', 'capitalist', 'monarchist', 'anarchist', 'bodyguard', 'fascist_spy', 'liberal_spy', 'jester', 'propagandist', 'bureaucrat', 'detective'].map((k) => [k, true])),
   briefings: true,
-  ballots: 'double',
+  hitlerArt: 'all',
+  ballots: 'separate',
   boardStyle: 'border',
+  boardSize: 'full',
   refCards: Object.fromEntries(REF_CARDS.map((r) => [r.id, r.copies])),
-  refSize: 'board',
+  refSize: 'small',
   spares: { tiles: 0, roles: 0, memberships: 0, ballots: 0 },
   placards: true,
   pileCards: true,
@@ -82,7 +89,10 @@ export function normalise(o: PrintOptions, needsCommunists: (id: string) => bool
   const { insertScale: _, ...rest } = o as PrintOptions & { insertScale?: number };   // no longer an option
   const n: PrintOptions = { ...rest, roles: { ...o.roles }, refCards: { ...DEFAULT_OPTIONS.refCards, ...o.refCards }, spares: { ...DEFAULT_OPTIONS.spares, ...o.spares } };
   if (!['border', 'borderless', 'both'].includes(n.boardStyle)) n.boardStyle = 'border';
-  if (n.refSize !== 'small') n.refSize = 'board';
+  if (n.refSize !== 'board') n.refSize = 'small';
+  if (n.boardSize !== 'fit') n.boardSize = 'full';
+  if (n.ballots !== 'double') n.ballots = 'separate';
+  if (typeof n.hitlerArt !== 'string' || !n.hitlerArt) n.hitlerArt = 'all';
   n.base = n.base !== false || !n.xl;
   const clamp = (v: unknown, max: number) => Math.min(max, Math.max(0, Math.round(Number(v) || 0)));
   for (const k of Object.keys(n.refCards)) n.refCards[k] = clamp(n.refCards[k], 9);

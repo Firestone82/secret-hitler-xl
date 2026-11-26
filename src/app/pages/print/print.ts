@@ -1,8 +1,8 @@
 import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
-import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
-import { CountLine, Slot, makePlan, uniquePieces } from '../../print/plan';
+import { BoardSize, BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
+import { BOARD_FIT_SCALE, INSERT_MM, Slot, makePlan, uniquePieces } from '../../print/plan';
 import { layout } from '../../print/layout';
 import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
 import { Renderer, fetchLoader } from '../../print/render';
@@ -19,7 +19,14 @@ type Flag = 'briefings' | 'placards' | 'pileCards' | 'blanks' | 'splitFiles' | '
 })
 export class PrintPage {
   data = inject(DataService);
-  private stored = (() => { try { return JSON.parse(localStorage.getItem('sh-print-options') ?? 'null'); } catch { return null; } })();
+  private stored = (() => {
+    try {
+      const o = JSON.parse(localStorage.getItem('sh-print-options') ?? 'null');
+      // options saved before version 2 carry the old defaults: board-sized reference cards and double ballots
+      if (o && (o.v ?? 1) < 2) { delete o.refSize; delete o.ballots; }
+      return o;
+    } catch { return null; }
+  })();
   raw = signal<PrintOptions>({ ...DEFAULT_OPTIONS, ...(this.stored ?? {}) });
   busy = signal(false);
   progress = signal(0);
@@ -30,16 +37,11 @@ export class PrintPage {
   opts = computed(() => {
     const rf = this.data.roles();
     const o = normalise(this.raw(), (id) => !!rf?.roles.find((r) => r.id === id)?.needsCommunists);
-    try { localStorage.setItem('sh-print-options', JSON.stringify(o)); } catch { /* private mode */ }
+    try { localStorage.setItem('sh-print-options', JSON.stringify({ ...o, v: 2 })); } catch { /* private mode */ }
     return o;
   });
   plan = computed(() => { const rf = this.data.roles(); return rf ? makePlan(this.opts(), rf) : null; });
   files = computed(() => { const p = this.plan(); return p ? layout(p, this.opts().paper, this.opts().splitFiles) : []; });
-  groups = computed(() => {
-    const g = new Map<string, CountLine[]>();
-    for (const c of this.plan()?.counts ?? []) g.set(c.group, [...(g.get(c.group) ?? []), c]);
-    return [...g.entries()];
-  });
   totalSheets = computed(() => this.files().reduce((s, f) => s + f.sheets.length, 0));
 
   // ---- preview: the sheets as they will print, or the single pieces for a print service
@@ -50,6 +52,11 @@ export class PrintPage {
   sheetPreview = computed(() => {
     const ref = this.sheets()[this.sheetIndex()], rf = this.data.roles();
     return ref && rf ? previewSheet(ref.sheet, this.opts().paper, this.back(), rf) : null;
+  });
+  /** the same sheet with the sharper pictures, for the full-screen view */
+  zoomPreview = computed(() => {
+    const ref = this.sheets()[this.sheetIndex()], rf = this.data.roles();
+    return ref && rf && this.zoom() ? previewSheet(ref.sheet, this.opts().paper, this.back(), rf, true) : null;
   });
   pieces = computed(() => { const p = this.plan(); return p ? uniquePieces(p) : []; });
   piecePreviews = computed(() => {
@@ -106,9 +113,15 @@ export class PrintPage {
   // ---- boards, reference cards, spares
   boardStyles: { k: BoardStyle; label: string; hint: string }[] = [
     { k: 'border', label: 'With border', hint: 'The classic boards, 395 × 134 mm.' },
-    { k: 'borderless', label: 'Borderless', hint: 'For the 3D-printed frames, 390 × 130 mm, with the title left blank.' },
+    { k: 'borderless', label: 'Borderless', hint: 'Only the inner track, for the 3D-printed frames.' },
     { k: 'both', label: 'Both', hint: 'Every board in both versions.' },
   ];
+  boardSizes: { k: BoardSize; label: string; hint: string }[] = [
+    { k: 'full', label: 'Full size', hint: 'As designed: board 395 × 134 mm.' },
+    { k: 'fit', label: 'Fit sleeved tiles', hint: `${Math.round(BOARD_FIT_SCALE * 100)} %: the slots hold a sleeved policy tile with a little play.` },
+  ];
+  /** the Hitler card arts there are to choose from */
+  hitlerArts = computed(() => this.data.roles()?.roles.find((r) => r.id === 'hitler')?.art ?? []);
   refSizes: { k: RefSize; label: string; hint: string }[] = [
     { k: 'board', label: 'Board size', hint: '395 × 134 mm, laid out like the boards.' },
     { k: 'small', label: 'Small', hint: '280 × 95 mm: four stacked on A3, two side by side on A4.' },
@@ -222,7 +235,7 @@ function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
     `${pieces} different pieces, ${copies} copies in total.`, '',
     'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
     o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
-    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards 395 x 134 mm, borderless boards 390 x 130 mm, reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
+    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards ${mmText(395, 134, o)}, borderless boards ${mmText(...INSERT_MM['fascist_9-10'], o)} (Liberal ${mmText(...INSERT_MM['liberal'], o)}), reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
     'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
     'Licensed CC BY-NC-SA 4.0: not for commercial use.',
   ].join('\n');
@@ -240,4 +253,10 @@ function readme(o: PrintOptions, files: string[]): string {
     'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
     'Licensed CC BY-NC-SA 4.0: not for commercial use.',
   ].join('\n');
+}
+
+/** A board size for the README, with the "fit sleeved tiles" scale applied. */
+function mmText(w: number, h: number, o: PrintOptions): string {
+  const s = o.boardSize === 'fit' ? BOARD_FIT_SCALE : 1;
+  return `${+(w * s).toFixed(1)} x ${+(h * s).toFixed(1)} mm`;
 }

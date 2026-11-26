@@ -9,7 +9,7 @@ All game content is in `public/`. The site reads three JSON files at start-up (`
 | `data/pieces.json` | Size and label of every printable piece. |
 | `pieces/*.pdf` | One small PDF per piece: page 1 front, page 2 back, cut size plus 3 mm bleed. The print builder places these on the sheets. |
 | `portraits/`, `cards/`, `rb/` | Portraits for the briefing cards, card thumbnails, rulebook pictures. |
-| `preview/` | Small JPEGs of every piece (front `_0`, back `_1`) for the print builder's preview. Made from `pieces/` by `tools/export/web_previews.py`. |
+| `preview/` | Small JPEGs of every piece (front `_0`, back `_1`) for the print builder's preview. Made from `pieces/` by `tools/export/web_previews.py`, with sharper copies in `preview/hd/` for full screen. `preview/briefing/` has the Role Briefing cards, made by `tools/export/briefing_previews.mts`. |
 | `fonts/` | Jost and Germania One, embedded into the generated PDFs. |
 | `pdf/` | The finished rulebook PDFs (A5 and A4, normal and booklet). |
 

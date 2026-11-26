@@ -391,8 +391,8 @@
   },
   "i_liberal": {
     "kind": "insert",
-    "w": 390.0,
-    "h": 130.0,
+    "w": 289.4,
+    "h": 84.7,
     "label": "Liberal board (borderless)"
   },
   "b_fascist_5-6": {
@@ -403,8 +403,8 @@
   },
   "i_fascist_5-6": {
     "kind": "insert",
-    "w": 390.0,
-    "h": 130.0,
+    "w": 342.9,
+    "h": 83.4,
     "label": "Fascist board 5-6 players (borderless)"
   },
   "b_fascist_7-8": {
@@ -415,8 +415,8 @@
   },
   "i_fascist_7-8": {
     "kind": "insert",
-    "w": 390.0,
-    "h": 130.0,
+    "w": 342.9,
+    "h": 83.4,
     "label": "Fascist board 7-8 players (borderless)"
   },
   "b_fascist_9-10": {
@@ -427,8 +427,8 @@
   },
   "i_fascist_9-10": {
     "kind": "insert",
-    "w": 390.0,
-    "h": 130.0,
+    "w": 342.9,
+    "h": 83.4,
     "label": "Fascist board 9+ players (borderless)"
   },
   "b_communist": {
@@ -439,8 +439,8 @@
   },
   "i_communist": {
     "kind": "insert",
-    "w": 390.0,
-    "h": 130.0,
+    "w": 342.7,
+    "h": 81.6,
     "label": "Communist board (borderless)"
   },
   "r_setupnight": {

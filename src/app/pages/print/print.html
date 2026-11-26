@@ -83,6 +83,13 @@
               </button>
             }
           </div>
+          <div class="seg2 board-size" role="radiogroup" aria-label="Board size">
+            @for (z of boardSizes; track z.k) {
+              <button type="button" role="radio" [attr.aria-checked]="opts().boardSize === z.k" [class.on]="opts().boardSize === z.k" (click)="set('boardSize', z.k)">
+                <b>{{ z.label }}</b><span>{{ z.hint }}</span>
+              </button>
+            }
+          </div>
 
           <div class="refs" [class.dim]="!opts().xl">
             <div class="h3row"><b>Reference cards</b><small>Click a card to see it full size. Set 0 to leave one out.</small></div>
@@ -123,8 +130,23 @@
             <label><input type="radio" name="ballots" [checked]="opts().ballots === 'double'" (change)="set('ballots', 'double')" /> One card, Ja! front and Nein back</label>
             <label><input type="radio" name="ballots" [checked]="opts().ballots === 'separate'" (change)="set('ballots', 'separate')" /> Separate Ja! and Nein cards</label>
           </div>
+          @if (hitlerArts().length > 1) {
+            <div class="hitler" [class.dim]="!opts().base">
+              <b>Hitler card</b>
+              <p>Print one of every version to choose from at the table, or only the one you like.</p>
+              <div class="arts" role="radiogroup" aria-label="Hitler card">
+                <button type="button" role="radio" class="all" [attr.aria-checked]="opts().hitlerArt === 'all'" [class.on]="opts().hitlerArt === 'all'" (click)="set('hitlerArt', 'all')">All {{ hitlerArts().length }} versions</button>
+                @for (a of hitlerArts(); track a) {
+                  <button type="button" role="radio" [attr.aria-checked]="opts().hitlerArt === a" [class.on]="opts().hitlerArt === a" (click)="set('hitlerArt', a)" [attr.aria-label]="'Only this version'">
+                    <img [src]="'cards/' + a + '.jpg'" alt="" loading="lazy" />
+                  </button>
+                }
+              </div>
+            </div>
+          }
           <div class="spares">
-            <div class="h3row"><b>Spares</b><small>Extra copies in case one gets lost, bent or marked.</small></div>
+            <b>Spares</b>
+            <p>Extra copies in case one gets lost, bent or marked.</p>
             <div class="spare-grid">
               @for (k of spareKinds; track k.k) {
                 <div class="ref">
@@ -150,14 +172,7 @@
 
         <section>
           <h2>Output</h2>
-          <div class="papers outputs">
-            <button [class.on]="opts().output === 'sheets'" (click)="set('output', 'sheets')">
-              <b>Print at home</b><span>Pieces arranged on {{ opts().paper }} sheets with crop marks, front and back.</span>
-            </button>
-            <button [class.on]="opts().output === 'pieces'" (click)="set('output', 'pieces')">
-              <b>Print service</b><span>A ZIP with every piece as its own PDF, front and back, with 3 mm bleed.</span>
-            </button>
-          </div>
+          <p class="note">Choose between PDF sheets and a print service in the preview.</p>
           @if (opts().output === 'sheets') {
             <label class="sw"><input type="checkbox" [checked]="opts().splitFiles" (change)="set('splitFiles', $any($event.target).checked)" />
               <span><b>Separate files by paper</b><small>Ballots and borderless boards in their own PDFs, so you can load different paper.</small></span></label>
@@ -206,21 +221,14 @@
           </div>
         }
 
-        <details class="contents">
-          <summary>What is in the set</summary>
-          @for (g of groups(); track g[0]) {
-            <div class="grp"><div class="gh">{{ g[0] }}</div>
-              @for (c of g[1]; track c.label) { <div class="ln"><span>{{ c.label }}</span><b>{{ c.count }}</b></div> }
-            </div>
-          }
-          @if (opts().output === 'sheets') {
-            <div class="files">
-              @for (f of files(); track f.key) {
-                <div class="file"><b>{{ f.name }}</b><span>{{ f.sheets.length }} × {{ opts().paper }} · {{ f.title }}</span></div>
-              }
-            </div>
-          }
-        </details>
+        <div class="outputs" role="radiogroup" aria-label="Output">
+          <button type="button" role="radio" [attr.aria-checked]="opts().output === 'sheets'" [class.on]="opts().output === 'sheets'" (click)="set('output', 'sheets')">
+            <b>PDF</b><span>{{ opts().paper }} sheets with crop marks, to print at home</span>
+          </button>
+          <button type="button" role="radio" [attr.aria-checked]="opts().output === 'pieces'" [class.on]="opts().output === 'pieces'" (click)="set('output', 'pieces')">
+            <b>Print service</b><span>A ZIP with one PDF per piece and 3 mm bleed</span>
+          </button>
+        </div>
 
         <button class="btn primary big" (click)="generate()" [disabled]="busy() || !files().length">{{ busy() ? 'Building…' : opts().output === 'pieces' ? 'Download the ZIP for a print service' : 'Create the print files' }}</button>
         @if (busy() || progress() > 0) {
@@ -230,16 +238,17 @@
         @if (error()) { <p class="error">{{ error() }}</p> }
       </aside>
     </div>
-    @if (zoom() && sheetPreview(); as sp) {
+    @if (zoom() && zoomPreview(); as sp) {
       <div class="zoom" (click)="zoom.set(false)" role="dialog" aria-modal="true" aria-label="Sheet preview">
         <div class="zbar" (click)="$event.stopPropagation()">
           <button class="mini" (click)="pickSheet(sheetIndex() - 1)" [disabled]="sheetIndex() === 0" aria-label="Previous sheet">‹</button>
-          <span class="ztitle">{{ sheetIndex() + 1 }} / {{ sheets().length }} · {{ sp.title }}</span>
           <button class="mini" (click)="pickSheet(sheetIndex() + 1)" [disabled]="sheetIndex() >= sheets().length - 1" aria-label="Next sheet">›</button>
+          <span class="ztitle">{{ sheetIndex() + 1 }} / {{ sheets().length }} · {{ sp.title }}</span>
           <span class="seg"><button [class.on]="!back()" (click)="back.set(false)">Front</button><button [class.on]="back()" (click)="back.set(true)">Back</button></span>
           <button class="mini close" (click)="zoom.set(false)" aria-label="Close">✕</button>
         </div>
-        <svg class="zsheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" (click)="$event.stopPropagation()">
+        <!-- a click on the dark space around the sheet closes the view, a click on the sheet does not -->
+        <svg class="zsheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" (click)="$event.target === $event.currentTarget ? zoom.set(false) : $event.stopPropagation()">
           <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
           <g [appPreview]="sp.items" />
         </svg>
@@ -248,11 +257,14 @@
     @if (refZoom(); as rz) {
       <div class="zoom" (click)="refZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="rz.label">
         <div class="zbar" (click)="$event.stopPropagation()">
+          <span></span><span></span>
           <span class="ztitle">{{ rz.label }}</span>
           <span class="seg"><button [class.on]="!refZoomBack()" (click)="refZoomBack.set(false)">Front</button><button [class.on]="refZoomBack()" (click)="refZoomBack.set(true)">Back</button></span>
           <button class="mini close" (click)="refZoom.set(null)" aria-label="Close">✕</button>
         </div>
-        <img class="zimg" [src]="'preview/large/' + rz.id + '_' + (refZoomBack() ? 1 : 0) + '.jpg'" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
+        <div class="zstage">
+          <img class="zimg" [src]="'preview/large/' + rz.id + '_' + (refZoomBack() ? 1 : 0) + '.jpg'" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
+        </div>
       </div>
     }
   } @else { <p>Loading…</p> }
