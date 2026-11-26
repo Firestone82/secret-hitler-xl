@@ -371,21 +371,26 @@
             "label": "YOU WIN IF",
             "items": [
               "The Fascist board is full.",
-              "Hitler is executed.",
-              "Not when Hitler becomes Chancellor."
+              "Hitler is executed."
+            ]
+          },
+          {
+            "label": "YOU LOSE IF",
+            "items": [
+              "Hitler is elected Chancellor."
             ]
           },
           {
             "label": "YOU KNOW",
             "items": [
-              "Nobody. At setup, show your thumb to the Fascists."
+              "Nobody. Show the Fascists your thumb."
             ]
           },
           {
             "label": "YOUR POWER",
             "items": [
-              "When <b>Call Special Election</b> is enacted, you may reveal yourself and become the next President.",
-              "The President who enacted it and you each name a Chancellor candidate.",
+              "When <b>Call Special Election</b> is enacted, you may reveal yourself and become President.",
+              "You and the President who enacted it each name a Chancellor candidate.",
               "Everyone gives their ballot card to one of them. Most cards wins. You break ties."
             ]
           }
@@ -396,7 +401,7 @@
         "teamLabel": "Far right, own goals",
         "image": "r_monarchist.jpg",
         "paragraphs": [
-          "Wins if six Fascist policies are enacted or Hitler is executed, but not when Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
+          "Wins if six Fascist policies are enacted or Hitler is executed, and loses if Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
           "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
         ],
         "addWhen": "the Fascists win too often.",
