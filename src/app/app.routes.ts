@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
 import { RulesPage } from './pages/rules/rules';
 import { RolesPage } from './pages/roles/roles';
 
@@ -8,7 +9,9 @@ export const routes: Routes = [
   { path: 'roles', component: RolesPage, title: 'Roles · Secret Hitler + XL' },
   // the print builder carries pdf-lib, so it loads only when opened
   { path: 'print', loadComponent: () => import('./pages/print/print').then((m) => m.PrintPage), title: 'Print builder · Secret Hitler + XL' },
-  { path: 'about', loadComponent: () => import('./pages/about/about').then((m) => m.AboutPage), title: 'About · Secret Hitler + XL' },
+  // About is a section of the home page
+  { path: 'about', redirectTo: () => inject(Router).createUrlTree([''], { fragment: 'about' }) },
+  { path: 'versions', loadComponent: () => import('./pages/versions/versions').then((m) => m.VersionsPage), title: 'Version history · Secret Hitler + XL' },
   { path: 'credits', loadComponent: () => import('./pages/credits/credits').then((m) => m.CreditsPage), title: 'Credits · Secret Hitler + XL' },
   { path: '3d-printing', loadComponent: () => import('./pages/printing-3d/printing-3d').then((m) => m.Printing3dPage), title: '3D printing · Secret Hitler + XL' },
   { path: '**', redirectTo: '' },
