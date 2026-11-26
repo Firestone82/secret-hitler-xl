@@ -113,7 +113,15 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 1.5rem; }
     .role { background: #fff; border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .8rem; border-top: 5px solid var(--c);
       scroll-margin-top: 76px; }
-    .cards { display: flex; gap: .8rem; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+    /* the Secret Role card and the briefing card always side by side: in a narrower tile both shrink together */
+    .role { container-type: inline-size; }
+    .cards { display: flex; gap: .8rem; align-items: flex-start; justify-content: center; }
+    @container (max-width: 516px) { .cards { zoom: .94; } }
+    @container (max-width: 486px) { .cards { zoom: .86; } }
+    @container (max-width: 446px) { .cards { zoom: .78; } }
+    @container (max-width: 404px) { .cards { zoom: .7; } }
+    @container (max-width: 362px) { .cards { zoom: .62; } }
+    @container (max-width: 320px) { .cards { zoom: .55; } }
     .secret { width: 254px; height: 352px; object-fit: cover; border-radius: 9px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
     .head { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; }
     .acts { display: flex; gap: .4rem; flex: none; }
@@ -146,7 +154,6 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
       .tocbtn { display: block; position: fixed; right: 1rem; bottom: 1rem; z-index: 11; border: 0; border-radius: 99px; padding: .7rem 1.1rem;
         background: var(--orange); font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,.25); }
     }
-    @media (max-width: 600px) { .secret { width: 46%; height: auto; } }
   `,
 })
 export class RolesPage {
