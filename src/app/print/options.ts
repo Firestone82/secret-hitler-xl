@@ -2,8 +2,6 @@ export type Paper = 'A3' | 'A4';
 export type BoardStyle = 'border' | 'borderless' | 'both';
 /** board: as large as a board; small: 280 × 95 mm, stacked on A3 or two to an A4 sheet */
 export type RefSize = 'board' | 'small';
-/** full: 395 × 134 mm as designed; fit: 95 %, so the slots hold a sleeved policy tile with a little play */
-export type BoardSize = 'full' | 'fit';
 export type SpareKind = 'tiles' | 'roles' | 'memberships' | 'ballots';
 
 /** The reference cards, in print order, with what each needs and how many a table usually wants. */
@@ -17,7 +15,7 @@ export const REF_CARDS: { id: string; label: string; hint: string; copies: numbe
 
 export const SPARE_KINDS: { k: SpareKind; label: string; hint: string }[] = [
   { k: 'tiles', label: 'Policy tiles', hint: 'per party' },
-  { k: 'roles', label: 'Regular roles', hint: 'Liberal, Fascist, Communist' },
+  { k: 'roles', label: 'Regular roles', hint: 'one of each' },
   { k: 'memberships', label: 'Party Membership', hint: 'per party' },
   { k: 'ballots', label: 'Ballots', hint: 'besides the one spare' },
 ];
@@ -40,7 +38,6 @@ export interface PrintOptions {
   ballots: 'double' | 'separate';
   /** border: the classic boards; borderless: for the 3D-printed frames; both */
   boardStyle: BoardStyle;
-  boardSize: BoardSize;
   /** copies of each reference card, by piece id (r_round…); 0 leaves it out */
   refCards: Record<string, number>;
   refSize: RefSize;
@@ -49,9 +46,6 @@ export interface PrintOptions {
   placards: boolean;
   pileCards: boolean;
   blanks: boolean;
-  /** ballots and borderless boards in their own PDF, for different paper */
-  splitFiles: boolean;
-  rulebook: boolean;
   /** sheets: imposed sheets to print at home; pieces: one PDF per piece and side, for print services */
   output: 'sheets' | 'pieces';
   /** pieces only: repeat the files for every copy instead of putting the count in the file name */
@@ -71,26 +65,23 @@ export const DEFAULT_OPTIONS: PrintOptions = {
   hitlerArt: 'all',
   ballots: 'separate',
   boardStyle: 'border',
-  boardSize: 'full',
   refCards: Object.fromEntries(REF_CARDS.map((r) => [r.id, r.copies])),
   refSize: 'small',
   spares: { tiles: 0, roles: 0, memberships: 0, ballots: 0 },
   placards: true,
   pileCards: true,
   blanks: true,
-  splitFiles: true,
-  rulebook: true,
   output: 'sheets',
   perCopy: false,
 };
 
 /** Keeps the options consistent: what the rules allow at this table size and with these modules. */
 export function normalise(o: PrintOptions, needsCommunists: (id: string) => boolean): PrintOptions {
-  const { insertScale: _, ...rest } = o as PrintOptions & { insertScale?: number };   // no longer an option
+  // options that are gone, but may still be in what the browser saved
+  const { insertScale: _a, boardSize: _b, splitFiles: _c, rulebook: _d, ...rest } = o as PrintOptions & Record<string, unknown>;
   const n: PrintOptions = { ...rest, roles: { ...o.roles }, refCards: { ...DEFAULT_OPTIONS.refCards, ...o.refCards }, spares: { ...DEFAULT_OPTIONS.spares, ...o.spares } };
   if (!['border', 'borderless', 'both'].includes(n.boardStyle)) n.boardStyle = 'border';
   if (n.refSize !== 'board') n.refSize = 'small';
-  if (n.boardSize !== 'fit') n.boardSize = 'full';
   if (n.ballots !== 'double') n.ballots = 'separate';
   if (typeof n.hitlerArt !== 'string' || !n.hitlerArt) n.hitlerArt = 'all';
   n.base = n.base !== false || !n.xl;

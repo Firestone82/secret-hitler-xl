@@ -33,7 +33,7 @@ export interface Sheet {
 }
 
 export interface PrintFile {
-  key: 'main' | 'ballots' | 'inserts';
+  key: 'main';
   name: string;
   title: string;
   sheets: Sheet[];
@@ -162,35 +162,16 @@ function longSheetsA4(title: string, slots: Slot[], placards: Slot[]): Sheet[] {
   return out;
 }
 
-/** Splits the plan into print files and lays out every sheet. */
-export function layout(plan: Plan, paper: Paper, split: boolean): PrintFile[] {
+/** Lays out every sheet of the plan, all in one print file. */
+export function layout(plan: Plan, paper: Paper): PrintFile[] {
   const a3 = paper === 'A3';
-  const perCard = a3 ? 18 : 9;
-  let ballotsOwn: Slot[] = [], cards = [...plan.cards];
-  if (split && plan.ballots.length) {
-    // whole sheets of ballots on their own paper; a small remainder rides along with the other cards
-    const full = Math.floor(plan.ballots.length / perCard) * perCard, rest = plan.ballots.length - full;
-    if (full > 0 && rest <= 3) { ballotsOwn = plan.ballots.slice(0, full); cards = [...plan.ballots.slice(full), ...cards]; }
-    else ballotsOwn = plan.ballots;
-  } else cards = [...plan.ballots, ...cards];
-
+  const cards = [...plan.ballots, ...plan.cards];
   const tiles = a3 ? cardSheets('Policy tiles', plan.tiles, paper, true, 3, 8, GUT, GUT) : cardSheets('Policy tiles', plan.tiles, paper, false, 4, 4, GUT, 0);
   const cardS = a3 ? cardSheets('Cards', cards, paper, true, 3, 6, GUT, GUT) : cardSheets('Cards', cards, paper, false, 3, 3, 0, GUT);
   const longs = (a3 ? longSheetsA3 : longSheetsA4)('Boards', plan.longs, plan.placards);
   // small reference cards: four stacked on A3, two side by side on A4
   const refs = a3 ? cardSheets('Reference cards', plan.refs, paper, false, 1, 4, 4, 4) : cardSheets('Reference cards', plan.refs, paper, true, 2, 1, 4, 4);
-  const ballotS = a3 ? cardSheets('Ballots', ballotsOwn, paper, true, 3, 6, GUT, GUT) : cardSheets('Ballots', ballotsOwn, paper, false, 3, 3, 0, GUT);
   const insertS = (a3 ? longSheetsA3 : longSheetsA4)('Borderless boards', plan.inserts, []);
-
-  const files: PrintFile[] = [];
-  const main = [...tiles, ...cardS, ...longs, ...refs];
-  if (split) {
-    if (main.length) files.push({ key: 'main', name: `Secret_Hitler_XL_${paper}_duplex.pdf`, title: 'Tiles, cards, boards, reference cards, placards', sheets: main });
-    if (ballotS.length) files.push({ key: 'ballots', name: `Secret_Hitler_XL_${paper}_ballots_duplex.pdf`, title: 'Ballot cards', sheets: ballotS });
-    if (insertS.length) files.push({ key: 'inserts', name: `Secret_Hitler_XL_${paper}_borderless_boards_duplex.pdf`, title: 'Boards without border', sheets: insertS });
-  } else {
-    const all = [...main, ...ballotS, ...insertS];
-    if (all.length) files.push({ key: 'main', name: `Secret_Hitler_XL_${paper}_duplex.pdf`, title: 'Everything', sheets: all });
-  }
-  return files;
+  const all = [...tiles, ...cardS, ...longs, ...refs, ...insertS];
+  return all.length ? [{ key: 'main', name: `Secret_Hitler_XL_${paper}_duplex.pdf`, title: 'Everything', sheets: all }] : [];
 }

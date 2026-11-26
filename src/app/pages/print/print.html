@@ -24,7 +24,7 @@
             <input type="range" [min]="plan()!.minPlayers" [max]="opts().communists ? 19 : 10" [value]="opts().players" (input)="set('players', num($any($event.target).value))" />
           </label>
           <label class="sw"><input type="checkbox" [checked]="opts().xl" (change)="set('xl', $any($event.target).checked)" />
-            <span><b>Secret Hitler XL</b><small>The fan expansion. Off: only the original game for 5 to 10 players.</small></span></label>
+            <span><b>Secret Hitler XL</b><small>The fan expansion: up to 19 players, extra roles, reference cards and the modules below.</small></span></label>
           <div class="sub" [class.dim]="!opts().xl">
             <label class="sw"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().communists" (change)="set('communists', $any($event.target).checked)" />
               <span><b>The Communists</b><small>A third party with its own board. Needed above 10 players.</small></span></label>
@@ -34,7 +34,7 @@
               <span><b>Anti-policies</b><small>Three tiles that undo a board space.</small></span></label>
           </div>
           <label class="sw" [class.dim]="!opts().xl"><input type="checkbox" [disabled]="!opts().xl" [checked]="opts().base" (change)="set('base', $any($event.target).checked)" />
-            <span><b>Original game pieces</b><small>Off: only what XL adds, for playing with your own copy of Secret Hitler. Leaves out what its box already has: 17 policy tiles, 10 roles, 10 memberships, 20 ballots, the Liberal and Fascist boards, placards and pile cards.</small></span></label>
+            <span><b>Original game pieces</b><small>What the original Secret Hitler box holds: 17 policy tiles, 10 roles, 10 memberships, 20 ballots, the Liberal and Fascist boards, placards and pile cards. Already own the game? Leave them out and print only what XL adds.</small></span></label>
         </section>
 
         <section [class.dim]="!opts().xl">
@@ -80,13 +80,6 @@
             @for (b of boardStyles; track b.k) {
               <button type="button" role="radio" [attr.aria-checked]="opts().boardStyle === b.k" [class.on]="opts().boardStyle === b.k" (click)="set('boardStyle', b.k)">
                 <b>{{ b.label }}</b><span>{{ b.hint }}</span>
-              </button>
-            }
-          </div>
-          <div class="seg2 board-size" role="radiogroup" aria-label="Board size">
-            @for (z of boardSizes; track z.k) {
-              <button type="button" role="radio" [attr.aria-checked]="opts().boardSize === z.k" [class.on]="opts().boardSize === z.k" (click)="set('boardSize', z.k)">
-                <b>{{ z.label }}</b><span>{{ z.hint }}</span>
               </button>
             }
           </div>
@@ -173,15 +166,11 @@
         <section>
           <h2>Output</h2>
           <p class="note">Choose between PDF sheets and a print service in the preview.</p>
-          @if (opts().output === 'sheets') {
-            <label class="sw"><input type="checkbox" [checked]="opts().splitFiles" (change)="set('splitFiles', $any($event.target).checked)" />
-              <span><b>Separate files by paper</b><small>Ballots and borderless boards in their own PDFs, so you can load different paper.</small></span></label>
-          } @else {
+          @if (opts().output === 'pieces') {
             <label class="sw"><input type="checkbox" [checked]="opts().perCopy" (change)="set('perCopy', $any($event.target).checked)" />
-              <span><b>One file per copy</b><small>Off: each design once, with the count in the file name and in manifest.csv. On: four Liberal cards are four pairs of files.</small></span></label>
+              <span><b>One file per copy</b><small>Four Liberal cards become four pairs of files, instead of one pair with the count in the file name and in manifest.csv.</small></span></label>
           }
-          <label class="sw"><input type="checkbox" [checked]="opts().rulebook" (change)="set('rulebook', $any($event.target).checked)" />
-            <span><b>Add the rulebook</b><small>{{ opts().paper === 'A3' ? 'A4 booklet on A3' : 'A5 booklet on A4' }} and the page-by-page version.</small></span></label>
+          <p class="note">The rulebook is not part of the print files: download it from the <a routerLink="/rules">Rules</a> page.</p>
           <button class="mini" (click)="reset()">Reset all options</button>
         </section>
       </div>
@@ -208,7 +197,7 @@
           } @else { <p class="empty">Nothing to print yet.</p> }
           <div class="tot">{{ totalSheets() }} sheets of {{ opts().paper }} in {{ files().length }} {{ files().length === 1 ? 'file' : 'files' }}</div>
         } @else {
-          <div class="sheet-meta">{{ pieces().length }} different pieces, {{ totalCopies() }} copies</div>
+          <div class="sheet-meta">{{ pieces().length }} different designs, one file each</div>
           <div class="piece-grid">
             @for (p of piecePreviews(); track $index) {
               <figure [class.wide]="p.item.w > 150">
@@ -219,6 +208,7 @@
               </figure>
             }
           </div>
+          <div class="tot">{{ totalCopies() }} pieces in total: {{ pieceTotals() }}</div>
         }
 
         <div class="outputs" role="radiogroup" aria-label="Output">

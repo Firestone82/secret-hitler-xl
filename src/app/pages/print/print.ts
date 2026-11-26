@@ -1,19 +1,20 @@
 import { Component, HostListener, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
-import { BoardSize, BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
-import { BOARD_FIT_SCALE, INSERT_MM, Slot, makePlan, uniquePieces } from '../../print/plan';
+import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
+import { INSERT_MM, Slot, makePlan, uniquePieces } from '../../print/plan';
 import { layout } from '../../print/layout';
 import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
 import { Renderer, fetchLoader } from '../../print/render';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 import { PreviewSvg } from './preview-svg';
 
-type Flag = 'briefings' | 'placards' | 'pileCards' | 'blanks' | 'splitFiles' | 'rulebook';
+type Flag = 'briefings' | 'placards' | 'pileCards' | 'blanks';
 
 @Component({
   selector: 'app-print',
-  imports: [SafeHtmlPipe, PreviewSvg],
+  imports: [SafeHtmlPipe, PreviewSvg, RouterLink],
   templateUrl: './print.html',
   styleUrl: './print.scss',
 })
@@ -41,7 +42,7 @@ export class PrintPage {
     return o;
   });
   plan = computed(() => { const rf = this.data.roles(); return rf ? makePlan(this.opts(), rf) : null; });
-  files = computed(() => { const p = this.plan(); return p ? layout(p, this.opts().paper, this.opts().splitFiles) : []; });
+  files = computed(() => { const p = this.plan(); return p ? layout(p, this.opts().paper) : []; });
   totalSheets = computed(() => this.files().reduce((s, f) => s + f.sheets.length, 0));
 
   // ---- preview: the sheets as they will print, or the single pieces for a print service
@@ -64,6 +65,16 @@ export class PrintPage {
     return this.pieces().map((u) => ({ u, item: previewPiece(u.slot, this.back(), rf) }));
   });
   totalCopies = computed(() => this.pieces().reduce((s, u) => s + u.copies, 0));
+  /** what a print service is asked to print, by kind: "120 cards, 45 tiles, 7 boards" */
+  pieceTotals = computed(() => {
+    const p = this.plan(); if (!p) return '';
+    const n = (k: number, one: string, many: string) => (k ? [`${k} ${k === 1 ? one : many}`] : []);
+    return [
+      ...n(p.cards.length + p.ballots.length, 'card', 'cards'), ...n(p.tiles.length, 'policy tile', 'policy tiles'),
+      ...n(p.longs.length + p.inserts.length, 'board', 'boards'), ...n(p.refs.length, 'reference card', 'reference cards'),
+      ...n(p.placards.length, 'placard', 'placards'),
+    ].join(', ');
+  });
   /** the piece's own label from pieces.json where there is one: "Emergency: Policy Peek", not "Emergency power" */
   pieceLabel(slot: Slot): string {
     const f = slot.front;
@@ -115,10 +126,6 @@ export class PrintPage {
     { k: 'border', label: 'With border', hint: 'The classic boards, 395 × 134 mm.' },
     { k: 'borderless', label: 'Borderless', hint: 'Only the inner track, for the 3D-printed frames.' },
     { k: 'both', label: 'Both', hint: 'Every board in both versions.' },
-  ];
-  boardSizes: { k: BoardSize; label: string; hint: string }[] = [
-    { k: 'full', label: 'Full size', hint: 'As designed: board 395 × 134 mm.' },
-    { k: 'fit', label: 'Fit sleeved tiles', hint: `${Math.round(BOARD_FIT_SCALE * 100)} %: the slots hold a sleeved policy tile with a little play.` },
   ];
   /** the Hitler card arts there are to choose from */
   hitlerArts = computed(() => this.data.roles()?.roles.find((r) => r.id === 'hitler')?.art ?? []);
@@ -173,19 +180,10 @@ export class PrintPage {
     try {
       const o = this.opts(), files = this.files(), r = new Renderer(fetchLoader);
       if (o.output === 'pieces') return await this.generatePieces(r, o);
-      const out: { name: string; bytes: Uint8Array }[] = [];
+      // everything is in one file now, so it downloads as a plain PDF
       for (const [i, f] of files.entries()) {
         this.status.set(`Building ${f.name} (${f.sheets.length} sheets)…`);
-        out.push({ name: f.name, bytes: await r.render(f, o.paper, rf, (d, t) => this.progress.set((i + d / t) / files.length)) });
-      }
-      out.push(...(await this.rulebookFiles(o)));
-      if (out.length === 1) { save(out[0].bytes, out[0].name, 'application/pdf'); }
-      else {
-        this.status.set('Packing the zip…');
-        const JSZip = (await import('jszip')).default; const zip = new JSZip();
-        for (const f of out) zip.file(f.name, f.bytes);
-        zip.file('README.txt', readme(o, files.map((f) => `${f.name}: ${f.sheets.length} sheets, ${f.title}`)));
-        save(await zip.generateAsync({ type: 'uint8array' }), `Secret_Hitler_XL_${o.paper}_print_set.zip`, 'application/zip');
+        save(await r.render(f, o.paper, rf, (d, t) => this.progress.set((i + d / t) / files.length)), f.name, 'application/pdf');
       }
       this.status.set('Done. Print at 100 %, double-sided, flip on the long edge.'); this.progress.set(1);
     } catch (e: any) {
@@ -201,20 +199,9 @@ export class PrintPage {
     for (const f of ex.files) zip.file(f.path, f.bytes);
     zip.file('manifest.csv', ex.manifest);
     zip.file('README.txt', pieceReadme(o, ex.pieces, ex.copies));
-    for (const f of await this.rulebookFiles(o)) zip.file(f.name, f.bytes);
     this.status.set('Packing the zip…');
     save(await zip.generateAsync({ type: 'uint8array' }), `Secret_Hitler_XL_print_service_pieces.zip`, 'application/zip');
     this.status.set(`Done: ${ex.pieces} pieces, ${ex.copies} copies. Each file is cut size plus 3 mm bleed.`); this.progress.set(1);
-  }
-
-  private async rulebookFiles(o: PrintOptions) {
-    if (!o.rulebook) return [];
-    this.status.set('Adding the rulebook…');
-    let rb = o.paper === 'A3'
-      ? ['Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf', 'Secret_Hitler_XL_Rulebook_A4.pdf']
-      : ['Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf', 'Secret_Hitler_XL_Rulebook_A5.pdf'];
-    if (o.output === 'pieces') rb = rb.filter((n) => !n.includes('booklet'));   // a print service binds the page-by-page version
-    return Promise.all(rb.map(async (n) => ({ name: 'Rulebook/' + n, bytes: await fetchLoader('pdf/' + n) })));
   }
 
   setPaper(p: Paper) { this.set('paper', p); }
@@ -235,28 +222,12 @@ function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
     `${pieces} different pieces, ${copies} copies in total.`, '',
     'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
     o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
-    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards ${mmText(395, 134, o)}, borderless boards ${mmText(...INSERT_MM['fascist_9-10'], o)} (Liberal ${mmText(...INSERT_MM['liberal'], o)}), reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
+    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards ${mmText(395, 134)}, borderless boards ${mmText(...INSERT_MM['fascist_9-10'])} (Liberal ${mmText(...INSERT_MM['liberal'])}), reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
     'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
     'Licensed CC BY-NC-SA 4.0: not for commercial use.',
   ].join('\n');
 }
 
-function readme(o: PrintOptions, files: string[]): string {
-  return [
-    'SECRET HITLER + XL - PRINT SET', '',
-    `Paper: ${o.paper}. Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`,
-    ...(o.base ? [] : ['Only what XL adds to the original box: play it together with your copy of Secret Hitler.']), '',
-    ...files, '',
-    'Print at 100 % (no "fit to page"), double-sided, flip on the long edge.',
-    'Odd pages are fronts, even pages are backs. Cut along the crop marks.',
-    'Hold a sheet against the light: the registration targets should cover each other.', '',
-    'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
-    'Licensed CC BY-NC-SA 4.0: not for commercial use.',
-  ].join('\n');
-}
-
-/** A board size for the README, with the "fit sleeved tiles" scale applied. */
-function mmText(w: number, h: number, o: PrintOptions): string {
-  const s = o.boardSize === 'fit' ? BOARD_FIT_SCALE : 1;
-  return `${+(w * s).toFixed(1)} x ${+(h * s).toFixed(1)} mm`;
+function mmText(w: number, h: number): string {
+  return `${w} x ${h} mm`;
 }
