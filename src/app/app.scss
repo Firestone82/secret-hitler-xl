@@ -56,14 +56,18 @@ main { flex: 1; }
 .err { margin: 1rem; padding: .8rem 1rem; background: #fcebeb; color: #791f1f; border-radius: 8px; }
 
 .foot {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  display: flex; flex-direction: column; gap: .8rem;
   /* same content width as the header */
   padding: 1rem max(clamp(.8rem, 3vw, 2rem), calc((100% - var(--page-w)) / 2 + clamp(.8rem, 3vw, 2rem)));
   font-size: .8rem; color: #a9a693; background: var(--dark);
 }
+/* two rows, each with its content on the left and the licence or the author on the right */
+.foot .row { display: flex; align-items: center; justify-content: space-between; gap: .6rem 1.5rem; flex-wrap: wrap; }
 .foot .fl { display: flex; align-items: center; gap: .7rem; }
 .foot .fl img { flex: none; }
-.foot .fr { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-left: auto; }
+.foot .links { gap: 1rem; flex-wrap: wrap; }
+.foot a.lic { display: inline-flex; align-items: center; gap: .55rem; font-weight: 500; color: #d8d2b8; white-space: nowrap; }
+.foot a.lic img { display: block; }
 .foot a.ver { font-weight: 500; color: #d8d2b8; padding: .1rem .55rem; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(255, 247, 214, .25); font-variant-numeric: tabular-nums; }
 .foot a.ver:hover { color: var(--cream); text-decoration: none; box-shadow: inset 0 0 0 1px rgba(255, 247, 214, .55); }
 .foot .by { color: #a9a693; }
