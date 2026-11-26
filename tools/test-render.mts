@@ -13,13 +13,13 @@ const cases: [string, Partial<PrintOptions>][] = [
   ['base_A4', { paper: 'A4', xl: false, players: 10 }],
   ['expansion_A4', { paper: 'A4', base: false, refSize: 'small', roles: extra }],
   ['borderless_A4', { paper: 'A4', boardStyle: 'borderless' }],
-  ['borderless_A3', { paper: 'A3', boardStyle: 'both', boardSize: 'fit', refSize: 'small', spares: { tiles: 1, roles: 1, memberships: 2, ballots: 1 }, refCards: { r_round: 4, r_contents: 0 } }],
+  ['borderless_A3', { paper: 'A3', boardStyle: 'both', refSize: 'small', spares: { tiles: 1, roles: 1, memberships: 2, ballots: 1 }, refCards: { r_round: 4, r_contents: 0 } }],
 ];
 const r = new Renderer(pub);
 for (const [name, o] of cases) {
   const opts = normalise({ ...DEFAULT_OPTIONS, ...o }, (id) => data.roles.find((x: any) => x.id === id)?.needsCommunists);
   const plan = makePlan(opts, data);
-  const files = layout(plan, opts.paper, opts.splitFiles);
+  const files = layout(plan, opts.paper);
   console.log(name, plan.counts.map((c) => `${c.label}:${c.count}`).join(', '));
   for (const f of files) {
     const t = Date.now();

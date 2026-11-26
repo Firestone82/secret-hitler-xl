@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 # (output folder, pixels per mm, JPEG quality)
-SIZES = [('.', 2.5, 72), ('hd', 5, 70)]
+SIZES = [('.', 2.5, 72), ('hd', 8, 78)]
 ROOT = Path(__file__).resolve().parents[2]
 SRC, OUT = ROOT / 'public/pieces', ROOT / 'public/preview'
 
