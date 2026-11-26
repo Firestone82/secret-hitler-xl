@@ -1,10 +1,12 @@
-import { Component, ElementRef, HostListener, computed, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../core/data.service';
+import { ScrollService } from '../../core/scroll.service';
 import { Block, SeatTable } from '../../core/types';
 import { Credits } from '../../shared/credits';
+import { Lightbox } from '../../shared/lightbox';
 import { RoleBox } from '../../shared/role-box';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 import { PrintChoice, PrintDialog } from './print-dialog';
@@ -29,7 +31,7 @@ function blockText(b: Block): string {
 
 @Component({
   selector: 'app-rules',
-  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog],
+  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog, Lightbox],
   templateUrl: './rules.html',
   styleUrl: './rules.scss',
 })
@@ -41,7 +43,9 @@ export class RulesPage {
   tocOpen = signal(false);
   printing = signal(false);
   meta = this.data.rulebookMeta;
-
+  /** block index of the contents entry the reader is in now, highlighted in the sidebar */
+  active = signal(-1);
+  private lightbox = viewChild.required(Lightbox);
 
   blocks = computed(() => this.data.rulebook() ?? []);
   toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => b.type === 'part' || b.type === 'h1' || b.type === 'h2'));
@@ -65,6 +69,55 @@ export class RulesPage {
       const f = this.fragment(), n = this.blocks().length;
       if (f && n) setTimeout(() => this.host.nativeElement.querySelector('#' + CSS.escape(f))?.scrollIntoView({ behavior: 'smooth' }), 50);
     });
+    this.trackActive();
+  }
+
+  /** Follows the scroll position and marks the chapter or section being read in the sidebar. */
+  private trackActive() {
+    const scroll = inject(ScrollService);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const root = this.host.nativeElement as HTMLElement;
+      // a heading counts as reached once it passes under the sticky bar
+      let cur = -1;
+      for (const t of this.toc()) {
+        const el = root.querySelector('#b' + t.i);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top > 160) break;
+        cur = t.i;
+      }
+      if (cur < 0 && this.toc().length) cur = this.toc()[0].i;
+      if (cur !== this.active()) {
+        this.active.set(cur);
+        this.revealInToc(cur);
+      }
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    effect((onCleanup) => {
+      const el = scroll.element() ?? window;
+      if (!this.blocks().length) return;
+      el.addEventListener('scroll', onScroll, { passive: true });
+      setTimeout(update, 100);
+      onCleanup(() => el.removeEventListener('scroll', onScroll));
+    });
+    inject(DestroyRef).onDestroy(() => cancelAnimationFrame(frame));
+  }
+
+  /** Scrolls the sidebar itself (never the page) so the active entry stays in view. */
+  private revealInToc(i: number) {
+    const aside = (this.host.nativeElement as HTMLElement).querySelector('aside');
+    const btn = aside?.querySelector<HTMLElement>(`[data-b="${i}"]`);
+    if (!aside || !btn || aside.scrollHeight <= aside.clientHeight) return;
+    const top = btn.getBoundingClientRect().top - aside.getBoundingClientRect().top + aside.scrollTop, pad = 60;
+    if (top < aside.scrollTop + pad) aside.scrollTo({ top: top - pad, behavior: 'smooth' });
+    else if (top > aside.scrollTop + aside.clientHeight - pad) aside.scrollTo({ top: top - aside.clientHeight + pad, behavior: 'smooth' });
+  }
+
+  /** Pictures of the rulebook open at full size; icons and the cover do not. */
+  zoom(e: MouseEvent) {
+    const img = (e.target as HTMLElement).closest('img');
+    if (img && img.closest('figure, .legis, app-role-box')) this.lightbox().open(img.currentSrc || img.src, img.alt);
   }
 
   /** A seat table of rulebook.json as columns and rows, with the experimental player counts marked. */
