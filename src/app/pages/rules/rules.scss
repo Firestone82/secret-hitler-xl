@@ -6,8 +6,7 @@ aside { position: sticky; top: 56px; align-self: start; max-height: calc(100vh -
 .toc button.on { background: #efe9d6; box-shadow: inset 3px 0 0 var(--orange); color: var(--ink); }
 .toc .part.on { box-shadow: none; background: none; }
 .toc .part { margin-top: .9rem; font-family: var(--display); font-size: 1.15rem; color: var(--c); }
-.toc .h1, .toc .credits { font-weight: 600; margin-top: .25rem; }
-.toc .credits { margin-top: .9rem; }
+.toc .h1 { font-weight: 600; margin-top: .25rem; }
 .toc .h2 { padding-left: 1rem; font-size: .86rem; color: var(--muted); }
 /* the version link, the search and the print button share one bar with one line under it */
 .vlink { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: .45rem; height: var(--barh); box-sizing: border-box; padding: 0 .3rem; background: var(--paper); border-bottom: 1px solid var(--line);

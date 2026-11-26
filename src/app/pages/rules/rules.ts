@@ -61,7 +61,7 @@ export class RulesPage {
   private lightbox = viewChild.required(Lightbox);
 
   blocks = computed(() => this.data.rulebook() ?? []);
-  toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => ['part', 'h1', 'h2', 'credits'].includes(b.type)));
+  toc = computed(() => this.blocks().map((b, i) => ({ b, i })).filter(({ b }) => ['part', 'h1', 'h2'].includes(b.type)));
   /** every place a link can point to: the contents entries plus each extra role, as ?section=<id> */
   anchors = computed(() => this.blocks().map((b, i) => ({ i, id: sectionId(b) })).filter((a): a is { i: number; id: string } => !!a.id));
   results = computed(() => {
