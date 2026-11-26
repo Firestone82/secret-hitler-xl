@@ -14,7 +14,7 @@ export interface Slot {
   name: string;
   /** piece id whose cut size and bleed this slot uses */
   size: 'tile' | 'card' | 'long' | 'insert' | 'placard';
-  /** printed smaller or larger than the piece's own size (small reference cards, boards that fit sleeved tiles) */
+  /** printed smaller than the piece's own size (small reference cards) */
   scale?: number;
   /** cut size in mm where the piece has a size of its own (borderless boards) */
   mm?: [number, number];
@@ -59,12 +59,10 @@ export function setSeatTables(t: { base: Seats; xl: Seats }) {
 const ORIGINAL = { libTiles: 6, fasTiles: 11, libRoles: 6, fasRoles: 3, hitler: 1, libMembers: 6, fasMembers: 4, ballots: 10 };
 /** Small reference cards: 280 × 95 mm instead of 395 × 134. */
 export const SMALL_REF_SCALE = 280 / 395;
-/** Boards that fit sleeved tiles: a policy slot is about 55 × 78 mm, a tile in a mini European sleeve about 46 × 71 mm.
- *  At 95 % the slot is 52 × 74 mm, which leaves about 1.5 mm of play around the sleeve. */
-export const BOARD_FIT_SCALE = 0.95;
-/** Borderless boards are the inner track of each board only, so each has its own size (cut size, mm). */
+/** Borderless boards are the inner track of each board in a narrow frame of its own, so each has its own size (cut size, mm).
+ *  Made by tools/export/borderless_boards.py, which prints these numbers. */
 export const INSERT_MM: Record<string, [number, number]> = {
-  liberal: [289.4, 84.7], 'fascist_5-6': [342.9, 83.4], 'fascist_7-8': [342.9, 83.4], 'fascist_9-10': [342.9, 83.4], communist: [342.7, 81.6],
+  liberal: [291.9, 87.7], 'fascist_5-6': [345.7, 86.7], 'fascist_7-8': [345.7, 86.7], 'fascist_9-10': [345.7, 86.7], communist: [345.1, 84.7],
 };
 
 const EMERGENCY = ['e_investigate', 'e_peek', 'e_special_election', 'e_execution', 'e_propaganda', 'e_no_confidence', 'e_censorship', 'e_enabling_act', 'e_article48', 'e_pardon'];
@@ -172,7 +170,6 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
 
   // ---- boards and reference cards
   const longs: Slot[] = [];
-  const fit = (sl: Slot): Slot => (o.boardSize === 'fit' ? { ...sl, scale: BOARD_FIT_SCALE } : sl);
   // the original box has the Liberal and Fascist boards, but not the borderless ones for the frames
   const boards: [string, string, boolean][] = [['liberal', 'Liberal board', true]];
   if (s.from <= 6) boards.push(['fascist_5-6', 'Fascist board 5-6', true]);
@@ -182,10 +179,10 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   const border = o.boardStyle !== 'borderless', borderless = o.boardStyle !== 'border';
   if (border) {
     const printed = boards.filter(([, , original]) => o.base || !original);
-    for (const [k, n] of printed) longs.push(fit(both('b_' + k, n, 'long')));
+    for (const [k, n] of printed) longs.push(both('b_' + k, n, 'long'));
     count('Boards', 'Boards with border', printed.length);
   }
-  const inserts: Slot[] = borderless ? boards.map(([k, n]) => fit({ ...both('i_' + k, n + ' (borderless)', 'insert'), mm: INSERT_MM[k] })) : [];
+  const inserts: Slot[] = borderless ? boards.map(([k, n]) => ({ ...both('i_' + k, n + ' (borderless)', 'insert'), mm: INSERT_MM[k] })) : [];
   if (borderless) count('Boards', 'Borderless boards', inserts.length);
   const refs: Slot[] = [], small = o.refSize === 'small';
   for (const r of REF_CARDS) {
