@@ -1,4 +1,5 @@
-import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, effect, inject, signal, untracked } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BriefingCard } from '../../shared/briefing-card';
@@ -12,9 +13,9 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
   template: `
     <div class="page">
       <h1>Roles</h1>
-      <p class="lead">Every Secret Role with its Role Briefing card. The text comes from <code>data/roles.json</code>; the same file
-        writes the role sections of the rulebook and the briefing cards in the printed PDF. The download button next to a role's name
-        gives you all of its files in one zip.</p>
+      <p class="lead">Every Secret Role with its Role Briefing card. The card keeps it brief, and the text under it explains the role in full:
+        its goal, what it knows, its power and its dangers. The buttons next to a role's name copy a link to it, show both cards full size,
+        and download all of its files in one zip.</p>
       <div class="filters">
         @for (f of filters; track f.k) {
           <button [class.on]="filter() === f.k" (click)="filter.set(f.k)">{{ f.label }}</button>
@@ -45,6 +46,14 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
                 <div class="head">
                   <h2>{{ r.name }}</h2>
                   <div class="acts">
+                  <button class="dl" type="button" (click)="copyLink(r)" [attr.aria-label]="'Copy a link to the ' + r.name"
+                    [title]="copied() === r.id ? 'Link copied' : 'Copy a link to the ' + r.name">
+                    @if (copied() === r.id) {
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                    } @else {
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3.2-3.2a4.5 4.5 0 0 0-6.4-6.4L11.6 6M14 10a4.5 4.5 0 0 0-6.4 0l-3.2 3.2a4.5 4.5 0 0 0 6.4 6.4l1.6-1.6" /></svg>
+                    }
+                  </button>
                   <button class="dl" type="button" (click)="open(r)" [attr.aria-label]="'Show the ' + r.name + ' cards full size'"
                     [title]="'Show the Secret Role card and the Role Briefing card of the ' + r.name + ' full size'">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
@@ -66,11 +75,16 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
                   @if (r.countLabel) { <span class="chip">{{ r.countLabel }} in a game</span> }
                   @if (r.needsCommunists) { <span class="chip">needs the Communists</span> }
                 </div>
+                <div class="details">
+                  @for (s of r.details; track s.label) {
+                    <section>
+                      <h3>{{ s.label }}</h3>
+                      @for (p of s.text; track $index) { <p [innerHTML]="p | safeHtml"></p> }
+                    </section>
+                  }
+                </div>
                 @if (r.rulebook; as rb) {
-                  @for (p of rb.paragraphs; track $index) { <p [innerHTML]="p | safeHtml"></p> }
                   <p class="when"><span class="wl">Add it when</span> {{ rb.addWhen }}</p>
-                } @else {
-                  <p class="muted">A role of the {{ r.module === 'base' ? 'original game' : 'Communist party' }}: see the rulebook for how it plays.</p>
                 }
               </div>
             </section>
@@ -82,7 +96,9 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     @if (big(); as r) {
       <div class="lightbox" role="dialog" aria-modal="true" [attr.aria-label]="r.name + ' cards full size'" (click)="close()">
         <div class="big" [style.zoom]="zoom()" (click)="$event.stopPropagation()">
-          <img class="secret" [src]="'cards/' + r.art[0] + '.jpg'" [alt]="r.name + ' Secret Role card'" />
+          <!-- the full-size view loads the sharper copy of the card; the small one shows until it arrives -->
+          <img class="secret" [src]="'cards/hd/' + r.art[0] + '.jpg'" [style.background-image]="'url(cards/' + r.art[0] + '.jpg)'"
+            [alt]="r.name + ' Secret Role card'" />
           <app-briefing-card [role]="r" [palettes]="data.roles()!.palettes" />
         </div>
         <button class="x" type="button" (click)="close()" aria-label="Close">
@@ -136,12 +152,15 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
     .tags { display: flex; gap: .3rem; flex-wrap: wrap; margin: .3rem 0 .4rem; }
     .info p { margin: .35rem 0; }
     .info p ::ng-deep b { color: var(--c); }
+    .details section + section { margin-top: .7rem; }
+    .details h3 { margin: 0; font-family: var(--body); font-size: .74rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--c); }
+    .details p { margin: .15rem 0 .35rem; }
     .when { background: #f3eedd; border-left: 3px solid var(--c); padding: .4rem .7rem; }
     .wl { font-weight: 700; color: var(--c); margin-right: .2rem; }
     .lightbox { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; overflow: auto; padding: 4.5rem 1rem 1rem;
       background: rgba(20, 18, 14, .82); cursor: zoom-out; }
     .big { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; cursor: default; }
-    .big .secret { width: 254px; height: 352px; box-shadow: 0 4px 24px rgba(0,0,0,.45); }
+    .big .secret { width: 254px; height: 352px; box-shadow: 0 4px 24px rgba(0,0,0,.45); background-size: cover; opacity: 1; }
     .x { position: fixed; top: 1rem; right: 1rem; display: grid; place-items: center; width: 42px; height: 42px; border: 0; border-radius: 50%;
       background: var(--cream); color: var(--ink); }
     .x svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
@@ -182,6 +201,20 @@ export class RolesPage {
   go(id: string) {
     this.tocOpen.set(false);
     document.getElementById('role-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.writeUrl(id);
+  }
+
+  /** id of the role whose link was just copied */
+  copied = signal('');
+  private copyTimer: ReturnType<typeof setTimeout> | undefined;
+
+  /** Copies a link that opens this page scrolled to the role: …/#/roles?role=<id> */
+  async copyLink(r: Role) {
+    const url = location.href.split('#')[0] + '#' + this.router.serializeUrl(this.router.createUrlTree(['/roles'], { queryParams: { role: r.id } }));
+    try { await navigator.clipboard.writeText(url); } catch { prompt('Copy this link:', url); return; }
+    this.copied.set(r.id);
+    clearTimeout(this.copyTimer);
+    this.copyTimer = setTimeout(() => this.copied.set(''), 1600);
   }
 
   open(r: Role) { this.fit(); this.big.set(r); }
@@ -196,7 +229,34 @@ export class RolesPage {
   }
 
   private frame = 0;
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  /** the role in the URL (?role=), as this page last wrote or followed it */
+  private urlRole: string | null = null;
+  /** a role from the URL to scroll to once the roles are loaded and drawn */
+  private pending = signal<string | null>(null);
+  private urlTimer: ReturnType<typeof setTimeout> | undefined;
+
   constructor() {
+    // ?role=<id> opens the page at that role, also when a link changes it while the page is open
+    const qsub = this.route.queryParamMap.subscribe((q) => {
+      const id = q.get('role');
+      if (id !== this.urlRole) { this.urlRole = id; if (id) this.pending.set(id); }
+    });
+    inject(DestroyRef).onDestroy(() => { qsub.unsubscribe(); clearTimeout(this.urlTimer); clearTimeout(this.copyTimer); });
+    effect(() => {
+      const id = this.pending(), roles = this.data.roles()?.roles;
+      if (!id || !roles) return;
+      untracked(() => {
+        this.pending.set(null);
+        const r = roles.find((x) => x.id === id);
+        if (!r) return;
+        if (!this.shown().includes(r)) this.filter.set('all');
+        // after the cards are drawn, and once more after the app's own scroll reset of a new page
+        const jump = () => document.getElementById('role-' + id)?.scrollIntoView({ block: 'start' });
+        requestAnimationFrame(() => { jump(); setTimeout(jump, 60); });
+      });
+    });
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') this.close(); };
     const onResize = () => this.fit();
     document.addEventListener('keydown', onKey);
@@ -217,13 +277,31 @@ export class RolesPage {
     this.frame = requestAnimationFrame(() => {
       this.frame = 0;
       // the lowest row whose top has passed just below the navbar; in a row of two, its first role
-      let cur = this.shown()[0]?.id ?? '', best = -Infinity;
+      let cur = this.shown()[0]?.id ?? '', best = -Infinity, passed = false;
       for (const r of this.shown()) {
         const top = document.getElementById('role-' + r.id)?.getBoundingClientRect().top;
-        if (top !== undefined && top < 160 && top > best + 1) { cur = r.id; best = top; }
+        if (top !== undefined && top < 160 && top > best + 1) { cur = r.id; best = top; passed = true; }
       }
+      // two roles share a row: keep the one in the URL (a link, or the last one picked) rather than the row's first
+      const linked = this.urlRole && document.getElementById('role-' + this.urlRole)?.getBoundingClientRect().top;
+      if (passed && typeof linked === 'number' && Math.abs(linked - best) < 2) cur = this.urlRole!;
       this.active.set(cur);
+      // keep the role at the top in the URL, so a refresh comes back to it and the address can be shared
+      this.syncUrl(passed ? cur : null);
     });
+  }
+
+  private syncUrl(id: string | null) {
+    clearTimeout(this.urlTimer);
+    if (id === this.urlRole || this.pending()) return;
+    // wait until scrolling settles, so a long scroll writes the history entry once
+    this.urlTimer = setTimeout(() => this.writeUrl(id), 250);
+  }
+
+  private writeUrl(id: string | null) {
+    clearTimeout(this.urlTimer);
+    this.urlRole = id;
+    this.router.navigate([], { relativeTo: this.route, queryParams: { role: id }, queryParamsHandling: 'merge', replaceUrl: true });
   }
 
   moduleLabel(r: Role) { return { base: 'Original game', communists: 'XL: the Communists', roles: 'XL: extra role' }[r.module]; }
