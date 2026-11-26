@@ -267,7 +267,7 @@
       "label": "YOUR POWERS",
       "items": [
        "<b>Radicalisation</b> and <b>Congress</b>: open your eyes with the Communists.",
-       "<b>Capitalist hunt:</b> as President, you may announce that you are a Communist before an execution. If you then execute the Capitalist, the Communists radicalise once more."
+       "<b>Capitalist hunt:</b> before you execute a player as President, you may reveal your membership card. If you then execute the Capitalist, the Communists get an extra Radicalisation."
       ]
      }
     ]
@@ -320,8 +320,7 @@
      {
       "label": "YOUR POWER",
       "items": [
-       "<b>Assassination</b>, once per game, after a policy is enacted and before the next election.",
-       "Reveal your Secret Role card and execute a player."
+       "<b>Assassination</b>, once per game: after a policy is enacted and before the next election, reveal your Secret Role card and execute a player."
       ]
      }
     ]
@@ -332,10 +331,10 @@
     "image": "r_anarchist.jpg",
     "paragraphs": [
      "Wins if the Communists win. At setup the Anarchist only shows a thumb, so the Communists know them but not the other way round, unless there is just one other Communist.",
-     "<b>Power:</b> Assassination. Once per game, after a policy is enacted and before the next election, the Anarchist reveals their role and executes a player."
+     "<b>Power:</b> once per game, after a policy is enacted and before the next election, the Anarchist may reveal their role and assassinate a player."
     ],
-    "addWhen": "The group wants a wild card.",
-    "addWhenTable": "The group knows the Communists well and <b>wants a wild card</b>.",
+    "addWhen": "your group knows the Communists well and wants a wild card.",
+    "addWhenTable": "your group knows the Communists well and wants a wild card.",
     "seatLabel": "A Communist",
     "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
    }
@@ -385,9 +384,9 @@
      {
       "label": "YOUR POWER",
       "items": [
-       "When <b>Call Special Election</b> is enacted, you may reveal yourself and become President.",
-       "You and the President of the 3rd Fascist policy each name a Chancellor candidate.",
-       "Everyone gives their ballot card to one. Most cards wins; you break ties."
+       "When <b>Call Special Election</b> is enacted, you may reveal yourself and become the next President.",
+       "The President who enacted it and you each name a Chancellor candidate.",
+       "Everyone gives their ballot card to one of them. Most cards wins. You break ties."
       ]
      }
     ]
@@ -398,10 +397,10 @@
     "image": "r_monarchist.jpg",
     "paragraphs": [
      "Wins if six Fascist policies are enacted or Hitler is executed, but not when Hitler is elected Chancellor. At setup the Monarchist only shows a thumb, so the Fascists (not Hitler) know them.",
-     "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal and become President at once. They and the President of the third Fascist policy each name a Chancellor; everyone hands their ballot card to one; most cards wins and the Monarchist breaks ties."
+     "<b>Power:</b> when Special Election is enacted, the Monarchist may reveal their role and become the next President at once. The Monarchist and the President who enacted the policy each name a Chancellor candidate. Everyone hands their ballot card to the candidate they back. The one with the most cards becomes Chancellor, and the Monarchist breaks ties."
     ],
-    "addWhen": "The Fascists win too often.",
-    "addWhenTable": "<b>The Fascists win too often.</b>",
+    "addWhen": "the Fascists win too often.",
+    "addWhenTable": "the Fascists win too often.",
     "seatLabel": "A Fascist",
     "pitch": "A Fascist who wants the board, not Hitler. Splits the Fascist team and can <b>seize the presidency</b> at Special Election."
    }
@@ -470,8 +469,8 @@
     "paragraphs": [
      "Wins with the Fascists and opens their eyes with them. <b>The first time Hitler would be executed, the Bodyguard dies instead.</b> Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
     ],
-    "addWhen": "Hitler is executed too often.",
-    "addWhenTable": "<b>Hitler is found and executed too often.</b>",
+    "addWhen": "Hitler is found and executed too often.",
+    "addWhenTable": "Hitler is found and executed too often.",
     "seatLabel": "A Fascist",
     "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
    }
@@ -541,8 +540,8 @@
      "Wins with the Fascists.",
      "<b>Power:</b> once per game, at any moment, the Fascist Spy may reveal and execute a player. <b>If it is the Liberal Spy, the Fascists win at once.</b>"
     ],
-    "addWhen": "Always together with the Liberal Spy.",
-    "addWhenTable": "You want a <b>hidden duel</b>. Always add both.",
+    "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
+    "addWhenTable": "you want a hidden duel. Always add it together with the Liberal Spy.",
     "seatLabel": "A Fascist",
     "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
    }
@@ -610,8 +609,8 @@
     "paragraphs": [
      "Wins with the Liberals. At setup the Liberal Spy sees the Fascists' thumbs, so they know every Fascist except Hitler. <b>If a player of the Fascist team executes the Liberal Spy, the Fascists win.</b> The Liberal Spy must help without giving themselves away."
     ],
-    "addWhen": "Always together with the Fascist Spy.",
-    "addWhenTable": "You want a <b>hidden duel</b>. Always add both.",
+    "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
+    "addWhenTable": "you want a hidden duel. Always add it together with the Fascist Spy.",
     "seatLabel": "A Liberal",
     "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
    }
@@ -659,6 +658,12 @@
       ]
      },
      {
+      "label": "GOOD TO KNOW",
+      "items": [
+       "If you are radicalised, you join the Communists. The other Centrists are not told and may still trust you."
+      ]
+     },
+     {
       "label": "TIPS",
       "items": [
        "Wait before you reveal that you are Centrists.",
@@ -673,10 +678,11 @@
     "teamLabel": "Team Liberal",
     "image": "r_centrist_a.jpg",
     "paragraphs": [
-     "Centrists are Liberals who know each other: they <b>open their eyes together</b> at setup. They hold Liberal cards, so they are targets for Radicalisation."
+     "Centrists are Liberals who know each other: they <b>open their eyes together</b> at setup. They hold Liberal cards, so they are targets for Radicalisation.",
+     "A radicalised Centrist joins the Communists, but the other Centrists are not told, so they may keep trusting them."
     ],
-    "addWhen": "Big games, to give the Liberals a trusted core.",
-    "addWhenTable": "Big games: the Liberals get a small group that trusts each other.",
+    "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
+    "addWhenTable": "the game is big and the Liberals need a small group that trusts each other.",
     "seatLabel": "Liberals",
     "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
    }
@@ -704,8 +710,8 @@
    ],
    "portrait": "n_r_capitalist",
    "crop": [
-    0.52,
-    0.44,
+    0.48,
+    0.53,
     0.64
    ],
    "briefing": {
@@ -722,8 +728,8 @@
      {
       "label": "TWO MEMBERSHIP CARDS",
       "items": [
-       "Radicalisation: show the Fascist one; you are never converted.",
-       "Investigate Loyalty: show the Liberal one. Bugging: your choice."
+       "At Radicalisation, show the Fascist one. You are never converted.",
+       "At Investigate Loyalty, show the Liberal one. At Bugging, you choose."
       ]
      },
      {
@@ -746,10 +752,11 @@
     "image": "r_capitalist.jpg",
     "paragraphs": [
      "Wins with the Liberals and can never be radicalised. The Capitalist holds <b>two</b> membership cards: the Fascist one is shown at Radicalisation, the Liberal one at Investigate Loyalty, and either one at Bugging.",
-     "<b>Lobby card:</b> during Radicalisation the Capitalist gives it to a trusted player, who may spend it once to vote three times. <b>Danger:</b> a Communist who reveals their card before an execution and then executes the Capitalist earns another Radicalisation."
+     "<b>Lobby card:</b> during Radicalisation the Capitalist gives it to a trusted player, who may spend it once to vote three times.",
+     "<b>Danger:</b> a Communist President who reveals their membership card before an execution and then executes the Capitalist earns the Communists an extra Radicalisation."
     ],
-    "addWhen": "Communist policies pass too quickly.",
-    "addWhenTable": "<b>Communist policies pass too quickly</b>, or Radicalisation is too easy.",
+    "addWhen": "Communist policies pass too quickly or Radicalisation is too easy.",
+    "addWhenTable": "Communist policies pass too quickly or Radicalisation is too easy.",
     "seatLabel": "A Liberal",
     "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
    }
@@ -800,7 +807,8 @@
       "label": "TIPS",
       "items": [
        "Look suspicious, but not too obviously.",
-       "Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
+       "Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy.",
+       "Never claim to be the Jester."
       ]
      }
     ]
@@ -812,8 +820,8 @@
     "paragraphs": [
      "Holds a Fascist card. <b>If the Jester is executed, the game ends and only the Jester wins.</b> Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy."
     ],
-    "addWhen": "Executions happen too easily.",
-    "addWhenTable": "<b>Executions happen too easily.</b>",
+    "addWhen": "executions happen too easily.",
+    "addWhenTable": "executions happen too easily.",
     "seatLabel": "A Liberal",
     "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
    }
@@ -864,6 +872,13 @@
        "Once per game, reveal your Secret Role card and cast three votes in one election.",
        "It stacks with the Lobby card."
       ]
+     },
+     {
+      "label": "TIPS",
+      "items": [
+       "Save your votes for the election that decides the game.",
+       "Revealing shows your role, never your party."
+      ]
      }
     ]
    },
@@ -875,8 +890,8 @@
      "Belongs to the party on their membership card and wakes with it.",
      "<b>Power:</b> once per game, the Propagandist may reveal and cast <b>three votes</b> in one election. It stacks with the Lobby card."
     ],
-    "addWhen": "Elections are too predictable.",
-    "addWhenTable": "Elections are <b>too predictable</b>.",
+    "addWhen": "elections are too predictable.",
+    "addWhenTable": "elections are too predictable.",
     "seatLabel": "Any party (usually Fascist)",
     "pitch": "Casts <b>three votes</b> once, enough to swing one election."
    }
@@ -927,6 +942,13 @@
        "Once per game, reveal your Secret Role card and look at the top two policies of the discard pile.",
        "Afterwards you can never be nominated Chancellor."
       ]
+     },
+     {
+      "label": "TIPS",
+      "items": [
+       "Look right after a government you doubt.",
+       "Revealing shows your role, never your party."
+      ]
      }
     ]
    },
@@ -938,8 +960,8 @@
      "Belongs to the party on their membership card.",
      "<b>Power:</b> once per game, the Bureaucrat may reveal and look at the <b>top two policies of the discard pile</b>, but can never be nominated Chancellor afterwards."
     ],
-    "addWhen": "Liberals are fooled about discards.",
-    "addWhenTable": "Liberals are <b>fooled about discards</b> too often.",
+    "addWhen": "Liberals are too often fooled about which policies were discarded.",
+    "addWhenTable": "Liberals are too often fooled about which policies were discarded.",
     "seatLabel": "Any party (usually Liberal)",
     "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
    }
@@ -952,7 +974,7 @@
    "party": "drawn",
    "regular": false,
    "seat": "liberal",
-   "seatLabel": "A Liberal; party drawn at setup",
+   "seatLabel": "A Liberal (party drawn at setup)",
    "count": 1,
    "countLabel": null,
    "pair": null,
@@ -991,9 +1013,8 @@
      {
       "label": "YOUR POWER",
       "items": [
-       "Only at one moment: when <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor.",
-       "Then you may reveal your Secret Role card and use that power instead of the President.",
-       "The chosen player secretly hands you their <b>Secret Role</b> card, not only their party.",
+       "When <b>Bugging</b> or <b>Investigate Loyalty</b> is enacted while you are President or Chancellor, you may reveal your Secret Role card and take the power over.",
+       "You alone choose the player. They secretly hand you their <b>Secret Role</b> card, not only their party.",
        "At any other time you have no power."
       ]
      }
@@ -1005,12 +1026,12 @@
     "image": "r_detective.jpg",
     "paragraphs": [
      "Starts without a membership card. At the very start of the night script the Detective draws one from a spare deck of 2 Liberal, 1 Fascist and 1 Communist card, and joins that party.",
-     "<b>Power:</b> Detective investigation. It can only be used at the moment Bugging or Investigate Loyalty is unlocked <b>and</b> the Detective is President or Chancellor at that moment. The Detective then reveals their Secret Role card and uses that power instead of the President. The chosen player secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
-     "Revealing does not give a power to use at any other time: outside those two moments the Detective plays like any member of their party."
+     "<b>Power:</b> when Bugging or Investigate Loyalty is enacted while the Detective is President or Chancellor, the Detective may reveal their Secret Role card and take that power over. The Detective alone chooses the player, who secretly hands over their <b>Secret Role</b> card instead of their Party Membership card.",
+     "Outside those two moments the Detective has no power and plays like any member of their party."
     ],
-    "addWhen": "You want stronger investigations.",
-    "addWhenTable": "You want <b>stronger investigations</b>.",
-    "seatLabel": "A Liberal; party drawn at setup",
+    "addWhen": "you want stronger investigations.",
+    "addWhenTable": "you want stronger investigations.",
+    "seatLabel": "A Liberal (party drawn at setup)",
     "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
    }
   }
