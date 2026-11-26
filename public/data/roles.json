@@ -473,7 +473,8 @@
         "teamLabel": "Team Fascist",
         "image": "r_bodyguard.jpg",
         "paragraphs": [
-          "Wins with the Fascists and opens their eyes with them. <b>The first time Hitler would be executed, the Bodyguard dies instead.</b> Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
+          "Wins with the Fascists and opens their eyes with them.",
+          "<b>Power:</b> the first time Hitler would be executed, the Bodyguard reveals their role and dies instead. Hitler survives, but everyone now knows who he is, so the Fascists must win with policies."
         ],
         "addWhen": "Hitler is found and executed too often.",
         "addWhenTable": "Hitler is found and executed too often.",
