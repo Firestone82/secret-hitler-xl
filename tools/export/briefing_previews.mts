@@ -1,6 +1,6 @@
 /**
  * Renders the Role Briefing cards to JPEG for the print builder's preview: public/preview/briefing/<role>.jpg
- * and blank_<palette>.jpg, cut size plus 3 mm bleed at 5 px/mm. The PDFs themselves are drawn from roles.json
+ * and blank_<palette>.jpg, cut size plus 3 mm bleed at 8 px/mm. The PDFs themselves are drawn from roles.json
  * when you build them; only the preview needs these pictures.
  *
  * Run from the project root after changing briefing text in public/data/roles.json:
@@ -30,7 +30,7 @@ try {
     const pdf: Uint8Array = await (r as unknown as { facePdf(s: Slot, f: Face, d: unknown): Promise<Uint8Array> }).facePdf(slot, face, data);
     const src = join(tmp, name + '.pdf');
     await writeFile(src, pdf);
-    execFileSync('pdftoppm', ['-r', '127', '-singlefile', '-jpeg', '-jpegopt', 'quality=82,progressive=y', src, join(OUT, name)]);
+    execFileSync('pdftoppm', ['-r', '203', '-singlefile', '-jpeg', '-jpegopt', 'quality=82,progressive=y', src, join(OUT, name)]);
   }
   console.error(`${faces.length} briefing previews in ${OUT}`);
 } finally {
