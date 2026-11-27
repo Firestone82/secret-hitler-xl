@@ -27,6 +27,7 @@ Choose the paper (A3 or A4), how many players, which parts of XL you want (the C
 - Print at **100 %** (not "fit to page"), **double-sided**, flipping on the **long edge**.
 - Cut along the crop marks. Cards are the standard 63.5 × 88 mm, so normal card sleeves fit.
 - Using a print shop? Export a ZIP with every piece as its own PDF with bleed, plus a list of how many copies of each.
+- Just want the whole game? Every [release](../../releases) has it ready as one PDF for A3 and one for A4, plus the print-shop ZIP and the rulebook.
 
 ![The print builder](docs/images/print-builder.jpg)
 
