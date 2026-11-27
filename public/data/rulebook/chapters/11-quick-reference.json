@@ -147,10 +147,6 @@
         {
           "title": "This edition",
           "html": "A remix of the files above: rulebooks merged and reworded, cards and boards re-set, role briefings and reference cards added. <a href=\"#/assets\">Files of this edition</a>"
-        },
-        {
-          "title": "Website and print builder",
-          "html": "Pavel Mikula (<a href=\"https://github.com/Firestone82\" target=\"_blank\">Firestone82</a>): put this edition online, built the print builder and adjusted the cards, boards and sheets for printing."
         }
       ]
     ],
