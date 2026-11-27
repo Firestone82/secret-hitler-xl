@@ -1,4 +1,4 @@
-import { Component, HostListener, computed, inject, signal } from '@angular/core';
+import { Component, HostListener, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { cardImage } from '../../core/assets';
 import { DataService } from '../../core/data.service';
@@ -146,6 +146,19 @@ export class PrintPage {
   /** the reference card shown full size, and which side */
   refZoom = signal<{ id: string; label: string } | null>(null);
   refZoomBack = signal(false);
+  /** true while the pictures of the full-screen view are still loading, after opening it or switching sheet or side */
+  zoomLoading = signal(false);
+  private zoomToken = 0;
+  private watchZoom = effect(() => {
+    const sp = this.zoomPreview() ?? this.pieceZoomView()?.item, rz = this.refZoom();
+    const urls = sp ? ('items' in sp ? sp.items : [sp]).flatMap((i) => (i.img ? [i.img] : [])) : rz ? [cardImage(rz.id, this.refZoomBack() ? 1 : 0)] : [];
+    const token = ++this.zoomToken;
+    const todo = [...new Set(urls)];
+    if (!todo.length) { this.zoomLoading.set(false); return; }
+    this.zoomLoading.set(true);
+    Promise.all(todo.map((u) => new Promise<void>((done) => { const im = new Image(); im.onload = im.onerror = () => done(); im.src = u; })))
+      .then(() => { if (token === this.zoomToken) this.zoomLoading.set(false); });
+  });
   openRef(r: (typeof REF_CARDS)[number]) { this.refZoomBack.set(false); this.refZoom.set({ id: r.id, label: r.label }); }
   spareKinds = SPARE_KINDS;
   refAllowed(r: (typeof REF_CARDS)[number]) { return refCardAllowed(r, this.opts()); }

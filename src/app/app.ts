@@ -38,6 +38,10 @@ import { GithubStars } from './shared/github-stars';
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8 4.5v10l-8 4.5-8-4.5V7z" /><path d="M12 12l8-5M12 12v9.5M12 12L4 7" /></svg>
             3D printing
           </a>
+          <a routerLink="/assets" routerLinkActive="on">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+            Assets
+          </a>
           <a routerLink="/print" routerLinkActive="on" class="cta">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6" /><rect x="3" y="9" width="18" height="8" rx="2" /><path d="M7 14h10v7H7z" /></svg>
             Print builder

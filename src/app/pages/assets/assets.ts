@@ -33,6 +33,9 @@ const GROUPS: Record<string, [string, string]> = {
   backs: ['Backs', 'The backs that many pieces share.'],
 };
 
+/** Backs that are one flat colour: not worth showing or downloading as a picture. */
+const PLAIN_BACKS = new Set(['backs/borderless_fascist', 'backs/placard']);
+
 /** Every picture and file of this edition in one grid: look at it full size or download it. */
 @Component({
   selector: 'app-assets',
@@ -94,7 +97,7 @@ const GROUPS: Record<string, [string, string]> = {
   `,
   styles: `
     h1 { font-size: 2.4rem; margin: .5rem 0 .2rem; }
-    .lead { max-width: 780px; color: var(--muted); }
+    .lead { color: var(--muted); }
     .jump { display: flex; flex-wrap: wrap; gap: .35rem .5rem; margin: 1rem 0 .5rem; }
     .jump a { font-size: .9rem; padding: .2rem .65rem; border-radius: 99px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-decoration: none; }
     .jump a:hover { box-shadow: inset 0 0 0 1.5px var(--orange); }
@@ -140,8 +143,9 @@ export class AssetsPage {
     for (const [id, c] of Object.entries(cards)) {
       const group = id.slice(0, id.lastIndexOf('/'));
       const wide = c.kind === 'long' || c.kind === 'insert';
-      if (c.back?.startsWith('backs/')) backs.set(c.back, labelOfBack(c.back));
-      add(group, { key: id, label: c.label, img: cardImage(id), back: c.back === id ? undefined : cardImage(id, 1), pdf: cardPdf(id), wide });
+      const plain = !!c.back && PLAIN_BACKS.has(c.back);
+      if (c.back?.startsWith('backs/') && !plain) backs.set(c.back, labelOfBack(c.back));
+      add(group, { key: id, label: c.label, img: cardImage(id), back: c.back === id || plain ? undefined : cardImage(id, 1), pdf: cardPdf(id), wide });
     }
     // briefing cards: one picture per role and each blank, then the back
     const briefing: Asset[] = roles.roles.map((r) => ({ key: 'b-' + r.id, label: r.name, img: briefingImage(r.id) }));

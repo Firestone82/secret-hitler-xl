@@ -33,9 +33,8 @@ import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
     </div>
   `,
   styles: `
-    .narrow { max-width: 920px; }
     h1 { font-size: 2.4rem; margin: .5rem 0 .2rem; }
-    .lead { max-width: 720px; color: var(--muted); }
+    .lead { color: var(--muted); }
     .list { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
     .ver { background: #fff; border-radius: 14px; padding: 1rem 1.3rem 1.1rem; border-left: 5px solid var(--line); }
     .ver.current { border-left-color: var(--orange); }
