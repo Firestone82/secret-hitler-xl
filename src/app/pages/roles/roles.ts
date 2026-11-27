@@ -29,7 +29,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
             @for (g of groups(); track g.label) {
               <div class="tocg">{{ g.label }}</div>
               @for (r of g.roles; track r.id) {
-                <button type="button" [class.on]="(active() || shown()[0]?.id) === r.id" [style.--c]="rf.palettes[r.palette].accent" (click)="go(r.id)">
+                <button type="button" [class.on]="isActive(r.id)" [style.--c]="rf.palettes[r.palette].accent" (click)="go(r.id)">
                   <img [src]="img(r.art[0], 0, 'thumb')" alt="" loading="lazy" />{{ r.name }}
                 </button>
               }
@@ -191,8 +191,9 @@ export class RolesPage {
   big = signal<Role | null>(null);
   /** scale of the full-size view, so both cards fit the window side by side, or stacked on a narrow screen */
   zoom = signal(1);
-  /** id of the role at the top of the viewport */
-  active = signal('');
+  /** ids of the roles in view: two when two roles share a row on screen */
+  active = signal<string[]>([]);
+  isActive(id: string) { const a = this.active(); return a.length ? a.includes(id) : this.shown()[0]?.id === id; }
   groups = computed(() => {
     const labels: Record<Role['module'], string> = { base: 'Original game', communists: 'Communists', roles: 'Extra roles (XL)' };
     return (['base', 'communists', 'roles'] as const)
@@ -278,16 +279,27 @@ export class RolesPage {
     if (this.frame) return;
     this.frame = requestAnimationFrame(() => {
       this.frame = 0;
-      // the lowest row whose top has passed just below the navbar; in a row of two, its first role
-      let cur = this.shown()[0]?.id ?? '', best = -Infinity, passed = false;
+      // a role counts as in view when a good part of it (or of the screen height, for a tall role) is below the navbar
+      const top0 = 90, vis: string[] = [];
       for (const r of this.shown()) {
-        const top = document.getElementById('role-' + r.id)?.getBoundingClientRect().top;
-        if (top !== undefined && top < 160 && top > best + 1) { cur = r.id; best = top; passed = true; }
+        const rc = document.getElementById('role-' + r.id)?.getBoundingClientRect();
+        if (!rc) continue;
+        const overlap = Math.min(rc.bottom, innerHeight) - Math.max(rc.top, top0);
+        if (overlap > 0.4 * Math.min(rc.height, innerHeight - top0)) vis.push(r.id);
       }
+      if (!vis.length) {
+        // nothing qualifies: the role whose top passed the navbar last
+        let best = -Infinity, cur = '';
+        for (const r of this.shown()) {
+          const t = document.getElementById('role-' + r.id)?.getBoundingClientRect().top;
+          if (t !== undefined && t < 160 && t > best + 1) { best = t; cur = r.id; }
+        }
+        if (cur) vis.push(cur);
+      }
+      this.active.set(vis);
       // two roles share a row: keep the one in the URL (a link, or the last one picked) rather than the row's first
-      const linked = this.urlRole && document.getElementById('role-' + this.urlRole)?.getBoundingClientRect().top;
-      if (passed && typeof linked === 'number' && Math.abs(linked - best) < 2) cur = this.urlRole!;
-      this.active.set(cur);
+      const passed = vis.length > 0;
+      const cur = this.urlRole && vis.includes(this.urlRole) ? this.urlRole : vis[0];
       // keep the role at the top in the URL, so a refresh comes back to it and the address can be shared
       this.syncUrl(passed ? cur : null);
     });

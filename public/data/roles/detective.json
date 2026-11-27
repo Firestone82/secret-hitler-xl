@@ -66,7 +66,7 @@
     {
       "label": "Setup",
       "text": [
-        "You start without a membership card. At the very start of the night you open your eyes alone and take the top card of the spare membership deck (2 Liberal, 1 Fascist and 1 Communist card). You now belong to that party: put the card in your envelope and wake with that party later in the night."
+        "At the start of the night you draw the top card of the spare membership deck (2 Liberal, 1 Fascist, 1 Communist) and join that party."
       ]
     },
     {
@@ -78,21 +78,20 @@
     {
       "label": "Power",
       "text": [
-        "Your power works only in two moments: when <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are the sitting President or Chancellor. You may then reveal your Secret Role card and take that power over.",
-        "Taking it over means you alone use it. You choose the player, not the President, and not the President and Chancellor together. That player secretly hands you their <b>Secret Role</b> card instead of their membership card, and nobody else sees it. You may tell the truth about what you saw, or lie.",
-        "At any other time you have no power and play like any member of your party."
+        "When <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are President or Chancellor, you may reveal and take it over.",
+        "You alone choose the player. They hand you their <b>Secret Role</b> card instead of their membership card, and you may report it truthfully or lie. At any other time you have no power."
       ]
     },
     {
       "label": "Danger",
       "text": [
-        "Revealing tells everyone you are the Detective, but not which party you drew. Whatever you announce, the side it hurts will call you a liar, and may try to execute you."
+        "Revealing tells everyone you are the Detective, but not your party. The side your report hurts will call you a liar and may execute you."
       ]
     },
     {
       "label": "How to play it",
       "text": [
-        "Save your reveal for the investigation that matters most. A Secret Role card tells you far more than a party card: it can unmask Hitler or a hidden extra role."
+        "Save your reveal for the investigation that matters most: a Secret Role card can unmask Hitler or a hidden role."
       ]
     }
   ]

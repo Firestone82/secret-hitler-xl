@@ -80,21 +80,20 @@
     {
       "label": "Power",
       "text": [
-        "There is only ever one President. When a President uses <b>Call Special Election</b> and names the next presidential candidate, you may reveal your Secret Role card. You then become the next President instead of that player.",
-        "The Chancellor is chosen differently in that round. You and the outgoing President (the one who called the Special Election) each name a Chancellor candidate. Every player hands one ballot card to the candidate they back, and the candidate with the most cards becomes Chancellor. If there is a tie, you decide. Then the legislative session goes on as usual.",
-        "The round after, the President placard returns to the left of the President who called the Special Election, as after any Special Election."
+        "There is only ever one President. When the President names a pick at <b>Call Special Election</b>, you may reveal and become the next President instead.",
+        "You and the outgoing President each name a Chancellor candidate. Everyone hands a ballot card to their choice, and you break ties. The President placard then returns to the left of the President who called the Special Election."
       ]
     },
     {
       "label": "Danger",
       "text": [
-        "You want Fascist policies but not Hitler in power, so you have to find Hitler without help: the Fascists know you, but they will not tell you who Hitler is. Every time a Chancellor is elected after the 3rd Fascist policy, you could lose."
+        "You want Fascist policies but not Hitler in power, yet the Fascists will not tell you who he is. Any Chancellor elected after the 3rd Fascist policy could cost you the game."
       ]
     },
     {
       "label": "How to play it",
       "text": [
-        "Push Fascist policies, but block any Chancellor you suspect of being Hitler, and steer executions towards him. Save your power for the government that matters most."
+        "Push Fascist policies, block any Chancellor you suspect of being Hitler and steer executions towards him."
       ]
     }
   ]
