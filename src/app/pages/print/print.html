@@ -231,7 +231,7 @@
       </aside>
     </div>
     @if (zoom() && zoomPreview(); as sp) {
-      <div class="zoom" (click)="zoom.set(false)" role="dialog" aria-modal="true" aria-label="Sheet preview">
+      <div class="zoom" [class.loading]="zoomLoading()" (click)="zoom.set(false)" role="dialog" aria-modal="true" aria-label="Sheet preview">
         <div class="zbar" (click)="$event.stopPropagation()">
           <button class="mini" (click)="pickSheet(sheetIndex() - 1)" [disabled]="sheetIndex() === 0" aria-label="Previous sheet">‹</button>
           <button class="mini" (click)="pickSheet(sheetIndex() + 1)" [disabled]="sheetIndex() >= sheets().length - 1" aria-label="Next sheet">›</button>
@@ -244,6 +244,7 @@
           <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
           <g [appPreview]="sp.items" />
         </svg>
+        @if (zoomLoading()) { <div class="zload" role="status" aria-label="Loading"></div> }
       </div>
     }
     @if (pieceZoomView(); as pz) {
@@ -261,7 +262,7 @@
       </div>
     }
     @if (refZoom(); as rz) {
-      <div class="zoom" (click)="refZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="rz.label">
+      <div class="zoom" [class.loading]="zoomLoading()" (click)="refZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="rz.label">
         <div class="zbar" (click)="$event.stopPropagation()">
           <span></span><span></span>
           <span class="ztitle">{{ rz.label }}</span>
@@ -270,6 +271,7 @@
         </div>
         <div class="zstage">
           <img class="zimg" [src]="img(rz.id, refZoomBack() ? 1 : 0)" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
+          @if (zoomLoading()) { <div class="zload" role="status" aria-label="Loading"></div> }
         </div>
       </div>
     }

@@ -32,11 +32,10 @@ import { Reveal } from '../../shared/reveal';
     </div>
   `,
   styles: `
-    .narrow { max-width: 920px; }
     .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: .5rem 0 .2rem; }
     .soon { flex: none; background: var(--orange); color: #2a1206; }
     h1 { font-size: 2.4rem; margin: 0; }
-    .lead { max-width: 720px; font-size: 1.05rem; }
+    .lead { font-size: 1.05rem; }
     .plan { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
     .item { display: flex; gap: .9rem; background: #fff; border-radius: 14px; padding: 1rem 1.1rem; border: 2px dashed var(--line); }
     .item:nth-child(2) { transition-delay: .05s; }
