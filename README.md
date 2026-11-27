@@ -30,6 +30,12 @@ Choose the paper (A3 or A4), how many players, which parts of XL you want (the C
 
 ![The print builder](docs/images/print-builder.jpg)
 
+### Browse every file
+
+The Assets page shows every card, tile, board, placard and reference card in a grid. Open any of them full size, download the picture or the print-ready PDF, or a whole group as one ZIP. The rulebook PDFs are there too.
+
+![The assets page](docs/images/assets.jpg)
+
 ## What is Secret Hitler XL?
 
 [Secret Hitler](https://www.secrethitler.com/) is a social deduction game for 5 to 10 players: Liberals against Fascists, with Hitler hidden among them. Its makers offer the base game as a free print-and-play on their website.

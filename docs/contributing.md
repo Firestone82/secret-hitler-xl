@@ -8,13 +8,13 @@ Thanks for helping. Issues and pull requests are welcome at <https://github.com/
 
 ## Fixing rules text or a role
 
-Nearly all the text on the site is in three JSON files, so you do not need to touch any code:
+Nearly all the text on the site is in JSON files under `public/data/`, so you do not need to touch any code:
 
-- Rulebook text, seat tables, version history: `public/data/rulebook.json`
-- Roles, briefing cards and the role sections of the rulebook: `public/data/roles.json`
-- Names and sizes of the printable pieces: `public/data/pieces.json`
+- Rulebook text, one file per chapter: `public/data/rulebook/chapters/`; seat tables: `rulebook/setup.json`; version history: `rulebook/changelog.json`
+- Roles, briefing cards and the role sections of the rulebook: `public/data/roles/<role>.json`
+- Names and sizes of the printable pieces: `public/data/cards.json`
 
-See [Data files](data-files.md) for what each field does. When you change the rules, raise `version` in `rulebook.json` and add an entry to its `changelog`, which shows on the Versions page.
+See [Data files](data-files.md) for what each field does. When you change the rules, raise `version` in `rulebook/index.json` and add an entry to `rulebook/changelog.json`, which shows on the Versions page.
 
 ## Changing the code
 
