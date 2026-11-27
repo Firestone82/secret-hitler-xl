@@ -4,7 +4,8 @@ import { cardImage } from '../../core/assets';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
-import { INSERT_MM, Slot, makePlan, uniquePieces } from '../../print/plan';
+import { Slot, makePlan, uniquePieces } from '../../print/plan';
+import { pieceLabel, pieceReadme } from '../../print/pieces-readme';
 import { layout } from '../../print/layout';
 import { PreviewItem, allSheets, previewPiece, previewSheet } from '../../print/preview';
 import { Renderer, fetchLoader } from '../../print/render';
@@ -78,8 +79,7 @@ export class PrintPage {
   });
   /** the piece's own label from cards.json where there is one: "Emergency: Policy Peek", not "Emergency power" */
   pieceLabel(slot: Slot): string {
-    const f = slot.front;
-    return (f.type === 'piece' && this.data.cards()?.[f.id]?.label) || slot.name;
+    return pieceLabel(slot, this.data.cards());
   }
   pickSheet(i: number) { this.sheetPick.set(Math.max(0, Math.min(i, this.sheets().length - 1))); }
   pieceBox(it: PreviewItem) { return `0 0 ${it.w} ${it.h}`; }
@@ -214,22 +214,4 @@ function save(bytes: Uint8Array, name: string, type: string) {
   const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type }));
   const a = document.createElement('a'); a.href = url; a.download = name.split('/').pop()!; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
-}
-
-function pieceReadme(o: PrintOptions, pieces: number, copies: number): string {
-  return [
-    'SECRET HITLER + XL - PIECES FOR A PRINT SERVICE', '',
-    `Players: up to ${o.players}. ${o.xl ? 'Secret Hitler XL' + (o.communists ? ' with the Communists' : '') : 'Original game only'}.`,
-    ...(o.base ? [] : ['Only what XL adds to the original box: play it together with your copy of Secret Hitler.']),
-    `${pieces} different pieces, ${copies} copies in total.`, '',
-    'Every piece has a front and a back file, one page each: the cut size plus 3 mm bleed on every side.',
-    o.perCopy ? 'Each copy has its own pair of files.' : 'The number of copies is in the file name (_x4 = four copies) and in manifest.csv.',
-    `Folders: tiles 44 x 68 mm (mini European sleeves), cards 63.5 x 88 mm (standard sleeves), boards ${mmText(395, 134)}, borderless boards ${mmText(...INSERT_MM['fascist_9-10'])} (Liberal ${mmText(...INSERT_MM['liberal'])}), reference cards ${o.refSize === 'small' ? '280 x 95' : '395 x 134'} mm, placards 104.5 x 176 mm (fold in half).`, '',
-    'Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert. Secret Hitler XL by Lord_Roguy.',
-    'Licensed CC BY-NC-SA 4.0: not for commercial use.',
-  ].join('\n');
-}
-
-function mmText(w: number, h: number): string {
-  return `${w} x ${h} mm`;
 }

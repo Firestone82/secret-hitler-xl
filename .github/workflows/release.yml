@@ -1,0 +1,63 @@
+name: Release
+
+# Publishes a GitHub release with the rulebook PDFs and the print files (A3 and A4 sheets, print-service zip).
+# Push a tag v<version> that matches "version" in public/data/rulebook/index.json, or run it by hand:
+# a manual run tags the current commit with that version.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Check the version
+        id: version
+        run: |
+          version=$(node -p "require('./public/data/rulebook/index.json').version")
+          tag="v$version"
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "$tag" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match the rulebook version $version (public/data/rulebook/index.json)."
+            exit 1
+          fi
+          if [ "$GITHUB_EVENT_NAME" != "push" ] && git ls-remote --exit-code --tags origin "refs/tags/$tag" > /dev/null; then
+            echo "::error::$tag already exists. Raise the version in public/data/rulebook/index.json and changelog.json first."
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build the release files
+        run: npx tsx tools/release/print_files.mts release
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            # a re-run: replace the files and the notes of the existing release
+            gh release upload "$TAG" release/*.pdf release/*.zip --clobber
+            gh release edit "$TAG" --notes-file release/release-notes.md
+          else
+            gh release create "$TAG" release/*.pdf release/*.zip \
+              --title "Secret Hitler XL $VERSION" \
+              --notes-file release/release-notes.md \
+              --target "$GITHUB_SHA"
+          fi
