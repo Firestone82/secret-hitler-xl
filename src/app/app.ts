@@ -73,6 +73,7 @@ import { GithubStars } from './shared/github-stars';
           }
           <a routerLink="/" fragment="about">About</a>
           <a routerLink="/versions">Versions</a>
+          <a routerLink="/assets">Assets</a>
           <a routerLink="/" fragment="credits">Credits</a>
           <a href="https://github.com/Firestone82/secret-hitler-xl" target="_blank" rel="noopener">Source</a>
         </div>
