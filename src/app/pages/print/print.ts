@@ -125,7 +125,7 @@ export class PrintPage {
   // ---- boards, reference cards, spares
   boardStyles: { k: BoardStyle; label: string; hint: string }[] = [
     { k: 'border', label: 'With border', hint: 'The classic boards, 395 × 134 mm.' },
-    { k: 'borderless', label: 'Borderless', hint: 'Only the inner track, for the 3D-printed frames.' },
+    { k: 'borderless', label: 'Borderless', hint: 'Only the inner track and the footer strip, for the 3D-printed frames.' },
     { k: 'both', label: 'Both', hint: 'Every board in both versions.' },
   ];
   /** the Hitler card arts there are to choose from */

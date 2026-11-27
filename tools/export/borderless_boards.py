@@ -28,17 +28,18 @@ PX = 10          # pixels per mm, about what the board pictures have
 BLEED = 3.0      # mm, as every piece file
 BAND, LINE, EDGE = 1.2, 1.0, 2.0   # mm: the new frame, from the track outwards
 
-# The track of each board (mm on the 395 x 134 mm board), just outside the dotted rope,
+# The track of each board plus its footer strip (mm on the 395 x 134 mm board): the box starts just outside the dotted rope
+# and runs down past the footer (the election tracker, or the player-count note) to the board's inner rule,
 # and the colours of the frame: dark edge, light line, band (the colour just outside the rope).
 LIB = dict(dark=(0, 77, 107), line=(247, 254, 255), band=(97, 200, 217), back=(97, 201, 217))
 FAS = dict(dark=(150, 2, 1), line=(255, 250, 176), band=(230, 100, 68), back=(230, 100, 68))
 COM = dict(dark=(150, 2, 1), line=(255, 251, 177), band=(230, 73, 66), back=(230, 72, 66))
 BOARDS = {
-    'liberal': ((55.7, 27.4, 339.2, 106.7), LIB, 'Liberal board (borderless)'),
-    'fascist_5-6': ((28.5, 28.0, 365.8, 106.3), FAS, 'Fascist board 5-6 players (borderless)'),
-    'fascist_7-8': ((28.5, 28.0, 365.8, 106.3), FAS, 'Fascist board 7-8 players (borderless)'),
-    'fascist_9-10': ((28.5, 28.0, 365.8, 106.3), FAS, 'Fascist board 9+ players (borderless)'),
-    'communist': ((29.1, 28.8, 365.8, 105.1), COM, 'Communist board (borderless)'),
+    'liberal': ((55.7, 27.4, 339.2, 125.0), LIB, 'Liberal board (borderless)'),
+    'fascist_5-6': ((28.5, 28.0, 365.8, 123.5), FAS, 'Fascist board 5-6 players (borderless)'),
+    'fascist_7-8': ((28.5, 28.0, 365.8, 123.5), FAS, 'Fascist board 7-8 players (borderless)'),
+    'fascist_9-10': ((28.5, 28.0, 365.8, 123.5), FAS, 'Fascist board 9+ players (borderless)'),
+    'communist': ((29.1, 28.8, 365.8, 122.6), COM, 'Communist board (borderless)'),
 }
 
 

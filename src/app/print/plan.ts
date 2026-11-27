@@ -59,10 +59,10 @@ export function setSeatTables(t: { base: Seats; xl: Seats }) {
 const ORIGINAL = { libTiles: 6, fasTiles: 11, libRoles: 6, fasRoles: 3, hitler: 1, libMembers: 6, fasMembers: 4, ballots: 10 };
 /** Small reference cards: 280 × 95 mm instead of 395 × 134. */
 export const SMALL_REF_SCALE = 280 / 395;
-/** Borderless boards are the inner track of each board in a narrow frame of its own, so each has its own size (cut size, mm).
+/** Borderless boards are the inner track and footer strip of each board in a narrow frame of its own, so each has its own size (cut size, mm).
  *  Made by tools/export/borderless_boards.py, which prints these numbers. */
 export const INSERT_MM: Record<string, [number, number]> = {
-  liberal: [291.9, 87.7], 'fascist_5-6': [345.7, 86.7], 'fascist_7-8': [345.7, 86.7], 'fascist_9-10': [345.7, 86.7], communist: [345.1, 84.7],
+  liberal: [291.9, 106.0], 'fascist_5-6': [345.7, 103.9], 'fascist_7-8': [345.7, 103.9], 'fascist_9-10': [345.7, 103.9], communist: [345.1, 102.2],
 };
 
 const EMERGENCY = ['investigate', 'peek', 'special_election', 'execution', 'propaganda', 'no_confidence', 'censorship', 'enabling_act', 'article48', 'pardon'];

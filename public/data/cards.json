@@ -476,34 +476,34 @@
   "boards/borderless/liberal": {
     "kind": "insert",
     "w": 291.9,
-    "h": 87.7,
+    "h": 106.0,
     "label": "Liberal board (borderless)"
   },
   "boards/borderless/fascist_5-6": {
     "kind": "insert",
     "w": 345.7,
-    "h": 86.7,
+    "h": 103.9,
     "label": "Fascist board 5-6 players (borderless)",
     "back": "backs/borderless_fascist"
   },
   "boards/borderless/fascist_7-8": {
     "kind": "insert",
     "w": 345.7,
-    "h": 86.7,
+    "h": 103.9,
     "label": "Fascist board 7-8 players (borderless)",
     "back": "backs/borderless_fascist"
   },
   "boards/borderless/fascist_9-10": {
     "kind": "insert",
     "w": 345.7,
-    "h": 86.7,
+    "h": 103.9,
     "label": "Fascist board 9+ players (borderless)",
     "back": "backs/borderless_fascist"
   },
   "boards/borderless/communist": {
     "kind": "insert",
     "w": 345.1,
-    "h": 84.7,
+    "h": 102.2,
     "label": "Communist board (borderless)"
   },
   "reference/setup_night": {
