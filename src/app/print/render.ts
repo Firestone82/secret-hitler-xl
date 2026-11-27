@@ -230,18 +230,17 @@ export class Renderer {
     const gaps = (v: number[]) => v.slice(1).map((b, i) => [v[i], b]).filter(([a, b]) => b - a > 0 && b - a <= 8);
     for (const x of sx) for (const [a, b] of gaps(sy)) ln(x, a, x, b, gap, 0.12);
     for (const y of sy) for (const [a, b] of gaps(sx)) ln(a, y, b, y, gap, 0.12);
-    // registration targets: corners and the middle of every edge, where they stay clear of the artwork
+    // registration targets: only in the four corners, where they stay clear of the artwork
     const [TG, TR, TC] = A4 ? [5, 1.1, 2] : [7.5, 1.6, 3];
     const clear = (tx: number, ty: number) => sh.items.every((it) => {
       const x = ix(it), r = TC + 0.5;
       return tx + r < x - BLEED || tx - r > x + it.w + BLEED || ty + r < it.y - BLEED || ty - r > it.y + it.h + BLEED;
     });
-    for (const [tx, ty] of [[TG, TG], [PW - TG, TG], [TG, PH - TG], [PW - TG, PH - TG], [PW / 2, TG], [PW / 2, PH - TG], [TG, PH / 2], [PW - TG, PH / 2]]) {
+    for (const [tx, ty] of [[TG, TG], [PW - TG, TG], [TG, PH - TG], [PW - TG, PH - TG]]) {
       if (!clear(tx, ty)) continue;
       page.drawCircle({ x: pt(tx), y: pt(PH - ty), size: pt(TR), borderColor: target, borderWidth: 0.2 });
       ln(tx - TC, ty, tx + TC, ty, target); ln(tx, ty - TC, tx, ty + TC, target);
     }
-    ln(PW / 2, y0 - G, PW / 2, y0 - G - L, crop, 0.2, 1); ln(PW / 2, y1 + G, PW / 2, y1 + G + L, crop, 0.2, 1);
     for (const fx0 of sh.fold ?? []) {
       const fx = back ? PW - fx0 : fx0;
       ln(fx, y0 - G - L - 1, fx, y0 - G - L - 5, crop, 0.2, 1.5); ln(fx, y1 + G, fx, y1 + G + L + 2, crop, 0.2, 1.5);

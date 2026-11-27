@@ -201,9 +201,11 @@
           <div class="piece-grid">
             @for (p of piecePreviews(); track $index) {
               <figure [class.wide]="p.item.w > 150">
-                <svg [attr.viewBox]="pieceBox(p.item)" role="img" [attr.aria-label]="pieceLabel(p.u.slot)">
-                  <g [appPreview]="[p.item]" [cuts]="false" />
-                </svg>
+                <button type="button" class="piece-btn" (click)="pieceZoom.set($index)" title="Full screen" [attr.aria-label]="'Show ' + pieceLabel(p.u.slot) + ' full screen'">
+                  <svg [attr.viewBox]="pieceBox(p.item)" role="img" [attr.aria-label]="pieceLabel(p.u.slot)">
+                    <g [appPreview]="[p.item]" [cuts]="false" />
+                  </svg><span class="zoom-hint">⤢</span>
+                </button>
                 <figcaption>{{ pieceLabel(p.u.slot) }} <b>×{{ p.u.copies }}</b></figcaption>
               </figure>
             }
@@ -241,6 +243,20 @@
         <svg class="zsheet" [attr.viewBox]="'0 0 ' + sp.w + ' ' + sp.h" (click)="$event.target === $event.currentTarget ? zoom.set(false) : $event.stopPropagation()">
           <rect [attr.width]="sp.w" [attr.height]="sp.h" fill="#fff" />
           <g [appPreview]="sp.items" />
+        </svg>
+      </div>
+    }
+    @if (pieceZoomView(); as pz) {
+      <div class="zoom" (click)="pieceZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="pieceLabel(pz.u.slot)">
+        <div class="zbar" (click)="$event.stopPropagation()">
+          <button class="mini" (click)="pickPiece(pieceZoom()! - 1)" [disabled]="pieceZoom() === 0" aria-label="Previous piece">‹</button>
+          <button class="mini" (click)="pickPiece(pieceZoom()! + 1)" [disabled]="pieceZoom()! >= pieces().length - 1" aria-label="Next piece">›</button>
+          <span class="ztitle">{{ pieceZoom()! + 1 }} / {{ pieces().length }} · {{ pieceLabel(pz.u.slot) }} ×{{ pz.u.copies }}</span>
+          <span class="seg"><button [class.on]="!back()" (click)="back.set(false)">Front</button><button [class.on]="back()" (click)="back.set(true)">Back</button></span>
+          <button class="mini close" (click)="pieceZoom.set(null)" aria-label="Close">✕</button>
+        </div>
+        <svg class="zsheet" [attr.viewBox]="pieceBox(pz.item)" (click)="$event.target === $event.currentTarget ? pieceZoom.set(null) : $event.stopPropagation()">
+          <g [appPreview]="[pz.item]" [cuts]="false" />
         </svg>
       </div>
     }

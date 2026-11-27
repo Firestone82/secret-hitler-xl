@@ -71,9 +71,9 @@ export function allSheets(files: PrintFile[]): SheetRef[] {
 }
 
 /** A single piece on its own, at cut size plus the 1.5 mm bleed the sheets keep. */
-export function previewPiece(slot: Slot, back: boolean, data: RolesFile): PreviewItem {
+export function previewPiece(slot: Slot, back: boolean, data: RolesFile, hd = false): PreviewItem {
   const [w, h] = slotSize(slot);
   const draw = (face: Slot['front']) => ({ face, rot: 0 as const, dx: 0, w, h, scale: slot.scale ?? 1 });
   const it: Item = { x: 0, y: 0, w, h, name: slot.name, front: draw(slot.front), back: draw(slot.back), free: [true, true, true, true] };
-  return previewItem(it, w, back, data);
+  return previewItem(it, w, back, data, hd);
 }

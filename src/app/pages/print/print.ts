@@ -66,6 +66,13 @@ export class PrintPage {
     const rf = this.data.roles(); if (!rf) return [];
     return this.pieces().map((u) => ({ u, item: previewPiece(u.slot, this.back(), rf) }));
   });
+  /** the print-service piece shown full screen: its index in the grid */
+  pieceZoom = signal<number | null>(null);
+  pieceZoomView = computed(() => {
+    const i = this.pieceZoom(), u = i === null ? undefined : this.pieces()[i], rf = this.data.roles();
+    return u && rf ? { u, item: previewPiece(u.slot, this.back(), rf, true) } : null;
+  });
+  pickPiece(i: number) { if (i >= 0 && i < this.pieces().length) this.pieceZoom.set(i); }
   totalCopies = computed(() => this.pieces().reduce((s, u) => s + u.copies, 0));
   /** what a print service is asked to print, by kind: "120 cards, 45 tiles, 7 boards" */
   pieceTotals = computed(() => {
@@ -159,6 +166,16 @@ export class PrintPage {
     if (this.refZoom()) {
       if (e.key === 'Escape') this.refZoom.set(null);
       else if (e.key === 'f' || e.key === 'b') this.refZoomBack.set(!this.refZoomBack());
+      else return;
+      e.preventDefault();
+      return;
+    }
+    if (this.pieceZoom() !== null) {
+      const i = this.pieceZoom()!;
+      if (e.key === 'Escape') this.pieceZoom.set(null);
+      else if (e.key === 'ArrowRight') this.pickPiece(i + 1);
+      else if (e.key === 'ArrowLeft') this.pickPiece(i - 1);
+      else if (e.key === 'f' || e.key === 'b') this.back.set(!this.back());
       else return;
       e.preventDefault();
       return;
