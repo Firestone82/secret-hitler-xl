@@ -100,7 +100,7 @@
             <figure>
               <div class="imgs">
                 @for (im of b['images']; track $index) {
-                  <div class="fi"><img [src]="'rb/' + im" alt="" loading="lazy" />@if (b['labels']) { <span [innerHTML]="b['labels'][$index] | safeHtml"></span> }</div>
+                  <div class="fi"><img [src]="im | thumb" alt="" loading="lazy" />@if (b['labels']) { <span [innerHTML]="b['labels'][$index] | safeHtml"></span> }</div>
                 }
               </div>
               <figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption>
@@ -110,19 +110,19 @@
             <figure>
               <div class="imgs">
                 @for (p of b['pairs']; track $index) {
-                  <div class="fi"><div class="pair"><img [src]="'rb/' + p.a" alt="" /><img [src]="'rb/' + p.b" alt="" /></div><span [innerHTML]="p.label | safeHtml"></span></div>
+                  <div class="fi"><div class="pair"><img [src]="p.a | thumb" alt="" /><img [src]="p.b | thumb" alt="" /></div><span [innerHTML]="p.label | safeHtml"></span></div>
                 }
               </div>
               <figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption>
             </figure>
           }
           @case ('wide') {
-            <figure><img class="wide" [src]="'rb/' + b['image']" alt="" loading="lazy" /><figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption></figure>
+            <figure><img class="wide" [src]="b['image'] | thumb" alt="" loading="lazy" /><figcaption [innerHTML]="b['caption'] | safeHtml"></figcaption></figure>
           }
           @case ('icons') {
             <div class="icons">
               @for (it of b['items']; track $index) {
-                <div class="ic"><img [src]="'rb/' + it.icon" alt="" /><div><b [innerHTML]="it.name | safeHtml"></b><p [innerHTML]="it.html | safeHtml"></p></div></div>
+                <div class="ic"><img [src]="it.icon" alt="" /><div><b [innerHTML]="it.name | safeHtml"></b><p [innerHTML]="it.html | safeHtml"></p></div></div>
               }
             </div>
           }
@@ -141,8 +141,8 @@
               @for (st of b['steps']; track $index) {
                 <div class="lr">
                   <div><b><span class="n">{{ $index + 1 }}</span> <span [innerHTML]="st.title | safeHtml"></span></b><p [innerHTML]="st.html | safeHtml"></p></div>
-                  <div class="tiles">@for (t of st.tiles; track $index) { <img [src]="'rb/' + t.image" [alt]="t.alt" /> }</div>
-                  @if (st.discards && b['discard']) { <span class="ar">→</span><img class="disc" [src]="'rb/' + b['discard']" alt="discard" /> }
+                  <div class="tiles">@for (t of st.tiles; track $index) { <img [src]="t.image | thumb" [alt]="t.alt" /> }</div>
+                  @if (st.discards && b['discard']) { <span class="ar">→</span><img class="disc" [src]="b['discard'] | thumb" alt="discard" /> }
                 </div>
               }
               @if (b['caption']) { <p class="cap" [innerHTML]="b['caption'] | safeHtml"></p> }

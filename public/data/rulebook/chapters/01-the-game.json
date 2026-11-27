@@ -1,0 +1,131 @@
+[
+  {
+    "type": "part",
+    "num": "PART ONE",
+    "title": "The original game",
+    "sub": "5 to 10 players. Everything in this part is the base game by Mike Boxleiter, Tommy Maranges and Mac Schubert, reworded but unchanged.",
+    "color": "#d9611f",
+    "id": "the-original-game"
+  },
+  {
+    "type": "h1",
+    "text": "1  The game",
+    "id": "1-the-game"
+  },
+  {
+    "type": "p",
+    "html": "The year is 1932. The place is Germany before the war. Players are politicians trying to hold a fragile Liberal government together and stem the rising tide of Fascism. But there are secret Fascists among them, and one player is Secret Hitler."
+  },
+  {
+    "type": "p",
+    "html": "At the start, each player is secretly given one of three roles: <b>Liberal</b>, <b>Fascist</b> or <b>Hitler</b>. The Liberals have a majority but do not know for sure who anyone is. The Fascists must rely on secrecy and sabotage. Hitler plays for the Fascist team. The Fascists know who Hitler is from the outset, but Hitler does not know the Fascists and must work out who they are."
+  },
+  {
+    "type": "h2",
+    "text": "How to win",
+    "id": "how-to-win"
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Team",
+        "Wins if either"
+      ],
+      [
+        "Liberals",
+        "Five Liberal policies are enacted, <b>or</b> Hitler is assassinated."
+      ],
+      [
+        "Fascists",
+        "Six Fascist policies are enacted, <b>or</b> Hitler is elected Chancellor at any time after the third Fascist policy has been enacted."
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "p",
+    "html": "Whenever a Fascist policy is enacted, the government becomes more powerful: the President gets a single-use power that must be used before the next round. It does not matter which team the President is on. Even Liberal players may be tempted to enact a Fascist policy to gain a power."
+  },
+  {
+    "type": "h2",
+    "text": "Contents",
+    "id": "contents"
+  },
+  {
+    "type": "figure",
+    "images": [
+      "cards/policies/liberal.jpg",
+      "cards/policies/fascist.jpg",
+      "cards/backs/policy.jpg",
+      "cards/roles/liberal_1.jpg",
+      "cards/backs/role.jpg",
+      "cards/membership/liberal.jpg",
+      "cards/membership/fascist.jpg",
+      "cards/backs/membership.jpg",
+      "cards/ballots/ja.jpg",
+      "cards/ballots/nein.jpg",
+      "cards/piles/draw.jpg",
+      "cards/piles/discard.jpg"
+    ],
+    "labels": null,
+    "caption": "Policy tiles and their back, a Secret Role and its back, Party Membership cards and their back, the two ballots, and the draw and discard pile cards."
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Count",
+        "Component"
+      ],
+      [
+        "17",
+        "Policy tiles: 6 Liberal, 11 Fascist"
+      ],
+      [
+        "10",
+        "Secret Role cards"
+      ],
+      [
+        "10",
+        "Role Briefing cards, one for each Secret Role card"
+      ],
+      [
+        "10",
+        "Party Membership cards"
+      ],
+      [
+        "10 + 10",
+        "<b>Ja!</b> and <b>Nein</b> ballot cards"
+      ],
+      [
+        "10",
+        "Envelopes, one per player"
+      ],
+      [
+        "3 + 1",
+        "Fascist boards (5-6, 7-8, 9+ players) and one Liberal board"
+      ],
+      [
+        "1 + 1",
+        "Draw pile card and discard pile card"
+      ],
+      [
+        "1",
+        "Election tracker marker"
+      ],
+      [
+        "1 + 1",
+        "President placard and Chancellor placard"
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "note",
+    "label": "Why two cards?",
+    "html": "Every player has a Secret Role card and a Party Membership card. The investigation power shows only the Party Membership card. Hitler's membership card says Fascist and gives no hint of the special role, so Liberals who uncover a Fascist must work out for themselves whether they have found an ordinary Fascist or the leader."
+  }
+]

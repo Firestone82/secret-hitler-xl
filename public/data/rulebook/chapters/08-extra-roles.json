@@ -1,0 +1,133 @@
+[
+  {
+    "type": "h1",
+    "text": "8  Extra roles",
+    "id": "8-extra-roles"
+  },
+  {
+    "type": "p",
+    "html": "Each extra role takes the seat of a regular role, and its player gets that role's own <b>Role Briefing</b> card. The briefing explains everything the player needs, so this chapter is mostly for the person who sets up the game."
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Role",
+        "Takes the seat of",
+        "Add it when"
+      ],
+      [
+        "Centrists (2 to 4)",
+        "Liberals",
+        "The game is big and the Liberals need a small group that trusts each other."
+      ],
+      [
+        "Capitalist",
+        "A Liberal",
+        "Communist policies pass too quickly, or Radicalisation is too easy."
+      ],
+      [
+        "Monarchist",
+        "A Fascist",
+        "The Fascists win too often."
+      ],
+      [
+        "Anarchist",
+        "A Communist",
+        "The group knows the Communists well and wants a wild card."
+      ],
+      [
+        "Bodyguard",
+        "A Fascist",
+        "Hitler is found and executed too often."
+      ],
+      [
+        "Fascist Spy + Liberal Spy",
+        "A Fascist + a Liberal",
+        "You want a hidden duel. Always add both."
+      ],
+      [
+        "Jester",
+        "A Liberal",
+        "Executions happen too easily."
+      ],
+      [
+        "Propagandist",
+        "Any party (usually Fascist)",
+        "Elections are too predictable."
+      ],
+      [
+        "Bureaucrat",
+        "Any party (usually Liberal)",
+        "Liberals are fooled about discards too often."
+      ],
+      [
+        "Detective",
+        "A Liberal (party drawn at setup)",
+        "You want stronger investigations."
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "note",
+    "label": "Advice",
+    "html": "With the Communists, add only <b>Centrists, the Capitalist, the Monarchist and the Anarchist</b>, and only above 10 players. The other roles suit games without Communists. Start with one extra role at a time."
+  },
+  {
+    "type": "role",
+    "role": "centrist",
+    "intro": "In a big game it is easy for a Liberal to feel alone. Centrists are a small circle of moderate Liberals who recognise each other on the first night: a core of trust the rest of the table can build on, as long as none of them has been quietly radicalised."
+  },
+  {
+    "type": "role",
+    "role": "capitalist",
+    "intro": "The Capitalist is a Liberal with deep pockets and no wish for a revolution. Two membership cards keep the Communists from ever converting them, and the Lobby card lets them put extra weight behind the player they trust most."
+  },
+  {
+    "type": "role",
+    "role": "monarchist",
+    "intro": "The Monarchist wants a strong state with a king at its head, not Hitler. They vote with the far right, but a Hitler Chancellorship is the one outcome they cannot accept, so they work against him from inside the Fascist camp."
+  },
+  {
+    "type": "role",
+    "role": "anarchist",
+    "intro": "The Anarchist fights for the revolution but answers to nobody. The Communists know who the Anarchist is, the Anarchist does not know them, and once per game they can take matters into their own hands."
+  },
+  {
+    "type": "role",
+    "role": "bodyguard",
+    "intro": "Every dictator needs someone to take the bullet. The Bodyguard is a Fascist sworn to protect Hitler: the first execution aimed at him hits the Bodyguard instead."
+  },
+  {
+    "type": "role",
+    "role": "fascist_spy",
+    "intro": "The Fascist Spy hunts a traitor. Somewhere among the Liberals sits a Liberal Spy who knows the Fascists' faces, and one well-aimed shot ends the game in the Fascists' favour."
+  },
+  {
+    "type": "role",
+    "role": "liberal_spy",
+    "intro": "The Liberal Spy has infiltrated the Fascists and seen their faces. That knowledge can win the game for the Liberals, but if the Fascists work out who the spy is and execute them, the Fascists win instead."
+  },
+  {
+    "type": "role",
+    "role": "jester",
+    "intro": "The Jester plays for nobody but themselves. They want to look like a threat, because the only way they win is to be executed, which ends the game at once with the Jester as the only winner."
+  },
+  {
+    "type": "role",
+    "role": "propagandist",
+    "intro": "The Propagandist belongs to an ordinary party but controls the press. Once per game they can swing a vote with the weight of three ballots, enough to make or break the government that decides the game."
+  },
+  {
+    "type": "role",
+    "role": "bureaucrat",
+    "intro": "The Bureaucrat works in a back office with access to the files. Once per game they can check which policies a government really threw away, at the price of never being trusted with the Chancellorship again."
+  },
+  {
+    "type": "role",
+    "role": "detective",
+    "intro": "The Detective arrives without a party and only learns their loyalty on the first night, when they draw it at random. Their trade is investigation: when Bugging or Investigate Loyalty comes up while they sit in the government, they take the power over and see a player's true Secret Role."
+  }
+]

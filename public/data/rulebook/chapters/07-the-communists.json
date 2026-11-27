@@ -1,0 +1,108 @@
+[
+  {
+    "type": "h1",
+    "text": "7  The Communists",
+    "id": "7-the-communists"
+  },
+  {
+    "type": "figure",
+    "images": [
+      "cards/roles/communist_1.jpg",
+      "cards/roles/communist_3.jpg",
+      "cards/membership/communist.jpg",
+      "cards/policies/communist.jpg"
+    ],
+    "labels": null,
+    "caption": "Two Communist roles, the Communist Party Membership card and a Communist policy."
+  },
+  {
+    "type": "p",
+    "html": "The Communists are a third party with their own policies and their own board. Communist roles go with Communist Party Membership cards. Communist policies are shuffled into the deck and enacted like any other policy, onto the Communist board. The Communists know each other from the start."
+  },
+  {
+    "type": "h2",
+    "text": "How the Communists win",
+    "id": "how-the-communists-win"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "items": [
+      "Their board is full of Communist policies.",
+      "Hitler is executed. Then Communists and Liberals win together."
+    ]
+  },
+  {
+    "type": "h2",
+    "text": "The Communist board",
+    "id": "the-communist-board"
+  },
+  {
+    "type": "wide",
+    "image": "cards/boards/communist.jpg",
+    "caption": "The Communist board: Bugging, Radicalisation, Five-year plan, Congress, Confession, then the winning space."
+  },
+  {
+    "type": "h2",
+    "text": "Communist powers",
+    "id": "communist-powers"
+  },
+  {
+    "type": "p",
+    "html": "A Communist power is triggered when a Communist policy lands on its space, whoever the government is. <b>Radicalisation</b> and <b>Congress</b> are carried out by the Communists while everyone else has their eyes closed. A small <b>closed-eye icon</b> in the corner of the space marks them. The Anarchist never opens their eyes for these."
+  },
+  {
+    "type": "icons",
+    "items": [
+      {
+        "icon": "rulebook/images/cpo_bug.svg",
+        "name": "Bugging",
+        "html": "No eyes are closed. The President and the Chancellor together look at one player's Party Membership card. The Capitalist chooses which of their two cards to show."
+      },
+      {
+        "icon": "rulebook/images/cpo_rad.png",
+        "name": "Radicalisation",
+        "html": "The Communists try to turn another player into a Communist. <b>Fascists cannot be radicalised</b>, and neither can a player whose card was already investigated by a Fascist-board power."
+      },
+      {
+        "icon": "rulebook/images/cpo_plan.svg",
+        "name": "Five-year plan",
+        "html": "Shuffle two Communist policies and one Liberal policy from the reserve into the draw deck."
+      },
+      {
+        "icon": "rulebook/images/cpo_congress.png",
+        "name": "Congress",
+        "html": "The newly radicalised Communists learn who the original Communists are."
+      },
+      {
+        "icon": "rulebook/images/cpo_confess.png",
+        "name": "Confession",
+        "html": "The President executes a player of their choice. That player reveals their Party Membership card to everyone."
+      }
+    ]
+  },
+  {
+    "type": "script",
+    "title": "Radicalisation",
+    "lines": [
+      "Everyone not yet investigated by a Fascist-board power, take out your Party Membership card and place it face down in front of you. Capitalist, put out your Fascist card.",
+      "Everyone close your eyes.",
+      "Communists, open your eyes and look at one player's card together.",
+      "If it is a Liberal card, swap it for a spare Communist card and put the old card in the centre. If it is a Fascist card, put it back: the attempt fails.",
+      "Communists, close your eyes.",
+      "<span style=\"color:#c62f2a\"><b>Only with the Capitalist:</b></span> Capitalist, open your eyes. Place the Lobby card on the card of the player you trust most. Close your eyes.",
+      "Everyone reach out and move your card around slightly.",
+      "Everyone open your eyes and check your card. If it has been swapped, you are now a Communist and win only if the Communists win."
+    ]
+  },
+  {
+    "type": "script",
+    "title": "Congress",
+    "lines": [
+      "Everyone close your eyes.",
+      "Communists, open your eyes and recognise each other.",
+      "Communists, close your eyes.",
+      "Everyone open your eyes."
+    ]
+  }
+]

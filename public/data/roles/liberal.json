@@ -1,0 +1,91 @@
+{
+  "id": "liberal",
+  "name": "Liberal",
+  "module": "base",
+  "palette": "lib",
+  "party": "liberal",
+  "regular": true,
+  "seat": null,
+  "seatLabel": null,
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/liberal_1",
+    "roles/liberal_2",
+    "roles/liberal_3",
+    "roles/liberal_4",
+    "roles/liberal_5",
+    "roles/liberal_6",
+    "roles/liberal_7"
+  ],
+  "portrait": "liberal",
+  "crop": [
+    0.5,
+    0.46,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team Liberal",
+    "card": "Liberal",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Liberal board is full.",
+          "Hitler is executed."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "Nobody. Any player could be lying to you."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Tell the truth: you are solving a puzzle.",
+          "Ask players to explain their votes and powers.",
+          "Slow the table down."
+        ]
+      }
+    ]
+  },
+  "rulebook": null,
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Liberal team, the majority at the table. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>. With the Communists in the game, a Hitler execution is a win for them too."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Nothing. You get no information at setup and keep your eyes closed through the whole night. Every other player could be lying to you, and everything you learn comes from votes, claims, enacted policies and powers."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "You have no power of your own. When you are President you use the board powers like anyone else, and Investigate Loyalty, Policy Peek and Execution are your best tools to find the Fascists and Hitler."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "With the Communists in the game, your Liberal membership card makes you a target for <b>Radicalisation</b>. If the Communists swap it for a Communist card, you become a Communist and win only if the Communists win. Check your card after every Radicalisation. A player whose card was already looked at by a Fascist-board power cannot be radicalised."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Tell the truth: you are solving a puzzle, and a lie only confuses your own team. Ask players to explain their votes and powers, slow the table down when someone rushes a vote, and remember that when a Fascist policy appears, only the President, the Chancellor or the deck can be to blame."
+      ]
+    }
+  ]
+}

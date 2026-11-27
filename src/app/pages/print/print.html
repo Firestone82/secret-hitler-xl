@@ -45,7 +45,7 @@
             @for (g of roleGroups(); track g[0].id) {
               <label class="role" [class.off]="!roleAllowed(g[0])" [class.pair]="g.length > 1">
                 <input type="checkbox" [disabled]="!roleAllowed(g[0])" [checked]="!!opts().roles[g[0].id]" (change)="toggleRole(g[0], $any($event.target).checked)" />
-                <span class="imgs">@for (r of g; track r.id) { <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" loading="lazy" /> }</span>
+                <span class="imgs">@for (r of g; track r.id) { <img [src]="img(r.art[0], 0, 'thumb')" alt="" loading="lazy" /> }</span>
                 <span class="rtxt">
                   <span class="rhead"><b>{{ groupName(g) }}@if (g[0].countLabel) { <small> ×{{ g[0].countLabel }}</small> }</b>
                     <small class="seat">Takes the seat of {{ groupSeat(g) }}</small></span>
@@ -96,7 +96,7 @@
             @for (r of refCards; track r.id) {
               <div class="ref" [class.off]="!refAllowed(r)">
                 <button type="button" class="ref-thumb" (click)="openRef(r)" [attr.aria-label]="'Show ' + r.label + ' full size'">
-                  <img [src]="'preview/' + r.id + '_0.jpg'" alt="" loading="lazy" /><span class="zoom-hint">⤢</span>
+                  <img [src]="img(r.id, 0, 'thumb')" alt="" loading="lazy" /><span class="zoom-hint">⤢</span>
                 </button>
                 <span class="rlabel"><b>{{ r.label }}</b><small>{{ r.hint }}</small></span>
                 <span class="stepper">
@@ -131,7 +131,7 @@
                 <button type="button" role="radio" class="all" [attr.aria-checked]="opts().hitlerArt === 'all'" [class.on]="opts().hitlerArt === 'all'" (click)="set('hitlerArt', 'all')">All {{ hitlerArts().length }} versions</button>
                 @for (a of hitlerArts(); track a) {
                   <button type="button" role="radio" [attr.aria-checked]="opts().hitlerArt === a" [class.on]="opts().hitlerArt === a" (click)="set('hitlerArt', a)" [attr.aria-label]="'Only this version'">
-                    <img [src]="'cards/' + a + '.jpg'" alt="" loading="lazy" />
+                    <img [src]="img(a, 0, 'thumb')" alt="" loading="lazy" />
                   </button>
                 }
               </div>
@@ -253,7 +253,7 @@
           <button class="mini close" (click)="refZoom.set(null)" aria-label="Close">✕</button>
         </div>
         <div class="zstage">
-          <img class="zimg" [src]="'preview/large/' + rz.id + '_' + (refZoomBack() ? 1 : 0) + '.jpg'" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
+          <img class="zimg" [src]="img(rz.id, refZoomBack() ? 1 : 0)" [alt]="rz.label + (refZoomBack() ? ', back' : ', front')" (click)="$event.stopPropagation()" />
         </div>
       </div>
     }

@@ -7,7 +7,7 @@ import { Credits } from '../../shared/credits';
 import { Reveal } from '../../shared/reveal';
 
 /** card art shown fanned out in the hero, left to right */
-const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capitalist', 'h_r_anarchist'];
+const HERO_CARDS = ['monarchist', 'detective', 'jester', 'capitalist', 'anarchist'];
 
 @Component({
   selector: 'app-home',
@@ -29,7 +29,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
         </div>
         <div class="fan" aria-hidden="true">
           @for (c of cards; track c; let i = $index) {
-            <div class="card" [style.--i]="i - 2"><img [src]="'cards/' + c + '.jpg'" alt="" /></div>
+            <div class="card" [style.--i]="i - 2"><img [src]="'cards/roles/' + c + '.jpg'" alt="" /></div>
           }
         </div>
       </div>
@@ -58,11 +58,11 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
       <section class="tiles">
         <a class="tile lib" routerLink="/rules" appReveal>
           <div class="pic book">
-            <img class="board" src="rb/board_liberal.jpg" alt="" loading="lazy" />
-            <img class="pg" src="home/rulebook_p3.jpg" alt="" loading="lazy" />
-            <img class="pg" src="home/rulebook_p5.jpg" alt="" loading="lazy" />
-            <img class="pg" src="home/rulebook_p1.jpg" alt="" loading="lazy" />
-            <img class="pol" src="rb/p005.jpg" alt="" loading="lazy" />
+            <img class="board" src="cards/thumb/boards/liberal.jpg" alt="" loading="lazy" />
+            <img class="pg" src="rulebook/pages/p3.jpg" alt="" loading="lazy" />
+            <img class="pg" src="rulebook/pages/p5.jpg" alt="" loading="lazy" />
+            <img class="pg" src="rulebook/pages/p1.jpg" alt="" loading="lazy" />
+            <img class="pol" src="cards/thumb/policies/fascist.jpg" alt="" loading="lazy" />
           </div>
           <div class="txt">
             <h2>Rulebook</h2>
@@ -72,9 +72,9 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
         </a>
         <a class="tile com" routerLink="/roles" appReveal>
           <div class="pic cards">
-            <img src="cards/h_r_bodyguard.jpg" alt="" loading="lazy" />
-            <img src="cards/h_r_propagandist.jpg" alt="" loading="lazy" />
-            <img src="cards/h_r_centrist_a.jpg" alt="" loading="lazy" />
+            <img src="cards/thumb/roles/bodyguard.jpg" alt="" loading="lazy" />
+            <img src="cards/thumb/roles/propagandist.jpg" alt="" loading="lazy" />
+            <img src="cards/thumb/roles/centrist_a.jpg" alt="" loading="lazy" />
           </div>
           <div class="txt">
             <h2>Roles</h2>
@@ -83,7 +83,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
           </div>
         </a>
         <a class="tile cta" routerLink="/print" appReveal>
-          <div class="pic"><img src="preview/b_fascist_9-10_0.jpg" alt="" loading="lazy" /></div>
+          <div class="pic"><img src="cards/thumb/boards/fascist_9-10.jpg" alt="" loading="lazy" /></div>
           <div class="txt">
             <h2>Print builder</h2>
             <p>Pick the paper, the table size and the modules, and get print-ready PDFs with crop marks, made in your browser.</p>
@@ -110,7 +110,7 @@ const HERO_CARDS = ['h_r_monarchist', 'h_r_detective', 'h_r_jester', 'h_r_capita
       </section>
 
       <section class="original" appReveal>
-        <img src="cards/b_back.jpg" alt="" loading="lazy" />
+        <img src="cards/thumb/briefing/back.jpg" alt="" loading="lazy" />
         <div class="txt">
           <h2>The original Secret Hitler</h2>
           <p>

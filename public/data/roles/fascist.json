@@ -1,0 +1,100 @@
+{
+  "id": "fascist",
+  "name": "Fascist",
+  "module": "base",
+  "palette": "fas",
+  "party": "fascist",
+  "regular": true,
+  "seat": null,
+  "seatLabel": null,
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/fascist_1",
+    "roles/fascist_2",
+    "roles/fascist_3",
+    "roles/fascist_4"
+  ],
+  "portrait": "fascist",
+  "crop": [
+    0.55,
+    0.46,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team Fascist",
+    "card": "Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Fascist board is full.",
+          "Hitler is elected Chancellor after the 3rd Fascist policy."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "The other Fascists and Hitler.",
+          "The Monarchist, who shows you a thumb."
+        ]
+      },
+      {
+        "label": "GOOD TO KNOW",
+        "items": [
+          "You cannot be radicalised."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Claim to be a Liberal.",
+          "Spend your trust to make Hitler look trustworthy."
+        ]
+      }
+    ]
+  },
+  "rulebook": null,
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Fascist team. You win when the <b>Fascist board is full</b> or when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>. With the Spies in the game, your team also wins at once if one of you executes the Liberal Spy."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "You open your eyes with the other Fascists at setup, and Hitler shows you a thumb, so you know your whole team. With the Monarchist in the game, the Monarchist shows you a thumb too, but plays for their own goal, not for you."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "You have no power of your own. When you are President, the Fascist-board powers are yours to use for the team: investigate a player and lie about the result, or execute the Liberal who sees through you."
+      ]
+    },
+    {
+      "label": "Cannot be radicalised",
+      "text": [
+        "Your membership card says Fascist, so a Radicalisation that picks you fails and you stay a Fascist."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Your membership card is the proof against you. Any Investigate Loyalty or Bugging that looks at you shows Fascist, and a Confession shows it to the whole table."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Claim to be a Liberal. Spend your own trust to make Hitler look trustworthy, because electing Hitler as Chancellor is how the Fascists win most often. Create confusion and push for quick votes."
+      ]
+    }
+  ]
+}

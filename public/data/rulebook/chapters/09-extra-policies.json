@@ -1,0 +1,100 @@
+[
+  {
+    "type": "h1",
+    "text": "9  Extra policies",
+    "id": "9-extra-policies"
+  },
+  {
+    "type": "h2",
+    "text": "Emergency powers",
+    "id": "emergency-powers"
+  },
+  {
+    "type": "p",
+    "html": "Big games need more chances to investigate and execute, and they need to last longer. Emergency tiles give both. An enacted emergency tile is <b>not placed on any board</b>: it leaves the game, and the President uses the power printed on it. Shuffle the ten tiles face down and add <b>7</b> of them to the deck at 11 to 14 players, <b>all 10</b> from 15 players."
+  },
+  {
+    "type": "icons",
+    "items": [
+      {
+        "icon": "rulebook/images/it_investigate.png",
+        "name": "Investigate Loyalty",
+        "html": "The President looks at one player's Party Membership card."
+      },
+      {
+        "icon": "rulebook/images/it_peek.png",
+        "name": "Policy Peek",
+        "html": "The President secretly looks at the top three policies and puts them back in order."
+      },
+      {
+        "icon": "rulebook/images/it_special_election.png",
+        "name": "Special Election",
+        "html": "The President picks the next presidential candidate."
+      },
+      {
+        "icon": "rulebook/images/it_execution.png",
+        "name": "Execution",
+        "html": "The President executes a player."
+      },
+      {
+        "icon": "rulebook/images/it_propaganda.png",
+        "name": "Propaganda",
+        "html": "The President looks at the top policy, then puts it back or discards it."
+      },
+      {
+        "icon": "rulebook/images/it_no_confidence.png",
+        "name": "No Confidence",
+        "html": "The next elected government may use the veto power, just as after five Fascist policies. It lasts for that one government only. Once that government has finished its legislative session, the veto is gone again, unless five Fascist policies are enacted by then."
+      },
+      {
+        "icon": "rulebook/images/it_censorship.png",
+        "name": "Censorship",
+        "html": "The next government has no Chancellor: the next elected President draws three, discards two and enacts one."
+      },
+      {
+        "icon": "rulebook/images/it_enabling_act.png",
+        "name": "Enabling Act",
+        "html": "The next time a President gets a presidential power, their Chancellor uses it instead."
+      },
+      {
+        "icon": "rulebook/images/it_article48.png",
+        "name": "Article 48",
+        "html": "The President uses any presidential or emergency power of their choice, except Execution."
+      },
+      {
+        "icon": "rulebook/images/it_pardon.png",
+        "name": "Pardon",
+        "html": "The President investigates a player's Party Membership card, even one who was investigated before."
+      }
+    ]
+  },
+  {
+    "type": "h2",
+    "text": "Anti-policies",
+    "id": "anti-policies"
+  },
+  {
+    "type": "p",
+    "html": "Each anti-policy <b>replaces</b> a tile already in the deck: Anti-Fascist replaces a Communist policy, Anti-Communist a Fascist policy, Social Democratic a Liberal policy. They lengthen the game and help the Liberals most."
+  },
+  {
+    "type": "icons",
+    "items": [
+      {
+        "icon": "rulebook/images/it_anti_communist.png",
+        "name": "Anti-Communist",
+        "html": "Goes on the <b>Fascist board</b>. The President uses the power of that space. Then one Communist policy moves from the Communist board to the discard pile, and that Communist power is not used a second time."
+      },
+      {
+        "icon": "rulebook/images/it_anti_fascist.png",
+        "name": "Anti-Fascist",
+        "html": "Goes on the <b>Communist board</b>. The Communist power of that space is used. Then one Fascist policy moves from the Fascist board to the discard pile, and that presidential power is not used a second time."
+      },
+      {
+        "icon": "rulebook/images/it_social_democratic.png",
+        "name": "Social Democratic",
+        "html": "Goes on the <b>Liberal board</b>. On the count of three, the President and the Chancellor each name a policy type. If they match, one tile of that type leaves the draw deck for good. Then shuffle the draw deck, without the discard pile."
+      }
+    ]
+  }
+]

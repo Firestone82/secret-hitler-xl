@@ -39,7 +39,7 @@ export interface Plan {
   minPlayers: number;
 }
 
-// who sits at the table: defaults, replaced by the seat tables of rulebook.json once it loads
+// who sits at the table: defaults, replaced by the seat tables of the rulebook (data/rulebook/setup.json) once it loads
 type Seats = Pick<SeatTable, 'from' | 'liberals' | 'fascists' | 'communists'>;
 let BASE: Seats = { from: 5, liberals: [3, 4, 4, 5, 5, 6], fascists: [1, 1, 2, 2, 3, 3], communists: [0, 0, 0, 0, 0, 0] };
 let XL: Seats = {
@@ -49,7 +49,7 @@ let XL: Seats = {
   communists: [1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 5, 5, 5],
 };
 
-/** Uses the seat tables from rulebook.json, so the rulebook and the print builder agree. */
+/** Uses the seat tables from data/rulebook/setup.json, so the rulebook and the print builder agree. */
 export function setSeatTables(t: { base: Seats; xl: Seats }) {
   BASE = t.base;
   XL = t.xl;
@@ -65,7 +65,7 @@ export const INSERT_MM: Record<string, [number, number]> = {
   liberal: [291.9, 87.7], 'fascist_5-6': [345.7, 86.7], 'fascist_7-8': [345.7, 86.7], 'fascist_9-10': [345.7, 86.7], communist: [345.1, 84.7],
 };
 
-const EMERGENCY = ['e_investigate', 'e_peek', 'e_special_election', 'e_execution', 'e_propaganda', 'e_no_confidence', 'e_censorship', 'e_enabling_act', 'e_article48', 'e_pardon'];
+const EMERGENCY = ['investigate', 'peek', 'special_election', 'execution', 'propaganda', 'no_confidence', 'censorship', 'enabling_act', 'article48', 'pardon'];
 const PLACARD_BACK: [number, number, number] = [224, 146, 39];
 
 const piece = (id: string, page: 0 | 1 = 0): Face => ({ type: 'piece', id, page });
@@ -96,16 +96,16 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   const sp = o.spares, own = o.base ? null : ORIGINAL;
   const less = (n: number, owned = 0) => Math.max(0, n - owned);
   const nLib = less(6, own?.libTiles) + (o.communists ? 1 : 0) + sp.tiles, nFas = less(11, own?.fasTiles) + sp.tiles, nCom = o.communists ? 10 + sp.tiles : 0;
-  tiles.push(...times(nLib, () => both('t_p018', 'Liberal policy', 'tile')));
-  tiles.push(...times(nFas, () => both('t_p005', 'Fascist policy', 'tile')));
-  tiles.push(...times(nCom, () => both('t_p104', 'Communist policy', 'tile')));
+  tiles.push(...times(nLib, () => both('policies/liberal', 'Liberal policy', 'tile')));
+  tiles.push(...times(nFas, () => both('policies/fascist', 'Fascist policy', 'tile')));
+  tiles.push(...times(nCom, () => both('policies/communist', 'Communist policy', 'tile')));
   count('Policy tiles', 'Liberal policies', nLib); count('Policy tiles', 'Fascist policies', nFas); count('Policy tiles', 'Communist policies', nCom);
-  if (o.emergency) { for (const e of EMERGENCY) tiles.push(both('t_' + e, 'Emergency power', 'tile')); count('Policy tiles', 'Emergency powers', 10); }
-  if (o.antiPolicies) { for (const a of ['t_p060', 't_p014', 't_p129']) tiles.push(both(a, 'Anti-policy', 'tile')); count('Policy tiles', 'Anti-policies', 3); }
+  if (o.emergency) { for (const e of EMERGENCY) tiles.push(both('powers/' + e, 'Emergency power', 'tile')); count('Policy tiles', 'Emergency powers', 10); }
+  if (o.antiPolicies) { for (const a of ['policies/anti_fascist', 'policies/anti_communist', 'policies/social_democratic']) tiles.push(both(a, 'Anti-policy', 'tile')); count('Policy tiles', 'Anti-policies', 3); }
   const capitalist = extras.some((r) => r.id === 'capitalist');
-  if (capitalist) { tiles.push(both('t_lobby', 'Lobby card (small)', 'tile')); count('Policy tiles', 'Small Lobby card', 1); }
+  if (capitalist) { tiles.push(both('policies/lobby', 'Lobby card (small)', 'tile')); count('Policy tiles', 'Small Lobby card', 1); }
   if (o.blanks) {
-    const b = ['t_pblank_liberal', 't_pblank_fascist', ...(o.communists ? ['t_pblank_communist'] : []), ...(o.emergency ? ['t_pblank_emergency'] : [])];
+    const b = ['policies/blank_liberal', 'policies/blank_fascist', ...(o.communists ? ['policies/blank_communist'] : []), ...(o.emergency ? ['powers/blank'] : [])];
     tiles.push(...b.map((id) => both(id, 'Blank tile', 'tile'))); count('Policy tiles', 'Blank tiles', b.length);
   }
 
@@ -130,18 +130,18 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   for (const r of extras) count('Roles', r.name + (r.count > 1 ? 's' : ''), r.count);
 
   const cards: Slot[] = [];
-  const roleSlots = roleCards.filter((c) => !c.owned).map(({ role, art }) => ({ front: piece('c_' + art, 0), back: piece('c_' + art, 1), name: role.name + ' role', size: 'card' as const }));
-  const briefSlots = o.briefings ? roleCards.filter((c) => c.briefed !== false).map(({ role }) => ({ front: { type: 'briefing', role: role.id } as Face, back: piece('c_bback', 0), name: role.name + ' briefing', size: 'card' as const })) : [];
+  const roleSlots = roleCards.filter((c) => !c.owned).map(({ role, art }) => ({ front: piece(art, 0), back: piece(art, 1), name: role.name + ' role', size: 'card' as const }));
+  const briefSlots = o.briefings ? roleCards.filter((c) => c.briefed !== false).map(({ role }) => ({ front: { type: 'briefing', role: role.id } as Face, back: piece('briefing/back', 0), name: role.name + ' briefing', size: 'card' as const })) : [];
   if (o.briefings) count('Roles', 'Role Briefing cards', briefSlots.length);
 
   // ---- party membership: every seat plus the cards the rules hand out on top
   const mem = { liberal: less(s.lib, own?.libMembers) + sp.memberships, fascist: less(s.fas + 1, own?.fasMembers) + sp.memberships, communist: o.communists ? s.com + 2 + sp.memberships : 0, lobby: 0 };
   for (const r of extras) for (const [k, v] of Object.entries(r.extraMembership ?? {})) (mem as any)[k] += v;
   const memSlots: Slot[] = [
-    ...times(mem.liberal, () => both('c_069', 'Liberal membership', 'card')),
-    ...times(mem.fascist, () => both('c_086', 'Fascist membership', 'card')),
-    ...times(mem.communist, () => both('c_098', 'Communist membership', 'card')),
-    ...times(mem.lobby, () => both('c_lobby', 'Lobby card', 'card')),
+    ...times(mem.liberal, () => both('membership/liberal', 'Liberal membership', 'card')),
+    ...times(mem.fascist, () => both('membership/fascist', 'Fascist membership', 'card')),
+    ...times(mem.communist, () => both('membership/communist', 'Communist membership', 'card')),
+    ...times(mem.lobby, () => both('membership/lobby', 'Lobby card', 'card')),
   ];
   count('Party Membership', 'Liberal', mem.liberal); count('Party Membership', 'Fascist', mem.fascist);
   count('Party Membership', 'Communist', mem.communist); count('Party Membership', 'Lobby card', mem.lobby);
@@ -149,20 +149,20 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   // ---- ballots: one per player and a spare, plus any extra spares
   const ballots: Slot[] = [], nBallot = less(o.players + 1, own?.ballots) + sp.ballots;
   if (o.ballots === 'double') {
-    ballots.push(...times(nBallot, () => both('c_ballot', 'Ballot', 'card')));
+    ballots.push(...times(nBallot, () => both('ballots/ja_nein', 'Ballot', 'card')));
     count('Ballots', 'Ballots, Ja! front / Nein back', nBallot);
   } else {
-    ballots.push(...times(nBallot, () => both('c_ja', 'Ja! ballot', 'card')), ...times(nBallot, () => both('c_nein', 'Nein ballot', 'card')));
+    ballots.push(...times(nBallot, () => both('ballots/ja', 'Ja! ballot', 'card')), ...times(nBallot, () => both('ballots/nein', 'Nein ballot', 'card')));
     count('Ballots', 'Ja! ballots', nBallot); count('Ballots', 'Nein ballots', nBallot);
   }
 
   const extraCards: Slot[] = [];
-  if (o.pileCards && o.base) { extraCards.push(both('c_draw', 'Draw pile card', 'card'), both('c_discard', 'Discard pile card', 'card')); count('Other cards', 'Draw and discard pile cards', 2); }
+  if (o.pileCards && o.base) { extraCards.push(both('piles/draw', 'Draw pile card', 'card'), both('piles/discard', 'Discard pile card', 'card')); count('Other cards', 'Draw and discard pile cards', 2); }
   if (o.blanks) {
     const pals: [string, string][] = [['liberal', 'lib'], ['fascist', 'fas'], ...(o.communists ? [['communist', 'com'] as [string, string]] : []), ['neutral', 'neu']];
-    for (const [k] of pals) extraCards.push(both('c_h_blank_' + k, 'Blank role', 'card'));
-    if (o.briefings) for (const [, p] of pals) extraCards.push({ front: { type: 'blankBriefing', palette: p }, back: piece('c_bback', 0), name: 'Blank briefing', size: 'card' });
-    extraCards.push(both('c_m_blank', 'Blank membership', 'card'), both('c_m_blank', 'Blank membership', 'card'));
+    for (const [k] of pals) extraCards.push(both('roles/blank_' + k, 'Blank role', 'card'));
+    if (o.briefings) for (const [, p] of pals) extraCards.push({ front: { type: 'blankBriefing', palette: p }, back: piece('briefing/back', 0), name: 'Blank briefing', size: 'card' });
+    extraCards.push(both('membership/blank', 'Blank membership', 'card'), both('membership/blank', 'Blank membership', 'card'));
     count('Other cards', 'Blank roles' + (o.briefings ? ' + briefings' : ''), pals.length * (o.briefings ? 2 : 1));
     count('Other cards', 'Blank memberships', 2);
   }
@@ -179,10 +179,10 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   const border = o.boardStyle !== 'borderless', borderless = o.boardStyle !== 'border';
   if (border) {
     const printed = boards.filter(([, , original]) => o.base || !original);
-    for (const [k, n] of printed) longs.push(both('b_' + k, n, 'long'));
+    for (const [k, n] of printed) longs.push(both('boards/' + k, n, 'long'));
     count('Boards', 'Boards with border', printed.length);
   }
-  const inserts: Slot[] = borderless ? boards.map(([k, n]) => ({ ...both('i_' + k, n + ' (borderless)', 'insert'), mm: INSERT_MM[k] })) : [];
+  const inserts: Slot[] = borderless ? boards.map(([k, n]) => ({ ...both('boards/borderless/' + k, n + ' (borderless)', 'insert'), mm: INSERT_MM[k] })) : [];
   if (borderless) count('Boards', 'Borderless boards', inserts.length);
   const refs: Slot[] = [], small = o.refSize === 'small';
   for (const r of REF_CARDS) {
@@ -192,7 +192,7 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
     count('Reference cards', r.label, n);
   }
   const placards: Slot[] = o.placards && o.base
-    ? (['chancellor', 'president'] as const).map((n) => ({ front: piece('pl_' + n, 0), back: { type: 'solid', rgb: PLACARD_BACK } as Face, name: n + ' placard', size: 'placard' as const }))
+    ? (['chancellor', 'president'] as const).map((n) => ({ front: piece('placards/' + n, 0), back: { type: 'solid', rgb: PLACARD_BACK } as Face, name: n + ' placard', size: 'placard' as const }))
     : [];
   count('Boards', 'Placards', placards.length);
 

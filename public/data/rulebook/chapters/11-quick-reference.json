@@ -1,0 +1,159 @@
+[
+  {
+    "type": "h1",
+    "text": "Quick reference",
+    "id": "quick-reference"
+  },
+  {
+    "type": "h2",
+    "text": "A round at a glance",
+    "id": "a-round-at-a-glance"
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Step",
+        "What happens"
+      ],
+      [
+        "1  Election",
+        "The President placard moves clockwise. The candidate nominates a Chancellor. The last elected President and Chancellor are barred. Everyone votes <b>Ja!</b> or <b>Nein</b>. A majority of <b>Ja!</b> elects the government."
+      ],
+      [
+        "Vote fails",
+        "The election tracker advances. After <b>three</b> failed votes the top policy is enacted with no power, and term limits are forgotten."
+      ],
+      [
+        "After 3 Fascist policies",
+        "Ask every newly elected Chancellor whether they are Hitler. If so, the Fascists win."
+      ],
+      [
+        "2  Legislative session",
+        "The President draws <b>three</b> tiles and discards one. The Chancellor gets <b>two</b>, discards one and enacts the last. No talking. Reshuffle when fewer than three tiles remain."
+      ],
+      [
+        "3  Executive action",
+        "If the new policy covered a power, the President uses it now."
+      ],
+      [
+        "Veto",
+        "After <b>five</b> Fascist policies, or for the next government only after No Confidence, the Chancellor may ask to veto. If the President agrees, both tiles are discarded and the tracker advances."
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "h2",
+    "text": "Powers",
+    "id": "powers"
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Power",
+        "In short"
+      ],
+      [
+        "Investigate Loyalty",
+        "The President looks at one Party Membership card. Once per player."
+      ],
+      [
+        "Call Special Election",
+        "The President picks the next presidential candidate. Then the order resumes."
+      ],
+      [
+        "Policy Peek",
+        "The President looks at the top three tiles."
+      ],
+      [
+        "Execution",
+        "The President kills a player. If it is Hitler, the Liberals win."
+      ],
+      [
+        "Bugging",
+        "The President and Chancellor look at one Party Membership card."
+      ],
+      [
+        "Radicalisation",
+        "The Communists turn a Liberal into a Communist. Fascists cannot be radicalised."
+      ],
+      [
+        "Five-year plan",
+        "Shuffle 2 Communist and 1 Liberal policy into the deck."
+      ],
+      [
+        "Congress",
+        "New Communists learn who the original Communists are."
+      ],
+      [
+        "Confession",
+        "The President executes a player, whose Party Membership card is revealed."
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "h2",
+    "text": "Who is at the table: original game",
+    "id": "who-is-at-the-table-original-game"
+  },
+  {
+    "type": "seats",
+    "table": "base",
+    "caption": "Deck: 6 Liberal and 11 Fascist policies."
+  },
+  {
+    "type": "h2",
+    "text": "Who is at the table: Secret Hitler XL",
+    "id": "who-is-at-the-table-secret-hitler-xl"
+  },
+  {
+    "type": "seats",
+    "table": "xl",
+    "caption": "Deck: 5 Liberal, 10 Fascist, 8 Communist (exactly 8 players: 6, 9, 8). Fascist board by player count: 5-6, 7-8 or 9+. One Communist board."
+  },
+  {
+    "type": "credits",
+    "id": "credits-and-licence",
+    "title": "Credits and licence",
+    "columns": [
+      [
+        {
+          "title": "Secret Hitler",
+          "html": "Game by Mike Boxleiter, Tommy Maranges and Max Temkin. Art by Mac Schubert. <a href=\"https://www.secrethitler.com/\" target=\"_blank\">secrethitler.com</a>"
+        },
+        {
+          "title": "Secret Hitler Socialist expansion",
+          "html": "Dtep, mrkvicka and havosh."
+        },
+        {
+          "title": "Secret Hitler XL",
+          "html": "Rules by Lord_Roguy (Bo P.): the Communists (adapted from the Socialists), Anarchist, Monarchist, Capitalist, Centrists, anti-policies and emergency powers. <a href=\"https://drive.google.com/drive/folders/1_UMxjcPKxG3I_Zgr0JtOsD5Lh6GaBDVY\" target=\"_blank\">Original XL files</a>"
+        },
+        {
+          "title": "XL artwork",
+          "html": "u/PenguineWithAFez: the Communists and the Anarchist. u/muhaaman: clothing of the Communist grizzly bear. Leo Carlton (u/therazeblitz): the Monarchist and the Capitalist. Hal Aetus: the Centrists."
+        }
+      ],
+      [
+        {
+          "title": "Play testers of Secret Hitler XL",
+          "html": "Fluff, Greenbeehn, Adoy, u/ZoomZoom670, Racc, Zommy, Käs, Brendon Bradburn, Coon, N00bAdrian, Wagon, JP, Kangawolf (inventor of the wildcat strike strategy for the Anarchist); the University of Queensland's Sci-Fi &amp; Fantasy Society, Mafia Society and Board Games Society; and many more."
+        },
+        {
+          "title": "This edition",
+          "html": "A remix of the files above: rulebooks merged and reworded, cards and boards re-set, role briefings and reference cards added. <a href=\"#/assets\">Files of this edition</a>"
+        }
+      ]
+    ],
+    "licence": {
+      "image": "rulebook/images/cc_by_nc_sa.png",
+      "alt": "CC BY-NC-SA",
+      "html": "Licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (<a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\">CC BY-NC-SA 4.0</a>). Free to share and adapt with credit, but not for commercial use. Adaptations use the same licence."
+    }
+  }
+]

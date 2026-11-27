@@ -1,0 +1,99 @@
+{
+  "id": "fascist_spy",
+  "name": "Fascist Spy",
+  "module": "roles",
+  "palette": "fas",
+  "party": "fascist",
+  "regular": false,
+  "seat": "fascist",
+  "seatLabel": "A Fascist",
+  "count": 1,
+  "countLabel": null,
+  "pair": "liberal_spy",
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/fascist_spy"
+  ],
+  "portrait": "fascist_spy",
+  "crop": [
+    0.58,
+    0.43,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team Fascist",
+    "card": "Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Fascist board is full.",
+          "Hitler is elected Chancellor after the 3rd Fascist policy."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "The Fascists and Hitler: you open your eyes with the Fascists."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "Once per game, at any moment: reveal your Secret Role card and execute a player.",
+          "If that player is the Liberal Spy, the game ends right away and the Fascist team wins."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Be certain before you shoot.",
+          "A miss leaves the Liberal Spy free to talk."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Fascist Spy",
+    "teamLabel": "Team Fascist",
+    "image": "cards/roles/fascist_spy.jpg",
+    "addWhen": "you want a hidden duel. Always add it together with the Liberal Spy.",
+    "addWhenTable": "You want a hidden duel. Always add it together with the Liberal Spy.",
+    "seatLabel": "A Fascist",
+    "pitch": "Can <b>shoot once at any moment</b>. Hitting the Liberal Spy wins the game for the Fascists."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Fascist team. You win when the <b>Fascist board is full</b>, when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>, or when a player of your team executes the Liberal Spy."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "The Fascists and Hitler: you open your eyes with the Fascists at setup. Like every Fascist, you show your thumb to the Liberal Spy, so the Liberal Spy knows you."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "Once per game, at any moment, you may reveal your Secret Role card and execute a player. If that player is the Liberal Spy, the game ends at once and the Fascist team wins. It counts as an execution in every way, so shooting the Jester hands the Jester the win."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "A miss reveals you as a Fascist and leaves the Liberal Spy free to steer the table against your team."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Watch who seems to know too much: the Liberal Spy knows the Fascists and will try to vote against them quietly. Be certain before you shoot."
+      ]
+    }
+  ]
+}

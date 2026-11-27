@@ -1,0 +1,99 @@
+{
+  "id": "detective",
+  "name": "Detective",
+  "module": "roles",
+  "palette": "neu",
+  "party": "drawn",
+  "regular": false,
+  "seat": "liberal",
+  "seatLabel": "A Liberal (party drawn at setup)",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": {
+    "liberal": 2,
+    "fascist": 1,
+    "communist": 1
+  },
+  "art": [
+    "roles/detective"
+  ],
+  "portrait": "detective",
+  "crop": [
+    0.5,
+    0.45,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team drawn at setup",
+    "card": "Drawn at setup",
+    "sections": [
+      {
+        "label": "SETUP",
+        "items": [
+          "At night, draw a membership card from the spare deck. You join that party."
+        ]
+      },
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The party you drew wins."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "When <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are President or Chancellor, you may reveal and take it over.",
+          "You alone choose the player and look.",
+          "They show you their <b>Secret Role</b> card, not their party.",
+          "No power at any other time."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Detective",
+    "teamLabel": "Party drawn at setup",
+    "image": "cards/roles/detective.jpg",
+    "addWhen": "you want stronger investigations.",
+    "addWhenTable": "You want stronger investigations.",
+    "seatLabel": "A Liberal (party drawn at setup)",
+    "pitch": "Joins a random party and turns Bugging or Investigate Loyalty into a look at the target's <b>Secret Role card</b>."
+  },
+  "details": [
+    {
+      "label": "Setup",
+      "text": [
+        "You start without a membership card. At the very start of the night you open your eyes alone and take the top card of the spare membership deck (2 Liberal, 1 Fascist and 1 Communist card). You now belong to that party: put the card in your envelope and wake with that party later in the night."
+      ]
+    },
+    {
+      "label": "Goal",
+      "text": [
+        "You win when the party you drew wins."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "Your power works only in two moments: when <b>Bugging</b> or <b>Investigate Loyalty</b> comes up while you are the sitting President or Chancellor. You may then reveal your Secret Role card and take that power over.",
+        "Taking it over means you alone use it. You choose the player, not the President, and not the President and Chancellor together. That player secretly hands you their <b>Secret Role</b> card instead of their membership card, and nobody else sees it. You may tell the truth about what you saw, or lie.",
+        "At any other time you have no power and play like any member of your party."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Revealing tells everyone you are the Detective, but not which party you drew. Whatever you announce, the side it hurts will call you a liar, and may try to execute you."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Save your reveal for the investigation that matters most. A Secret Role card tells you far more than a party card: it can unmask Hitler or a hidden extra role."
+      ]
+    }
+  ]
+}

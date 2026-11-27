@@ -1,0 +1,98 @@
+{
+  "id": "bureaucrat",
+  "name": "Bureaucrat",
+  "module": "roles",
+  "palette": "neu",
+  "party": "any",
+  "regular": false,
+  "seat": "any",
+  "seatLabel": "Any party (usually Liberal)",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/bureaucrat"
+  ],
+  "portrait": "bureaucrat",
+  "crop": [
+    0.52,
+    0.46,
+    0.55
+  ],
+  "briefing": {
+    "side": "Team of your membership card",
+    "card": "Group decides",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The party on your Party Membership card wins."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "What that party knows: you open your eyes with it at setup."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "Once per game, reveal your Secret Role card and look at the top two policies of the discard pile.",
+          "Afterwards you can never be nominated Chancellor."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Look right after a government you doubt.",
+          "Revealing shows your role, never your party."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Bureaucrat",
+    "teamLabel": "Any party",
+    "image": "cards/roles/bureaucrat.jpg",
+    "addWhen": "Liberals are too often fooled about which policies were discarded.",
+    "addWhenTable": "Liberals are too often fooled about which policies were discarded.",
+    "seatLabel": "Any party (usually Liberal)",
+    "pitch": "Looks at the <b>top two discarded policies</b> once, to catch a lying President or Chancellor."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You belong to the party on your membership card, which the group chooses at setup, and you win when that party wins."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "What that party knows: you open your eyes with it at setup. As a Liberal you learn nothing."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "Once per game, you may reveal your Secret Role card and look at the <b>top two policies of the discard pile</b>. You may tell the table what you saw, or lie about it."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "The price: once you have used the power, you can never be nominated Chancellor again. Revealing shows your role but never your party."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Look right after a government you doubt, while its discards are still on top of the pile."
+      ]
+    }
+  ]
+}

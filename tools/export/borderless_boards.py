@@ -1,4 +1,4 @@
-"""Builds the borderless boards (public/pieces/i_*.pdf) from the boards with border (b_*.pdf).
+"""Builds the borderless boards (public/cards/boards/borderless/*.pdf) from the boards with border (public/cards/boards/*.pdf).
 
 A borderless board is the inner track of a board, cut just outside its dotted rope edge, with a new
 narrow frame drawn around it in the board's own colours: a light band, a thin light line and a dark
@@ -6,7 +6,8 @@ edge that runs on into the bleed. The track itself stays at 100 %, so the tiles 
 
 Run from the project root, then refresh the previews and the sizes in plan.ts (INSERT_MM):
     python3 tools/export/borderless_boards.py
-    python3 tools/export/web_previews.py i_liberal i_fascist_5-6 i_fascist_7-8 i_fascist_9-10 i_communist
+    python3 tools/export/card_images.py boards/borderless/liberal boards/borderless/fascist_5-6 boards/borderless/fascist_7-8 \
+        boards/borderless/fascist_9-10 boards/borderless/communist
 Needs pdftoppm (poppler-utils), Pillow and reportlab.
 """
 import io
@@ -22,7 +23,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parents[2]
-PIECES = ROOT / 'public/pieces'
+BOARDS_DIR = ROOT / 'public/cards/boards'
 PX = 10          # pixels per mm, about what the board pictures have
 BLEED = 3.0      # mm, as every piece file
 BAND, LINE, EDGE = 1.2, 1.0, 2.0   # mm: the new frame, from the track outwards
@@ -45,7 +46,7 @@ def render_board(key: str, tmp: Path) -> Image.Image:
     """Page 1 of b_<key>.pdf at PX pixels per mm, bleed included."""
     prefix = tmp / key
     subprocess.run(['pdftoppm', '-r', str(round(PX * 25.4)), '-f', '1', '-l', '1', '-singlefile', '-png',
-                    str(PIECES / f'b_{key}.pdf'), str(prefix)], check=True)
+                    str(BOARDS_DIR / f'{key}.pdf'), str(prefix)], check=True)
     return Image.open(f'{prefix}.png').convert('RGB')
 
 
@@ -65,7 +66,7 @@ def build(key: str, tmp: Path) -> tuple[float, float]:
     box(BLEED + EDGE + LINE, c['band'])
     img.paste(track.resize((round((x1 - x0) * PX), round((y1 - y0) * PX)), Image.LANCZOS), (round((BLEED + frame) * PX), round((BLEED + frame) * PX)))
 
-    out = PIECES / f'i_{key}.pdf'
+    out = BOARDS_DIR / 'borderless' / f'{key}.pdf'
     pdf = canvas.Canvas(str(out), pagesize=(W * mm, H * mm))
     buf = io.BytesIO(); img.save(buf, 'JPEG', quality=90); buf.seek(0)
     pdf.drawImage(ImageReader(buf), 0, 0, W * mm, H * mm); pdf.showPage()
@@ -79,12 +80,12 @@ def main() -> None:
     with tempfile.TemporaryDirectory() as t:
         for key in BOARDS:
             sizes[key] = build(key, Path(t))
-            print(f'i_{key}: {sizes[key][0]} x {sizes[key][1]} mm', file=sys.stderr)
-    # keep pieces.json in step with the new sizes
-    pj = ROOT / 'public/data/pieces.json'
+            print(f'borderless/{key}: {sizes[key][0]} x {sizes[key][1]} mm', file=sys.stderr)
+    # keep cards.json in step with the new sizes
+    pj = ROOT / 'public/data/cards.json'
     data = json.loads(pj.read_text())
     for key, (w, h) in sizes.items():
-        data[f'i_{key}'].update(w=w, h=h, label=BOARDS[key][2])
+        data[f'boards/borderless/{key}'].update(w=w, h=h, label=BOARDS[key][2])
     pj.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
     print('INSERT_MM = {', ', '.join(f"'{k}': [{w}, {h}]" for k, (w, h) in sizes.items()), '}', file=sys.stderr)
 

@@ -2,6 +2,7 @@ import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inje
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { fullSize } from '../../core/assets';
 import { DataService } from '../../core/data.service';
 import { ScrollService } from '../../core/scroll.service';
 import { Block, SeatTable } from '../../core/types';
@@ -9,6 +10,7 @@ import { Credits } from '../../shared/credits';
 import { Lightbox } from '../../shared/lightbox';
 import { RoleBox } from '../../shared/role-box';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
+import { ThumbPipe } from '../../shared/thumb.pipe';
 import { PrintChoice, PrintDialog } from './print-dialog';
 
 /** the ?section= value of a block: the heading id, or the role id for an extra role */
@@ -34,7 +36,7 @@ function blockText(b: Block): string {
 
 @Component({
   selector: 'app-rules',
-  imports: [SafeHtmlPipe, RoleBox, DatePipe, Credits, PrintDialog, Lightbox, RouterLink],
+  imports: [SafeHtmlPipe, ThumbPipe, RoleBox, DatePipe, Credits, PrintDialog, Lightbox, RouterLink],
   templateUrl: './rules.html',
   styleUrl: './rules.scss',
 })
@@ -161,7 +163,7 @@ export class RulesPage {
 
   /**
    * Clicks in the rules: a section link copies its address and scrolls there; pictures of the
-   * rulebook open at full size (icons and the cover do not), with the sharper copy from rb/hd/ when there is one.
+   * rulebook open at full size (icons and the cover do not), with the full-size copy of a card's thumbnail.
    */
   onClick(e: MouseEvent) {
     const t = e.target as HTMLElement;
@@ -183,11 +185,11 @@ export class RulesPage {
     const img = t.closest('img');
     if (img && img.closest('figure, .legis, app-role-box')) {
       const src = img.currentSrc || img.src;
-      this.lightbox().open(src, img.alt, src.replace(/\/rb\/([^/]+\.jpg)$/, '/rb/hd/$1'));
+      this.lightbox().open(src, img.alt, fullSize(src));
     }
   }
 
-  /** A seat table of rulebook.json as columns and rows, with the experimental player counts marked. */
+  /** A seat table of data/rulebook/setup.json as columns and rows, with the experimental player counts marked. */
   seatTable(key: 'base' | 'xl') {
     const t: SeatTable | undefined = this.meta()?.setup[key];
     if (!t) return null;

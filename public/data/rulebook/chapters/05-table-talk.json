@@ -1,0 +1,33 @@
+[
+  {
+    "type": "h1",
+    "text": "5  Table talk",
+    "id": "5-table-talk"
+  },
+  {
+    "type": "h2",
+    "text": "About lying",
+    "id": "about-lying"
+  },
+  {
+    "type": "p",
+    "html": "Players often learn things the rest of the table does not know: what tiles the government saw, or what an investigation showed. You may always lie about hidden knowledge. The only time a player must tell the truth is in the game-ending Hitler situations: a player who is Hitler must say so if assassinated, or if elected Chancellor after three Fascist policies."
+  },
+  {
+    "type": "h2",
+    "text": "Strategy notes",
+    "id": "strategy-notes"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "items": [
+      "<b>Everyone should claim to be a Liberal.</b> The Liberal majority can shut out anyone who admits to being a Fascist. Liberals should usually tell the truth. They are solving a puzzle, and lying hurts their own team.",
+      "<b>Hitler should be as Liberal as possible.</b> Enact Liberal policies, vote for Liberal governments, and let the other Fascists create openings. Fascists win by quiet manipulation, not by playing openly evil.",
+      "<b>Liberals gain from slowing down</b> and discussing what is known. Fascists gain from rushed votes and confusion.",
+      "<b>Fascists most often win by electing Hitler,</b> not by six policies. It is the core of their strategy, so Hitler needs the Liberals' trust when the time comes.",
+      "<b>Ask players to explain their actions,</b> above all with powers. Ask a candidate in advance whom they would investigate, appoint or execute.",
+      "<b>When a Fascist policy appears,</b> there are only three possible culprits: the President, the Chancellor or the deck."
+    ]
+  }
+]

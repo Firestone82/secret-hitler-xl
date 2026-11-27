@@ -1,16 +1,17 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { DataService } from '../core/data.service';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { ThumbPipe } from './thumb.pipe';
 
-/** A role section of the rulebook, written from roles.json: the same sections as the role's Role Briefing card. */
+/** A role section of the rulebook, written from the role files: the same sections as the role's Role Briefing card. */
 @Component({
   selector: 'app-role-box',
-  imports: [SafeHtmlPipe],
+  imports: [SafeHtmlPipe, ThumbPipe],
   template: `
     @if (role(); as r) {
       @if (r.rulebook; as rb) {
         <article class="box" [style.--c]="pal()?.accent">
-          <img [src]="'rb/' + rb.image" [alt]="rb.title" loading="lazy" />
+          <img [src]="rb.image | thumb" [alt]="rb.title" loading="lazy" />
           <div class="txt">
             <h3>{{ rb.title }} @if (link()) { <a class="anchor" [href]="link()" [attr.data-section]="id()" aria-label="Link to this role" title="Copy the link to this role">#</a> }</h3>
             <div class="team">{{ rb.teamLabel }} @if (r.seatLabel) { · takes the seat of {{ r.seatLabel.toLowerCase() }} }</div>

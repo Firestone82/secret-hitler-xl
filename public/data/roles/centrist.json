@@ -1,0 +1,100 @@
+{
+  "id": "centrist",
+  "name": "Centrist",
+  "module": "roles",
+  "palette": "lib",
+  "party": "liberal",
+  "regular": false,
+  "seat": "liberal",
+  "seatLabel": "Liberals",
+  "count": 4,
+  "countLabel": "2 to 4",
+  "pair": null,
+  "withCommunists": true,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/centrist_a",
+    "roles/centrist_b"
+  ],
+  "portrait": "centrist",
+  "crop": [
+    0.5,
+    0.42,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team Liberal",
+    "card": "Liberal",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Liberal board is full.",
+          "Hitler is executed."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "The other Centrists: you open your eyes together at setup."
+        ]
+      },
+      {
+        "label": "GOOD TO KNOW",
+        "items": [
+          "If you are radicalised, you join the Communists. The other Centrists are not told and may still trust you."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Wait before you reveal that you are Centrists.",
+          "Fascists will pretend to be Centrists.",
+          "The Communists will want to radicalise you."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "Centrists",
+    "teamLabel": "Team Liberal",
+    "image": "cards/roles/centrist_a.jpg",
+    "addWhen": "the game is big and the Liberals need a small group that trusts each other.",
+    "addWhenTable": "The game is big and the Liberals need a small group that trusts each other.",
+    "seatLabel": "Liberals",
+    "pitch": "Liberals who <b>know each other</b> from the start: a trusted core the others can build on."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "The other Centrists: there are 2 to 4 of you, and you open your eyes together at setup. You know nothing about anyone else."
+      ]
+    },
+    {
+      "label": "Radicalisation",
+      "text": [
+        "You hold a Liberal membership card, so the Communists can radicalise you. A radicalised Centrist joins the Communists and wins only if the Communists win. The other Centrists are not told, so they may keep trusting a player who no longer plays for them."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Fascists and Communists will claim to be Centrists. A claim proves nothing to the rest of the table, and only the real Centrists know who is lying."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Wait before you reveal that you are Centrists: a known group is easy to target. Use your trust to form governments, and check your card after every Radicalisation."
+      ]
+    }
+  ]
+}

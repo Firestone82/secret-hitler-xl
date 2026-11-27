@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { setSeatTables } from '../print/plan';
+import { setCardCatalog } from './assets';
+import { loadCards, loadRoles, loadRulebook } from './load-data';
 import { Block, PieceInfo, Role, RolesFile, RulebookFile } from './types';
 
 /** Loads the JSON files once. Everything else in the app reads from here. */
@@ -7,23 +9,24 @@ import { Block, PieceInfo, Role, RolesFile, RulebookFile } from './types';
 export class DataService {
   readonly roles = signal<RolesFile | null>(null);
   readonly rulebook = signal<Block[] | null>(null);
-  /** rulebook.json without its blocks: version, changelog, downloads and seat tables */
+  /** the rulebook without its blocks: version, changelog, downloads and seat tables */
   readonly rulebookMeta = signal<Omit<RulebookFile, 'blocks'> | null>(null);
-  readonly pieces = signal<Record<string, PieceInfo> | null>(null);
+  readonly cards = signal<Record<string, PieceInfo> | null>(null);
   private loading?: Promise<void>;
 
   load(): Promise<void> {
     // set the signals together, so the seat tables are in place before anything plans a print
     this.loading ??= Promise.all([
-      fetchJson<RolesFile>('data/roles.json'),
-      fetchJson<RulebookFile>('data/rulebook.json'),
-      fetchJson<Record<string, PieceInfo>>('data/pieces.json'),
+      loadRoles(fetchJson),
+      loadRulebook(fetchJson),
+      loadCards(fetchJson),
     ]).then(([roles, { blocks, ...meta }, pieces]) => {
       setSeatTables(meta.setup);
+      setCardCatalog(pieces);
       this.rulebookMeta.set(meta);
       this.rulebook.set(blocks);
       this.roles.set(roles);
-      this.pieces.set(pieces);
+      this.cards.set(pieces);
     });
     return this.loading;
   }

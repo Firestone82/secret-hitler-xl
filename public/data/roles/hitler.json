@@ -1,0 +1,97 @@
+{
+  "id": "hitler",
+  "name": "Hitler",
+  "module": "base",
+  "palette": "fas",
+  "party": "fascist",
+  "regular": true,
+  "seat": null,
+  "seatLabel": null,
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/hitler"
+  ],
+  "portrait": "hitler",
+  "crop": [
+    0.48,
+    0.46,
+    0.7
+  ],
+  "briefing": {
+    "side": "Team Fascist",
+    "card": "Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Fascist board is full.",
+          "You are elected Chancellor after 3 Fascist policies."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "Only the Fascist, when there is just one.",
+          "Otherwise nobody: show your thumb at setup."
+        ]
+      },
+      {
+        "label": "YOU MUST",
+        "items": [
+          "Say that you are Hitler when executed, or when elected Chancellor after 3 Fascist policies."
+        ]
+      },
+      {
+        "label": "GOOD TO KNOW",
+        "items": [
+          "A Bodyguard dies in your place, once.",
+          "You cannot be radicalised."
+        ]
+      }
+    ]
+  },
+  "rulebook": null,
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You lead the Fascist team. You win when the <b>Fascist board is full</b> or when <b>you are elected Chancellor after the 3rd Fascist policy</b>."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Usually nobody. At setup you keep your eyes closed and show a thumb, so the Fascists learn who you are, but you do not learn who they are. Only when there is exactly one Fascist do the two of you open your eyes together."
+      ]
+    },
+    {
+      "label": "You must tell the truth",
+      "text": [
+        "If you are executed, or if you are elected Chancellor after 3 Fascist policies, you must say that you are Hitler. These are the only moments in the game when a player may not lie."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "If you are executed, the game ends and the Liberals win, with the Communists and the Monarchist. A Bodyguard who is still alive dies in your place, once, but then everyone knows who you are. After the 3rd Fascist policy, every newly elected Chancellor is asked whether they are Hitler, so each election you survive clears your name a little."
+      ]
+    },
+    {
+      "label": "Cannot be radicalised",
+      "text": [
+        "Your membership card says Fascist, so Radicalisation never turns you."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Be as Liberal as possible: enact Liberal policies, vote for Liberal governments and let the other Fascists take the risks. You need the trust of the table at the moment it counts, when you are nominated Chancellor after the 3rd Fascist policy."
+      ]
+    }
+  ]
+}

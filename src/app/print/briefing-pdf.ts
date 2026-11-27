@@ -1,7 +1,7 @@
 import { PDFFont, PDFImage, PDFPage, RGB, clip, endPath, popGraphicsState, pushGraphicsState, rectangle, rgb, concatTransformationMatrix } from 'pdf-lib';
 import { Palette, Role } from '../core/types';
 
-/** Role Briefing card, 63.5 x 88 mm, drawn as vector text from roles.json.
+/** Role Briefing card, 63.5 x 88 mm, drawn as vector text from the role files (public/data/roles/).
  *  Same layout as the original generator: coloured header with portrait, then labelled bullet sections. */
 export const MM = 72 / 25.4;
 export const CARD_W = 63.5 * MM, CARD_H = 88 * MM;

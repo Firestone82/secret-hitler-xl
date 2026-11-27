@@ -1,0 +1,99 @@
+{
+  "id": "bodyguard",
+  "name": "Bodyguard",
+  "module": "roles",
+  "palette": "fas",
+  "party": "fascist",
+  "regular": false,
+  "seat": "fascist",
+  "seatLabel": "A Fascist",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/bodyguard"
+  ],
+  "portrait": "bodyguard",
+  "crop": [
+    0.45,
+    0.38,
+    0.64
+  ],
+  "briefing": {
+    "side": "Team Fascist",
+    "card": "Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Fascist board is full.",
+          "Hitler is elected Chancellor after the 3rd Fascist policy."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "The Fascists and Hitler: you open your eyes with the Fascists."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "The first time Hitler would be executed, reveal your Secret Role card.",
+          "You die instead, and Hitler lives."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Once you have saved Hitler, everyone knows who he is.",
+          "Push for a full Fascist board."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Bodyguard",
+    "teamLabel": "Team Fascist",
+    "image": "cards/roles/bodyguard.jpg",
+    "addWhen": "Hitler is found and executed too often.",
+    "addWhenTable": "Hitler is found and executed too often.",
+    "seatLabel": "A Fascist",
+    "pitch": "<b>Dies in Hitler's place</b> the first time he is shot, so one lucky execution no longer wins the game."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Fascist team. You win when the <b>Fascist board is full</b> or when <b>Hitler is elected Chancellor after the 3rd Fascist policy</b>."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "The Fascists and Hitler: you open your eyes with the Fascists at setup and see Hitler's thumb."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "The first time Hitler would be executed, by any kind of execution, reveal your Secret Role card. You die instead, Hitler lives, and the game goes on. It works once, and only while you are alive."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Saving Hitler shows everyone who Hitler is, so he will never be elected Chancellor again. After that, the Fascists can win only by filling their board. If you are executed before Hitler is, the protection is gone."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Stay alive and unsuspected, so the shield is still there when Hitler is found. Once you have saved him, push for a full Fascist board."
+      ]
+    }
+  ]
+}

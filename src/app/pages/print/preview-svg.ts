@@ -12,6 +12,7 @@ import { PreviewItem } from '../../print/preview';
         <svg:g [attr.transform]="it.transform">
           @if (it.img) {
             <svg:image [attr.href]="it.img" [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah" preserveAspectRatio="none" />
+            <svg:image [attr.href]="it.img" [attr.x]="-it.iw! / 2" [attr.y]="-it.ih! / 2" [attr.width]="it.iw" [attr.height]="it.ih" preserveAspectRatio="none" />
           } @else {
             <svg:rect [attr.x]="-it.aw / 2" [attr.y]="-it.ah / 2" [attr.width]="it.aw" [attr.height]="it.ah" [attr.fill]="it.fill ?? '#ddd'" />
           }

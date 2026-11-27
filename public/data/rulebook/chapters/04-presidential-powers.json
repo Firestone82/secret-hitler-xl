@@ -1,0 +1,46 @@
+[
+  {
+    "type": "h1",
+    "text": "4  Presidential powers",
+    "id": "4-presidential-powers"
+  },
+  {
+    "type": "icons",
+    "items": [
+      {
+        "icon": "rulebook/images/ppi_inv.png",
+        "name": "Investigate Loyalty",
+        "html": "Chooses a player to investigate. That player hands over the Party Membership card, not the Secret Role card. The President checks it in secret and returns it, and may share or lie about the result. No player may be investigated twice in the same game."
+      },
+      {
+        "icon": "rulebook/images/ppi_se.png",
+        "name": "Call Special Election",
+        "html": "Chooses any other player as the next presidential candidate by passing the President placard, even to a term-limited player. That player nominates a Chancellor and the election proceeds as usual. Afterwards the placard returns to the left of the President who called it."
+      },
+      {
+        "icon": "rulebook/images/ppi_peek.png",
+        "name": "Policy Peek",
+        "html": "Secretly looks at the top three tiles of the deck and returns them without changing the order."
+      },
+      {
+        "icon": "rulebook/images/ppi_kill.png",
+        "name": "Execution",
+        "html": "Executes one player by saying “I formally execute” and the player’s name. If that player is Hitler, the game ends in a Liberal victory. If not, the table does not learn whether a Fascist or a Liberal was killed. Executed players may not speak, vote or run for office."
+      },
+      {
+        "icon": "rulebook/images/ppi_veto.png",
+        "name": "Execution + Veto",
+        "html": "The fifth Fascist space. The President executes a player, as above, and from now on the <b>veto power</b> is unlocked for every government until the end of the game."
+      }
+    ]
+  },
+  {
+    "type": "h2",
+    "text": "Veto power",
+    "id": "veto-power"
+  },
+  {
+    "type": "p",
+    "html": "The veto comes into effect after five Fascist policies have been enacted and stays for the rest of the game. The President draws three tiles, discards one and passes two as usual. The Chancellor may then, instead of enacting, say \"I wish to veto this agenda.\" If the President consents by saying \"I agree to the veto,\" both tiles are discarded and the President placard passes on. If the President does not consent, the Chancellor must enact a policy as normal. Each veto is an inactive government and advances the election tracker by one."
+  }
+]

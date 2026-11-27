@@ -1,5 +1,5 @@
 /**
- * Rebuilds the rulebook PDFs in public/pdf/ from the rulebook page of the built site, so the
+ * Rebuilds the rulebook PDFs in public/rulebook/pdf/ from the rulebook page of the built site, so the
  * downloads always say the same as the website.
  *
  *   npm run build
@@ -25,7 +25,7 @@ const fontkit = require('@pdf-lib/fontkit');
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const DIST = join(ROOT, 'dist/secret-hitler-xl/browser');
-const PDF = join(ROOT, 'public/pdf');
+const PDF = join(ROOT, 'public/rulebook/pdf');
 const MM = 72 / 25.4;
 
 /** Each reading version, and the booklet it is folded into. */

@@ -1,4 +1,5 @@
 import { Component, computed, input } from '@angular/core';
+import { portrait } from '../core/assets';
 import { Palette, Role } from '../core/types';
 import { SafeHtmlPipe } from './safe-html.pipe';
 
@@ -13,7 +14,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
         <div class="name">{{ role().name }}</div>
         <div class="side">{{ role().briefing.side }}</div>
         <div class="mem"><b>Membership card:</b> {{ role().briefing.card }}</div>
-        <div class="portrait" [style.border-color]="pal().headerText" [style.background-image]="'url(portraits/' + role().portrait + '.jpg)'"
+        <div class="portrait" [style.border-color]="pal().headerText" [style.background-image]="'url(' + portraitUrl() + ')'"
              [style.background-size]="crop().size" [style.background-position]="crop().pos"></div>
       </div>
       <div class="body">
@@ -48,6 +49,7 @@ export class BriefingCard {
   role = input.required<Role>();
   palettes = input.required<Record<string, Palette>>();
   pal = computed(() => this.palettes()[this.role().palette]);
+  portraitUrl = computed(() => portrait(this.role()));
   /** crop window of the portrait art, as CSS background size and position */
   crop = computed(() => {
     const [cx, cy, w] = this.role().crop, iw = 822, ih = 1122;

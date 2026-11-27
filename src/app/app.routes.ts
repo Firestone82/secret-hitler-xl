@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'versions', loadComponent: () => import('./pages/versions/versions').then((m) => m.VersionsPage), title: 'Version history · Secret Hitler + XL' },
   // Credits are a section of the home page too
   { path: 'credits', redirectTo: () => inject(Router).createUrlTree([''], { fragment: 'credits' }) },
+  { path: 'assets', loadComponent: () => import('./pages/assets/assets').then((m) => m.AssetsPage), title: 'Assets · Secret Hitler + XL' },
   { path: '3d-printing', loadComponent: () => import('./pages/printing-3d/printing-3d').then((m) => m.Printing3dPage), title: '3D printing · Secret Hitler + XL' },
   { path: '**', redirectTo: '' },
 ];
