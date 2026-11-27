@@ -1,11 +1,14 @@
 name: Release
 
 # Publishes a GitHub release with the rulebook PDFs and the print files (A3 and A4 sheets, print-service zip).
-# Push a tag v<version> that matches "version" in public/data/rulebook/index.json, or run it by hand:
-# a manual run tags the current commit with that version.
+# Push a tag v<version> that matches "version" in public/data/rulebook/index.json, publish a release for
+# such a tag on GitHub, or run it by hand: a manual run tags the current commit with that version.
+# GitHub runs the workflow file of the tagged commit, so the tag must point to a commit that has this file.
 on:
   push:
     tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -31,12 +34,17 @@ jobs:
         run: |
           version=$(node -p "require('./public/data/rulebook/index.json').version")
           tag="v$version"
-          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "$tag" ]; then
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            existing=""
+            if git fetch --quiet --depth=1 origin "refs/tags/$tag:refs/tags/$tag" 2> /dev/null; then
+              existing=$(git rev-parse "$tag^{commit}")
+            fi
+            if [ -n "$existing" ] && [ "$existing" != "$GITHUB_SHA" ]; then
+              echo "::error::Tag $tag already exists on commit ${existing:0:7}, not on ${GITHUB_SHA:0:7} that this run builds. Delete the tag (and its release) to release this commit as $version, or raise the version in public/data/rulebook/index.json and changelog.json."
+              exit 1
+            fi
+          elif [ "$GITHUB_REF_NAME" != "$tag" ]; then
             echo "::error::Tag $GITHUB_REF_NAME does not match the rulebook version $version (public/data/rulebook/index.json)."
-            exit 1
-          fi
-          if [ "$GITHUB_EVENT_NAME" != "push" ] && git ls-remote --exit-code --tags origin "refs/tags/$tag" > /dev/null; then
-            echo "::error::$tag already exists. Raise the version in public/data/rulebook/index.json and changelog.json first."
             exit 1
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
