@@ -26,7 +26,7 @@ const GROUPS: Record<string, [string, string]> = {
   policies: ['Policy tiles', 'Policies, anti-policies, blanks and the small Lobby card. All share one back.'],
   powers: ['Emergency powers', 'The emergency power tiles.'],
   boards: ['Boards', 'The boards with border, 395 × 134 mm.'],
-  'boards/borderless': ['Borderless boards', 'Only the inner track, for 3D-printed frames.'],
+  'boards/borderless': ['Borderless boards', 'Only the inner track and the footer strip, for 3D-printed frames.'],
   reference: ['Reference cards', 'Round order, setup and night script, powers and contents.'],
   placards: ['Placards', 'President and Chancellor. Fold in half.'],
   piles: ['Pile cards', 'Mark the draw and discard piles.'],
