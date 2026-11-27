@@ -150,8 +150,8 @@ export class PrintPage {
   zoomLoading = signal(false);
   private zoomToken = 0;
   private watchZoom = effect(() => {
-    const sp = this.zoomPreview(), rz = this.refZoom();
-    const urls = sp ? sp.items.flatMap((i) => (i.img ? [i.img] : [])) : rz ? [cardImage(rz.id, this.refZoomBack() ? 1 : 0)] : [];
+    const sp = this.zoomPreview() ?? this.pieceZoomView()?.item, rz = this.refZoom();
+    const urls = sp ? ('items' in sp ? sp.items : [sp]).flatMap((i) => (i.img ? [i.img] : [])) : rz ? [cardImage(rz.id, this.refZoomBack() ? 1 : 0)] : [];
     const token = ++this.zoomToken;
     const todo = [...new Set(urls)];
     if (!todo.length) { this.zoomLoading.set(false); return; }

@@ -248,7 +248,7 @@
       </div>
     }
     @if (pieceZoomView(); as pz) {
-      <div class="zoom" (click)="pieceZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="pieceLabel(pz.u.slot)">
+      <div class="zoom" [class.loading]="zoomLoading()" (click)="pieceZoom.set(null)" role="dialog" aria-modal="true" [attr.aria-label]="pieceLabel(pz.u.slot)">
         <div class="zbar" (click)="$event.stopPropagation()">
           <button class="mini" (click)="pickPiece(pieceZoom()! - 1)" [disabled]="pieceZoom() === 0" aria-label="Previous piece">‹</button>
           <button class="mini" (click)="pickPiece(pieceZoom()! + 1)" [disabled]="pieceZoom()! >= pieces().length - 1" aria-label="Next piece">›</button>
@@ -259,6 +259,7 @@
         <svg class="zsheet" [attr.viewBox]="pieceBox(pz.item)" (click)="$event.target === $event.currentTarget ? pieceZoom.set(null) : $event.stopPropagation()">
           <g [appPreview]="[pz.item]" [cuts]="false" />
         </svg>
+        @if (zoomLoading()) { <div class="zload" role="status" aria-label="Loading"></div> }
       </div>
     }
     @if (refZoom(); as rz) {
