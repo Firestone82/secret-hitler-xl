@@ -17,7 +17,7 @@ export const SPARE_KINDS: { k: SpareKind; label: string; hint: string }[] = [
   { k: 'tiles', label: 'Policy tiles', hint: 'per party' },
   { k: 'roles', label: 'Regular roles', hint: 'one of each' },
   { k: 'memberships', label: 'Party Membership', hint: 'per party' },
-  { k: 'ballots', label: 'Ballots', hint: 'besides the one spare' },
+  { k: 'ballots', label: 'Ballots', hint: 'none unless you add them' },
 ];
 
 export interface PrintOptions {

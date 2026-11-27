@@ -146,8 +146,8 @@ export function makePlan(o: PrintOptions, data: RolesFile): Plan {
   count('Party Membership', 'Liberal', mem.liberal); count('Party Membership', 'Fascist', mem.fascist);
   count('Party Membership', 'Communist', mem.communist); count('Party Membership', 'Lobby card', mem.lobby);
 
-  // ---- ballots: one per player and a spare, plus any extra spares
-  const ballots: Slot[] = [], nBallot = less(o.players + 1, own?.ballots) + sp.ballots;
+  // ---- ballots: one per player, plus any spares the user asks for
+  const ballots: Slot[] = [], nBallot = less(o.players, own?.ballots) + sp.ballots;
   if (o.ballots === 'double') {
     ballots.push(...times(nBallot, () => both('ballots/ja_nein', 'Ballot', 'card')));
     count('Ballots', 'Ballots, Ja! front / Nein back', nBallot);
