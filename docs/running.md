@@ -32,9 +32,12 @@ The app uses hash URLs (`#/rules`) and a relative base href, so it works under a
 To make one:
 
 1. Raise `version` and `date` in `public/data/rulebook/index.json` and add the entry to `changelog.json`. If the rules changed, rebuild the rulebook PDFs (`npx ng build && node tools/export/rulebook_pdf.mjs`).
-2. Merge to `master`, then either push a tag `v<version>` (`git tag v1.2.0 && git push origin v1.2.0`) or run the **Release** workflow by hand from the Actions tab, which tags the commit itself.
+2. Merge to `master`, then do one of these:
+   - run the **Release** workflow by hand from the Actions tab (simplest: it tags the commit itself);
+   - push a tag `v<version>` (`git tag v1.2.0 && git push origin v1.2.0`);
+   - create a release on GitHub with a new tag `v<version>` on `master`.
 
-The job fails when the tag does not match the version in `index.json`, or when a manual run finds the tag already taken. Re-running the job for an existing tag replaces the release's files.
+GitHub runs the workflow file of the tagged commit, so a tag on a commit from before the workflow existed starts nothing. The job fails when the tag does not match the version in `index.json`, or when a manual run finds the tag already on another commit. Re-running the job for an existing tag replaces the release's files.
 
 The same files can be built locally with `npx tsx tools/release/print_files.mts [out dir]` (default `release/`, which git ignores).
 
