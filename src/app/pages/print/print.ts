@@ -89,7 +89,8 @@ export class PrintPage {
     return pieceLabel(slot, this.data.cards());
   }
   pickSheet(i: number) { this.sheetPick.set(Math.max(0, Math.min(i, this.sheets().length - 1))); }
-  pieceBox(it: PreviewItem) { return `0 0 ${it.w} ${it.h}`; }
+  /** the view box of a single piece: its cut size, centred, without the bleed margin around it */
+  pieceBox(it: PreviewItem) { return `${it.x + it.cut.x} ${it.y + it.cut.y} ${it.cut.w} ${it.cut.h}`; }
 
   /** what an optional role brings to the table, beyond the text in the role files */
   roleTags(r: Role): string[] {
