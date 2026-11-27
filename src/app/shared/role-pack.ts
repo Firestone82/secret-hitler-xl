@@ -1,3 +1,4 @@
+import { cardImage, cardPdf, portrait } from '../core/assets';
 import { Role, RolesFile } from '../core/types';
 
 /** File-name friendly form of a role name: "Fascist Spy" -> "Fascist_Spy". */
@@ -5,7 +6,7 @@ const slug = (s: string) => s.replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '
 
 /**
  * Builds a zip with every file of one role: the Secret Role card(s) as images and as print-ready PDFs
- * (front and back with bleed), the Role Briefing card as a PDF, the portrait and the rulebook picture.
+ * (front and back with bleed), the Role Briefing card as a PDF and the portrait.
  */
 export async function rolePack(role: Role, data: RolesFile): Promise<{ bytes: Uint8Array; name: string }> {
   const [{ default: JSZip }, { Renderer, fetchLoader }] = await Promise.all([import('jszip'), import('../print/render')]);
@@ -15,11 +16,10 @@ export async function rolePack(role: Role, data: RolesFile): Promise<{ bytes: Ui
 
   // [name in the zip, file]; fetched in parallel, added in a stable order
   const entries: [string, Promise<Uint8Array>][] = [];
-  role.art.forEach((art, i) => entries.push([`${base}_Secret_Role_card${many ? `_${i + 1}` : ''}.jpg`, fetchLoader(`cards/${art}.jpg`)]));
-  entries.push([`${base}_portrait.jpg`, fetchLoader(`portraits/${role.portrait}.jpg`)]);
-  if (role.rulebook?.image) entries.push([`${base}_rulebook_picture.jpg`, fetchLoader(`rb/${role.rulebook.image}`)]);
+  role.art.forEach((art, i) => entries.push([`${base}_Secret_Role_card${many ? `_${i + 1}` : ''}.jpg`, fetchLoader(cardImage(art))]));
+  entries.push([`${base}_portrait.jpg`, fetchLoader(portrait(role))]);
   entries.push([`print/${base}_Role_Briefing_card.pdf`, new Renderer().briefingPdf(role.id, '', data)]);
-  role.art.forEach((art, i) => entries.push([`print/${base}_Secret_Role_card${many ? `_${i + 1}` : ''}.pdf`, fetchLoader(`pieces/c_${art}.pdf`)]));
+  role.art.forEach((art, i) => entries.push([`print/${base}_Secret_Role_card${many ? `_${i + 1}` : ''}.pdf`, fetchLoader(cardPdf(art))]));
   const bytes = await Promise.all(entries.map(([, p]) => p));
   entries.forEach(([name], i) => zip.file(name, bytes[i]));
 
@@ -27,7 +27,6 @@ export async function rolePack(role: Role, data: RolesFile): Promise<{ bytes: Ui
     `SECRET HITLER + XL - ${role.name.toUpperCase()}`, '',
     `${base}_Secret_Role_card*.jpg   the Secret Role card, for screens`,
     `${base}_portrait.jpg            the portrait used on the Role Briefing card`,
-    ...(role.rulebook?.image ? [`${base}_rulebook_picture.jpg     the picture from the rulebook`] : []),
     `print/*.pdf                     print-ready cards: page 1 front, page 2 back, 3 mm bleed`, '',
     'Licensed under CC BY-NC-SA 4.0. See the Credits page of the website.',
   ].join('\r\n'));

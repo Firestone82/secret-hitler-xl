@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/data.service';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 
-/** The rulebook's version history, from the `changelog` of rulebook.json, newest first. */
+/** The rulebook's version history, from data/rulebook/changelog.json, newest first. */
 @Component({
   selector: 'app-versions',
   imports: [DatePipe, RouterLink, SafeHtmlPipe],

@@ -1,0 +1,89 @@
+{
+  "id": "communist",
+  "name": "Communist",
+  "module": "communists",
+  "palette": "com",
+  "party": "communist",
+  "regular": true,
+  "seat": null,
+  "seatLabel": null,
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/communist_1",
+    "roles/communist_2",
+    "roles/communist_3",
+    "roles/communist_4"
+  ],
+  "portrait": "communist",
+  "crop": [
+    0.5,
+    0.45,
+    0.62
+  ],
+  "briefing": {
+    "side": "Team Communist",
+    "card": "Communist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Communist board is full.",
+          "Hitler is executed (the Liberals win too)."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "The other Communists, from the start.",
+          "The Anarchist, who shows you a thumb."
+        ]
+      },
+      {
+        "label": "YOUR POWERS",
+        "items": [
+          "<b>Radicalisation</b> and <b>Congress</b>: open your eyes with the Communists.",
+          "<b>Capitalist hunt:</b> before you execute a player as President, you may reveal your membership card. If you then execute the Capitalist, the Communists get an extra Radicalisation."
+        ]
+      }
+    ]
+  },
+  "rulebook": null,
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Communists, a third hidden party with its own board. You win when the <b>Communist board is full</b> or when <b>Hitler is executed</b>, which is a win for the Liberals too."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "The other Communists: you open your eyes together at setup. With the Anarchist in the game, the Anarchist shows you a thumb, or opens their eyes with you when there is just one other Communist. Players you radicalise later learn who you are only at Congress."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "Communist policies give powers to the Communists, whoever the government is. At <b>Radicalisation</b> you open your eyes together and look at one player's face-down membership card. A Liberal card is swapped for a Communist card, and that player joins you. A Fascist card stays, and the attempt fails. At <b>Congress</b> you open your eyes again, so the new Communists learn who the original ones are.",
+        "<b>Capitalist hunt:</b> when you are President and about to execute a player, you may first reveal your membership card. If the player you then execute is the Capitalist, the Communists get an extra Radicalisation."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Both other parties play against you. Revealing your card for the Capitalist hunt shows the whole table your party, and any investigation of your membership card shows Communist."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Claim to be a Liberal, and let Liberals and Fascists suspect each other. Radicalise the players the table trusts most, and remember that a failed Radicalisation tells you that card was Fascist."
+      ]
+    }
+  ]
+}

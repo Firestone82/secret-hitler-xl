@@ -1,0 +1,98 @@
+{
+  "id": "propagandist",
+  "name": "Propagandist",
+  "module": "roles",
+  "palette": "neu",
+  "party": "any",
+  "regular": false,
+  "seat": "any",
+  "seatLabel": "Any party (usually Fascist)",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/propagandist"
+  ],
+  "portrait": "propagandist",
+  "crop": [
+    0.52,
+    0.42,
+    0.55
+  ],
+  "briefing": {
+    "side": "Team of your membership card",
+    "card": "Group decides",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The party on your Party Membership card wins."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "What that party knows: you open your eyes with it at setup."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "Once per game, reveal your Secret Role card and cast three votes in one election.",
+          "It stacks with the Lobby card."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Save your votes for the election that decides the game.",
+          "Revealing shows your role, never your party."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Propagandist",
+    "teamLabel": "Any party",
+    "image": "cards/roles/propagandist.jpg",
+    "addWhen": "elections are too predictable.",
+    "addWhenTable": "Elections are too predictable.",
+    "seatLabel": "Any party (usually Fascist)",
+    "pitch": "Casts <b>three votes</b> once, enough to swing one election."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You belong to the party on your membership card, which the group chooses at setup, and you win when that party wins."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "What that party knows: you open your eyes with it at setup. As a Liberal you learn nothing."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "Once per game, you may reveal your Secret Role card and cast <b>three votes</b> in one election. If you also hold the Lobby card, you may use both in the same election."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Revealing shows your role but never your party. From then on the table knows a big vote is gone, and every side will try to work out which party you used it for."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Save your votes for the election that decides the game, such as a Hitler Chancellor vote after the 3rd Fascist policy."
+      ]
+    }
+  ]
+}

@@ -6,11 +6,11 @@ export type SpareKind = 'tiles' | 'roles' | 'memberships' | 'ballots';
 
 /** The reference cards, in print order, with what each needs and how many a table usually wants. */
 export const REF_CARDS: { id: string; label: string; hint: string; copies: number; needs?: 'powers' | 'communists' | 'full' }[] = [
-  { id: 'r_setupnight', label: 'Setup and night script', hint: 'For whoever runs the night.', copies: 1 },
-  { id: 'r_round', label: 'Round', hint: 'The order of a round.', copies: 2 },
-  { id: 'r_emerg', label: 'Emergency powers and anti-policies', hint: 'Needs emergency powers or anti-policies.', copies: 2, needs: 'powers' },
-  { id: 'r_compow', label: 'Communist powers and winning', hint: 'Needs the Communists.', copies: 2, needs: 'communists' },
-  { id: 'r_contents', label: 'Contents', hint: 'Lists the full set: needs every module and the briefings.', copies: 1, needs: 'full' },
+  { id: 'reference/setup_night', label: 'Setup and night script', hint: 'For whoever runs the night.', copies: 1 },
+  { id: 'reference/round', label: 'Round', hint: 'The order of a round.', copies: 2 },
+  { id: 'reference/emergency_powers', label: 'Emergency powers and anti-policies', hint: 'Needs emergency powers or anti-policies.', copies: 2, needs: 'powers' },
+  { id: 'reference/communist_powers', label: 'Communist powers and winning', hint: 'Needs the Communists.', copies: 2, needs: 'communists' },
+  { id: 'reference/contents', label: 'Contents', hint: 'Lists the full set: needs every module and the briefings.', copies: 1, needs: 'full' },
 ];
 
 export const SPARE_KINDS: { k: SpareKind; label: string; hint: string }[] = [
@@ -38,7 +38,7 @@ export interface PrintOptions {
   ballots: 'double' | 'separate';
   /** border: the classic boards; borderless: for the 3D-printed frames; both */
   boardStyle: BoardStyle;
-  /** copies of each reference card, by piece id (r_round…); 0 leaves it out */
+  /** copies of each reference card, by piece id (reference/round…); 0 leaves it out */
   refCards: Record<string, number>;
   refSize: RefSize;
   /** spare copies on top of what the table needs, by kind */

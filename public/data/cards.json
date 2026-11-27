@@ -1,0 +1,553 @@
+{
+  "roles/liberal_1": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 1",
+    "back": "backs/role"
+  },
+  "roles/liberal_2": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 2",
+    "back": "backs/role"
+  },
+  "roles/liberal_3": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 3",
+    "back": "backs/role"
+  },
+  "roles/liberal_4": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 4",
+    "back": "backs/role"
+  },
+  "roles/liberal_5": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 5",
+    "back": "backs/role"
+  },
+  "roles/liberal_6": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 6",
+    "back": "backs/role"
+  },
+  "roles/liberal_7": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Secret Role 7",
+    "back": "backs/role"
+  },
+  "roles/fascist_1": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist Secret Role 1",
+    "back": "backs/role"
+  },
+  "roles/fascist_2": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist Secret Role 2",
+    "back": "backs/role"
+  },
+  "roles/fascist_3": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist Secret Role 3",
+    "back": "backs/role"
+  },
+  "roles/fascist_4": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist Secret Role 4",
+    "back": "backs/role"
+  },
+  "roles/communist_1": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist Secret Role 1",
+    "back": "backs/role"
+  },
+  "roles/communist_2": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist Secret Role 2",
+    "back": "backs/role"
+  },
+  "roles/communist_3": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist Secret Role 3",
+    "back": "backs/role"
+  },
+  "roles/communist_4": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist Secret Role 4",
+    "back": "backs/role"
+  },
+  "roles/hitler": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Hitler Secret Role",
+    "back": "backs/role"
+  },
+  "roles/anarchist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Anarchist Secret Role",
+    "back": "backs/role"
+  },
+  "roles/bodyguard": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Bodyguard Secret Role",
+    "back": "backs/role"
+  },
+  "roles/bureaucrat": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Bureaucrat Secret Role",
+    "back": "backs/role"
+  },
+  "roles/capitalist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Capitalist Secret Role",
+    "back": "backs/role"
+  },
+  "roles/centrist_a": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Centrist (A) Secret Role",
+    "back": "backs/role"
+  },
+  "roles/centrist_b": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Centrist (B) Secret Role",
+    "back": "backs/role"
+  },
+  "roles/detective": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Detective Secret Role",
+    "back": "backs/role"
+  },
+  "roles/fascist_spy": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist Spy Secret Role",
+    "back": "backs/role"
+  },
+  "roles/jester": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Jester Secret Role",
+    "back": "backs/role"
+  },
+  "roles/liberal_spy": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal Spy Secret Role",
+    "back": "backs/role"
+  },
+  "roles/monarchist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Monarchist Secret Role",
+    "back": "backs/role"
+  },
+  "roles/propagandist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Propagandist Secret Role",
+    "back": "backs/role"
+  },
+  "roles/blank_liberal": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (liberal)",
+    "back": "backs/role"
+  },
+  "roles/blank_fascist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (fascist)",
+    "back": "backs/role"
+  },
+  "roles/blank_communist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (communist)",
+    "back": "backs/role"
+  },
+  "roles/blank_neutral": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank Secret Role (neutral)",
+    "back": "backs/role"
+  },
+  "membership/liberal": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Liberal membership",
+    "back": "backs/membership"
+  },
+  "membership/fascist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Fascist membership",
+    "back": "backs/membership"
+  },
+  "membership/communist": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Communist membership",
+    "back": "backs/membership"
+  },
+  "membership/lobby": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Lobby card",
+    "back": "backs/membership"
+  },
+  "membership/blank": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Blank membership",
+    "back": "backs/membership"
+  },
+  "ballots/ja": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Ja! ballot",
+    "back": "backs/ballot"
+  },
+  "ballots/nein": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Nein ballot",
+    "back": "backs/ballot"
+  },
+  "ballots/ja_nein": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Ballot: Ja! / Nein"
+  },
+  "piles/draw": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Draw pile card"
+  },
+  "piles/discard": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Discard pile card"
+  },
+  "briefing/back": {
+    "kind": "card",
+    "w": 63.5,
+    "h": 88,
+    "label": "Role Briefing back",
+    "back": "briefing/back"
+  },
+  "policies/liberal": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Liberal policy",
+    "back": "backs/policy"
+  },
+  "policies/fascist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Fascist policy",
+    "back": "backs/policy"
+  },
+  "policies/communist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Communist policy",
+    "back": "backs/policy"
+  },
+  "policies/anti_fascist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Anti-Fascist policy",
+    "back": "backs/policy"
+  },
+  "policies/anti_communist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Anti-Communist policy",
+    "back": "backs/policy"
+  },
+  "policies/social_democratic": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Social Democratic policy",
+    "back": "backs/policy"
+  },
+  "policies/blank_liberal": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Liberal policy",
+    "back": "backs/policy"
+  },
+  "policies/blank_fascist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Fascist policy",
+    "back": "backs/policy"
+  },
+  "policies/blank_communist": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank Communist policy",
+    "back": "backs/policy"
+  },
+  "policies/lobby": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Lobby card (small)"
+  },
+  "powers/blank": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Blank emergency power",
+    "back": "backs/policy"
+  },
+  "powers/investigate": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Investigate Loyalty",
+    "back": "backs/policy"
+  },
+  "powers/peek": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Policy Peek",
+    "back": "backs/policy"
+  },
+  "powers/special_election": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Special Election",
+    "back": "backs/policy"
+  },
+  "powers/execution": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Execution",
+    "back": "backs/policy"
+  },
+  "powers/propaganda": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Propaganda",
+    "back": "backs/policy"
+  },
+  "powers/no_confidence": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: No Confidence",
+    "back": "backs/policy"
+  },
+  "powers/censorship": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Censorship",
+    "back": "backs/policy"
+  },
+  "powers/enabling_act": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Enabling Act",
+    "back": "backs/policy"
+  },
+  "powers/article48": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Article 48",
+    "back": "backs/policy"
+  },
+  "powers/pardon": {
+    "kind": "tile",
+    "w": 44,
+    "h": 68,
+    "label": "Emergency: Pardon",
+    "back": "backs/policy"
+  },
+  "boards/liberal": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Liberal board"
+  },
+  "boards/fascist_5-6": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 5-6 players"
+  },
+  "boards/fascist_7-8": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 7-8 players"
+  },
+  "boards/fascist_9-10": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Fascist board 9+ players"
+  },
+  "boards/communist": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Communist board"
+  },
+  "boards/borderless/liberal": {
+    "kind": "insert",
+    "w": 291.9,
+    "h": 87.7,
+    "label": "Liberal board (borderless)"
+  },
+  "boards/borderless/fascist_5-6": {
+    "kind": "insert",
+    "w": 345.7,
+    "h": 86.7,
+    "label": "Fascist board 5-6 players (borderless)",
+    "back": "backs/borderless_fascist"
+  },
+  "boards/borderless/fascist_7-8": {
+    "kind": "insert",
+    "w": 345.7,
+    "h": 86.7,
+    "label": "Fascist board 7-8 players (borderless)",
+    "back": "backs/borderless_fascist"
+  },
+  "boards/borderless/fascist_9-10": {
+    "kind": "insert",
+    "w": 345.7,
+    "h": 86.7,
+    "label": "Fascist board 9+ players (borderless)",
+    "back": "backs/borderless_fascist"
+  },
+  "boards/borderless/communist": {
+    "kind": "insert",
+    "w": 345.1,
+    "h": 84.7,
+    "label": "Communist board (borderless)"
+  },
+  "reference/setup_night": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Setup reference / night script card"
+  },
+  "reference/round": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Round reference card"
+  },
+  "reference/emergency_powers": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Emergency powers / anti-policies card"
+  },
+  "reference/communist_powers": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Communist powers / powers and winning card"
+  },
+  "reference/contents": {
+    "kind": "long",
+    "w": 395.0,
+    "h": 134.0,
+    "label": "Contents card"
+  },
+  "placards/president": {
+    "kind": "placard",
+    "w": 104.5,
+    "h": 176.0,
+    "label": "President placard",
+    "back": "backs/placard"
+  },
+  "placards/chancellor": {
+    "kind": "placard",
+    "w": 104.5,
+    "h": 176.0,
+    "label": "Chancellor placard",
+    "back": "backs/placard"
+  }
+}

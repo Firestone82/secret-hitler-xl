@@ -1,0 +1,38 @@
+{
+  "lib": {
+    "header": "#61c9d9",
+    "headerText": "#013a52",
+    "accent": "#01607f",
+    "paper": "#e6f6f9"
+  },
+  "fas": {
+    "header": "#ee9370",
+    "headerText": "#3d0d03",
+    "accent": "#a2260f",
+    "paper": "#fcebe3"
+  },
+  "com": {
+    "header": "#ec7d77",
+    "headerText": "#420000",
+    "accent": "#a50f0f",
+    "paper": "#fce6e5"
+  },
+  "cap": {
+    "header": "#c9c79a",
+    "headerText": "#2f2f17",
+    "accent": "#5d5c2e",
+    "paper": "#f2f1e4"
+  },
+  "neu": {
+    "header": "#c3b0d9",
+    "headerText": "#2a1b40",
+    "accent": "#5a3f7d",
+    "paper": "#f0ebf7"
+  },
+  "jes": {
+    "header": "#f3a9cb",
+    "headerText": "#4d0f2e",
+    "accent": "#a8235f",
+    "paper": "#fcebf3"
+  }
+}

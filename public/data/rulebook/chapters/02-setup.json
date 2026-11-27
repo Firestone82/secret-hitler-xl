@@ -1,0 +1,83 @@
+[
+  {
+    "type": "h1",
+    "text": "2  Setup",
+    "id": "2-setup"
+  },
+  {
+    "type": "h2",
+    "text": "Boards and deck",
+    "id": "boards-and-deck"
+  },
+  {
+    "type": "p",
+    "html": "Choose the Fascist board for your number of players and place it next to the Liberal board. Shuffle the 11 Fascist and 6 Liberal policy tiles into one deck and place it face down on the draw pile card."
+  },
+  {
+    "type": "wide",
+    "image": "cards/boards/liberal.jpg",
+    "caption": "The Liberal board: five policy spaces, the election tracker along the bottom, draw pile and discard pile at the ends."
+  },
+  {
+    "type": "wide",
+    "image": "cards/boards/fascist_7-8.jpg",
+    "caption": "A Fascist board (7 or 8 players): six policy spaces. The icon on a space is the power the President gets when a policy lands there."
+  },
+  {
+    "type": "h2",
+    "text": "Roles",
+    "id": "roles"
+  },
+  {
+    "type": "seats",
+    "table": "base",
+    "caption": null
+  },
+  {
+    "type": "p",
+    "html": "Fill one envelope per player with a Secret Role card, its <b>Role Briefing</b> card, the matching Party Membership card, and one <b>Ja!</b> and one <b>Nein</b> ballot card. The Role Briefing card explains that role on its own, so a new player can read it at the table. Liberal roles always go with a Liberal membership card. Fascist and Hitler roles always go with a Fascist membership card. Shuffle the envelopes and deal one to each player at random. Everyone looks at their role in secret."
+  },
+  {
+    "type": "note",
+    "label": "Optional ballot card",
+    "html": "This edition can also print a single ballot card with <b>Ja!</b> on one side and <b>Nein</b> on the other. It is <b>optional</b> and not needed for the original game or for XL. If you use it, each player turns the chosen side up under the table and lays the card down when everyone votes."
+  },
+  {
+    "type": "p",
+    "html": "Choose the first presidential candidate at random and give that player both placards."
+  },
+  {
+    "type": "note",
+    "label": "Dictator card",
+    "html": "The <b>Dictator</b> role card is the <b>same role as Hitler</b> under another name, offered as an alternative for countries and groups where the original name is a problem. Every rule about Hitler applies to the Dictator unchanged. Use one or the other, <b>never both</b>."
+  },
+  {
+    "type": "h2",
+    "text": "Opening script",
+    "id": "opening-script"
+  },
+  {
+    "type": "script",
+    "title": "5 or 6 players",
+    "lines": [
+      "Everybody close your eyes.",
+      "Fascist and Hitler, open your eyes and acknowledge each other.",
+      "[Take a long pause]",
+      "Everyone close your eyes.",
+      "Everyone can open your eyes. If anyone is confused or something went wrong, please tell the group now."
+    ]
+  },
+  {
+    "type": "script",
+    "title": "7 to 10 players",
+    "lines": [
+      "Everybody close your eyes and extend your hand into a fist in front of you.",
+      "All Fascists who are not Hitler, open your eyes and acknowledge each other.",
+      "Hitler, keep your eyes closed but put your thumb out.",
+      "Fascists, take note of who has an extended thumb. That player is Hitler.",
+      "[Take a long pause]",
+      "Everyone close your eyes and put your hands down.",
+      "Everyone can open your eyes. If anyone is confused or something went wrong, please tell the group now."
+    ]
+  }
+]

@@ -59,6 +59,8 @@ export interface PieceInfo {
   w: number;
   h: number;
   label: string;
+  /** the picture of the back, when it is not <id>_back: a shared one in backs/, or the piece itself */
+  back?: string;
 }
 
 /** One block of the rulebook, as exported from the rule source. */

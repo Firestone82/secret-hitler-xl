@@ -1,0 +1,108 @@
+{
+  "id": "capitalist",
+  "name": "Capitalist",
+  "module": "roles",
+  "palette": "cap",
+  "party": "liberal",
+  "regular": false,
+  "seat": "liberal",
+  "seatLabel": "A Liberal",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": true,
+  "needsCommunists": true,
+  "extraMembership": {
+    "fascist": 1,
+    "lobby": 1
+  },
+  "art": [
+    "roles/capitalist"
+  ],
+  "portrait": "capitalist",
+  "crop": [
+    0.48,
+    0.53,
+    0.64
+  ],
+  "briefing": {
+    "side": "Team Liberal",
+    "card": "Liberal and Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Liberal board is full.",
+          "Hitler is executed."
+        ]
+      },
+      {
+        "label": "TWO MEMBERSHIP CARDS",
+        "items": [
+          "At Radicalisation, show the Fascist one. You are never converted.",
+          "At Investigate Loyalty, show the Liberal one.",
+          "At Bugging, show either one."
+        ]
+      },
+      {
+        "label": "LOBBY CARD",
+        "items": [
+          "At Radicalisation, give it to the player you trust most. They may vote three times with it, once."
+        ]
+      },
+      {
+        "label": "DANGER",
+        "items": [
+          "A revealed Communist President who executes you earns them a Radicalisation."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Capitalist",
+    "teamLabel": "Team Liberal",
+    "image": "cards/roles/capitalist.jpg",
+    "addWhen": "Communist policies pass too quickly or Radicalisation is too easy.",
+    "addWhenTable": "Communist policies pass too quickly or Radicalisation is too easy.",
+    "seatLabel": "A Liberal",
+    "pitch": "A Liberal who <b>can never be radicalised</b> and hands out a Lobby card worth three votes."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Nobody. You open your eyes only during Radicalisation, after the Communists have closed theirs, to hand out the Lobby card."
+      ]
+    },
+    {
+      "label": "Two membership cards",
+      "text": [
+        "You hold a Fascist and a Liberal card. At Radicalisation you put out the Fascist one, so you can never be radicalised. At Investigate Loyalty you show the Liberal one. At Bugging you choose which one to show."
+      ]
+    },
+    {
+      "label": "Lobby card",
+      "text": [
+        "During each Radicalisation you open your eyes and place the Lobby card on the card of the player you trust most. That player may spend it once to vote three times in one election."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "The Communists hunt you. A Communist President who reveals their membership card before an execution and then executes you earns the Communists an extra Radicalisation."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Give the Lobby card to a player you are sure of, and keep your role hidden so the Communists cannot aim at you."
+      ]
+    }
+  ]
+}

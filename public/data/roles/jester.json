@@ -1,0 +1,94 @@
+{
+  "id": "jester",
+  "name": "Jester",
+  "module": "roles",
+  "palette": "jes",
+  "party": "fascist",
+  "regular": false,
+  "seat": "liberal",
+  "seatLabel": "A Liberal",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": {
+    "fascist": 1
+  },
+  "art": [
+    "roles/jester"
+  ],
+  "portrait": "jester",
+  "crop": [
+    0.47,
+    0.44,
+    0.56
+  ],
+  "briefing": {
+    "side": "No team, own goal",
+    "card": "Fascist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "You are executed. The game ends at once and only you win."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "Nobody."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Look suspicious, but not too obviously.",
+          "Every execution counts: by a President, Confession, the Anarchist or the Fascist Spy.",
+          "Never claim to be the Jester."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Jester",
+    "teamLabel": "No team",
+    "image": "cards/roles/jester.jpg",
+    "addWhen": "executions happen too easily.",
+    "addWhenTable": "Executions happen too easily.",
+    "seatLabel": "A Liberal",
+    "pitch": "<b>Wins alone if executed</b>, so every execution becomes a gamble."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for nobody. You win if you are <b>executed</b>: the game ends at once and only you win. Every execution counts, by a President, by Confession, by the Anarchist or by the Fascist Spy."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Nobody. You keep your eyes closed through the whole night."
+      ]
+    },
+    {
+      "label": "Your Fascist card",
+      "text": [
+        "You hold a Fascist membership card, so any investigation shows Fascist and Radicalisation never turns you. That is your best tool for looking guilty."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "If any team wins before someone executes you, you lose. A player who works out that you are the Jester will never shoot you."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Look suspicious, but not too obviously. Never claim to be the Jester."
+      ]
+    }
+  ]
+}

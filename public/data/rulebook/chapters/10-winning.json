@@ -1,0 +1,75 @@
+[
+  {
+    "type": "h1",
+    "text": "10  Winning",
+    "id": "10-winning"
+  },
+  {
+    "type": "p",
+    "html": "Every side and every extra role has its own way to win. Find yours below. Your Role Briefing card says the same."
+  },
+  {
+    "type": "wins",
+    "panels": [
+      {
+        "name": "Liberals",
+        "who": "Liberals, Centrists, Capitalist, Liberal Spy",
+        "color": "#1f8ba3",
+        "items": [
+          "The Liberal board is full.",
+          "Hitler is executed."
+        ]
+      },
+      {
+        "name": "Fascists",
+        "who": "Fascists, Hitler, Bodyguard, Fascist Spy",
+        "color": "#d9611f",
+        "items": [
+          "The Fascist board is full.",
+          "Hitler is elected Chancellor after the 3rd Fascist policy.",
+          "A Fascist-team player executes the Liberal Spy."
+        ]
+      },
+      {
+        "name": "Communists",
+        "who": "Communists, Anarchist",
+        "color": "#c62f2a",
+        "items": [
+          "The Communist board is full.",
+          "Hitler is executed (together with the Liberals)."
+        ]
+      },
+      {
+        "name": "Monarchist",
+        "who": "Far right, own goals",
+        "color": "#a2260f",
+        "items": [
+          "The Fascist board is full.",
+          "Hitler is executed.",
+          "Never when Hitler becomes Chancellor."
+        ]
+      },
+      {
+        "name": "Jester",
+        "who": "No team",
+        "color": "#5a3f7d",
+        "items": [
+          "The Jester is executed: the game ends and nobody else wins."
+        ]
+      },
+      {
+        "name": "Card-party roles",
+        "who": "Propagandist, Bureaucrat, Detective",
+        "color": "#77796f",
+        "items": [
+          "The party on their Party Membership card wins."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "note",
+    "label": "When Hitler is executed",
+    "html": "Liberals, Communists and the Monarchist win together. A Bodyguard who is still alive dies instead, once, and the game goes on."
+  }
+]

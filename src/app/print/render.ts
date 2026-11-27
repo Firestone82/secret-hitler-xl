@@ -1,5 +1,6 @@
 import { PDFDocument, PDFEmbeddedPage, PDFFont, PDFImage, PDFPage, clip, concatTransformationMatrix, degrees, endPath, popGraphicsState, pushGraphicsState, rectangle, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
+import { cardPdf, portrait } from '../core/assets';
 import { RolesFile } from '../core/types';
 import { BriefingFonts, MM, drawBlankBriefing, drawBriefing } from './briefing-pdf';
 import { BLEED, Draw, Item, PAGE, PrintFile, Sheet, slotSize } from './layout';
@@ -44,7 +45,7 @@ export interface PieceExport {
   copies: number;
 }
 
-const faceKey = (f: Face) => slug(f.type === 'piece' ? f.id.replace(/^[a-z]{1,2}_/, '') : f.type === 'briefing' ? f.role : f.type === 'blankBriefing' ? f.palette : 'solid');
+const faceKey = (f: Face) => slug(f.type === 'piece' ? f.id.split('/').pop()! : f.type === 'briefing' ? f.role : f.type === 'blankBriefing' ? f.palette : 'solid');
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
 export class Renderer {
@@ -70,12 +71,12 @@ export class Renderer {
     const total = ids.size + roles.size + file.sheets.length; let done = 0;
     const tick = () => progress?.(++done, total);
     await Promise.all([...ids].map(async (id) => {
-      const [f, b] = await doc.embedPdf(await this.cache.get(`pieces/${id}.pdf`), [0, 1]);
+      const [f, b] = await doc.embedPdf(await this.cache.get(cardPdf(id)), [0, 1]);
       ctx.pages.set(id, [f, b]); tick();
     }));
     await Promise.all([...roles].map(async (rid) => {
       const r = data.roles.find((x) => x.id === rid)!;
-      ctx.portraits.set(rid, await doc.embedJpg(await this.cache.get(`portraits/${r.portrait}.jpg`))); tick();
+      ctx.portraits.set(rid, await doc.embedJpg(await this.cache.get(portrait(r)))); tick();
     }));
 
     file.sheets.forEach((sh, i) => {
@@ -97,7 +98,7 @@ export class Renderer {
     const page = doc.addPage([pt(63.5), pt(88)]);
     if (roleId) {
       const r = data.roles.find((x) => x.id === roleId)!;
-      const img = await doc.embedJpg(await this.cache.get(`portraits/${r.portrait}.jpg`));
+      const img = await doc.embedJpg(await this.cache.get(portrait(r)));
       drawBriefing(page, r, data.palettes[r.palette], fonts, img, 0);
     } else drawBlankBriefing(page, data.palettes[palette], data.blank.sections, fonts, 0);
     return doc.save();
@@ -138,7 +139,7 @@ export class Renderer {
     doc.setCreator('Secret Hitler XL print builder');
     const [w, h] = slotSize(slot), b = PIECE_BLEED, sc = slot.scale ?? 1;
     if (f.type === 'piece') {
-      const [emb] = await doc.embedPdf(await this.cache.get(`pieces/${f.id}.pdf`), [f.page]);
+      const [emb] = await doc.embedPdf(await this.cache.get(cardPdf(f.id)), [f.page]);
       const page = doc.addPage([emb.width * sc, emb.height * sc]);
       page.drawPage(emb, { x: 0, y: 0, width: emb.width * sc, height: emb.height * sc });
       return doc.save({ useObjectStreams: true });
@@ -154,7 +155,7 @@ export class Renderer {
     page.pushOperators(pushGraphicsState(), concatTransformationMatrix(1, 0, 0, 1, pt(b), pt(b)));
     if (f.type === 'briefing') {
       const r = data.roles.find((x) => x.id === f.role)!;
-      const img = await doc.embedJpg(await this.cache.get(`portraits/${r.portrait}.jpg`));
+      const img = await doc.embedJpg(await this.cache.get(portrait(r)));
       drawBriefing(page, r, data.palettes[r.palette], fonts, img, pt(b));
     } else drawBlankBriefing(page, data.palettes[f.palette], data.blank.sections, fonts, pt(b));
     page.pushOperators(popGraphicsState());

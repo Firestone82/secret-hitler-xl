@@ -1,0 +1,93 @@
+{
+  "id": "anarchist",
+  "name": "Anarchist",
+  "module": "roles",
+  "palette": "com",
+  "party": "communist",
+  "regular": false,
+  "seat": "communist",
+  "seatLabel": "A Communist",
+  "count": 1,
+  "countLabel": null,
+  "pair": null,
+  "withCommunists": true,
+  "needsCommunists": true,
+  "extraMembership": null,
+  "art": [
+    "roles/anarchist"
+  ],
+  "portrait": "anarchist",
+  "crop": [
+    0.53,
+    0.45,
+    0.62
+  ],
+  "briefing": {
+    "side": "Team Communist",
+    "card": "Communist",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Communist board is full.",
+          "Hitler is executed (the Liberals win too)."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "Nobody. At setup, show your thumb to the Communists.",
+          "With just one other Communist, open your eyes with them.",
+          "Keep your eyes closed at Radicalisation and Congress."
+        ]
+      },
+      {
+        "label": "YOUR POWER",
+        "items": [
+          "<b>Assassination</b>, once per game: after a policy is enacted and before the next election, reveal your Secret Role card and execute a player."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Anarchist",
+    "teamLabel": "Team Communist",
+    "image": "cards/roles/anarchist.jpg",
+    "addWhen": "your group knows the Communists well and wants a wild card.",
+    "addWhenTable": "Your group knows the Communists well and wants a wild card.",
+    "seatLabel": "A Communist",
+    "pitch": "A hidden Communist with one <b>assassination</b>: after any policy, anyone can be shot."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Communists. You win when the <b>Communist board is full</b> or when <b>Hitler is executed</b>, which is a win for the Liberals too."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Usually nobody. At setup you keep your eyes closed and show the Communists a thumb, so they know you, but you do not know them. Only when there is just one other Communist do you open your eyes with them. You keep your eyes closed at Radicalisation and Congress as well."
+      ]
+    },
+    {
+      "label": "Power",
+      "text": [
+        "<b>Assassination</b>, once per game. After a policy is enacted and before the next election, you may reveal your Secret Role card and execute any player. It counts as an execution in every way: shooting Hitler ends the game in a win for the Communists and Liberals, and shooting the Jester hands the Jester the win."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "Once you reveal, everyone knows you are on the Communist side, and the Liberals and Fascists will see you as a target. The Communists cannot confirm you openly without giving themselves away."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Wait until you are sure. The best shot removes a player the Communists cannot otherwise get rid of, or ends the game by finding Hitler."
+      ]
+    }
+  ]
+}

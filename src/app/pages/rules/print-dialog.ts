@@ -72,7 +72,7 @@ function save(key: string, value: string) {
   `,
 })
 export class PrintDialog {
-  /** booklet PDF for each paper size, from rulebook.json */
+  /** booklet PDF for each paper size, from data/rulebook/index.json */
   booklets = input<Partial<Record<Paper, { label: string; file: string }>>>({});
   version = input('');
   print = output<PrintChoice>();

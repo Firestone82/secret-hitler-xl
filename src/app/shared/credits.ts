@@ -4,7 +4,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 
 /**
  * Who made the game, the expansion and this edition, plus the licence.
- * The text is the `credits` block of rulebook.json; shown in the rulebook and on the Credits page.
+ * The text is the `credits` block of the rulebook (data/rulebook/chapters/); shown in the rulebook and on the Credits page.
  */
 @Component({
   selector: 'app-credits',
@@ -17,7 +17,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
         }
       </div>
       @if (b['licence']; as l) {
-        <div class="lic">@if (l.image) { <img [src]="'rb/' + l.image" [alt]="l.alt ?? ''" /> }<p [innerHTML]="l.html | safeHtml"></p></div>
+        <div class="lic">@if (l.image) { <img [src]="l.image" [alt]="l.alt ?? ''" /> }<p [innerHTML]="l.html | safeHtml"></p></div>
       }
     }
   `,

@@ -1,0 +1,45 @@
+{
+  "version": "1.1.0",
+  "date": "2026-11-26",
+  "downloads": [
+    {
+      "label": "A5, reading order",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A5.pdf"
+    },
+    {
+      "label": "A5 booklet on A4",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf"
+    },
+    {
+      "label": "A4, reading order",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A4.pdf"
+    },
+    {
+      "label": "A4 booklet on A3",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
+    }
+  ],
+  "booklets": {
+    "A4": {
+      "label": "A5 booklet on A4",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A5_booklet_on_A4.pdf"
+    },
+    "A3": {
+      "label": "A4 booklet on A3",
+      "file": "rulebook/pdf/Secret_Hitler_XL_Rulebook_A4_booklet_on_A3.pdf"
+    }
+  },
+  "chapters": [
+    "01-the-game",
+    "02-setup",
+    "03-a-round",
+    "04-presidential-powers",
+    "05-table-talk",
+    "06-what-xl-adds",
+    "07-the-communists",
+    "08-extra-roles",
+    "09-extra-policies",
+    "10-winning",
+    "11-quick-reference"
+  ]
+}

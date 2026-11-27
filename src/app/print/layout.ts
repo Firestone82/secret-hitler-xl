@@ -96,7 +96,7 @@ function notchFor(slot: Slot): [number, number, number] | undefined {
   if (slot.size === 'long') return BOARD_NOTCH;
   if (slot.size === 'insert') {
     const id = slot.front.type === 'piece' ? slot.front.id : '';
-    const c = INSERT_NOTCH[id.replace('i_', '')[0]] ?? [120, 120, 120];
+    const c = INSERT_NOTCH[id.replace('boards/borderless/', '')[0]] ?? [120, 120, 120];
     return c.map((v) => (v / 255) * 0.8) as [number, number, number];
   }
   return undefined;

@@ -1,3 +1,4 @@
+import { briefingImage, cardImage } from '../core/assets';
 import { RolesFile } from '../core/types';
 import { BLEED, Item, PAGE, PrintFile, Sheet, slotSize } from './layout';
 import { Slot } from './plan';
@@ -13,7 +14,8 @@ export interface PreviewItem {
   transform: string;
   /** artwork size with the piece file's own bleed */
   aw: number; ah: number;
-  img?: string;
+  /** the picture is the piece at cut size (iw x ih); the preview stretches a copy under it to stand in for the bleed */
+  img?: string; iw?: number; ih?: number;
   fill?: string;
   name: string;
   /** cut lines, relative to the clip box */
@@ -48,14 +50,16 @@ function previewItem(it: Item, PW: number, back: boolean, data: RolesFile, hd = 
     cut: { x: x - X0, y: it.y - Y0, w: it.w, h: it.h },
   };
   if (f.type === 'piece') {
-    out.img = `preview/${hd ? 'hd/' : ''}${f.id}_${f.page}.jpg`;
+    out.img = cardImage(f.id, f.page, hd ? 'full' : 'thumb');
     out.aw = d.w + 2 * PIECE_BLEED * d.scale; out.ah = d.h + 2 * PIECE_BLEED * d.scale;
+    out.iw = d.w; out.ih = d.h;
   } else if (f.type === 'solid') {
     out.fill = `rgb(${f.rgb.join(',')})`;
   } else {
-    // pictures of the briefing cards with their text, made by tools/export/briefing_previews.mts
-    out.img = `preview/briefing/${f.type === 'briefing' ? f.role : 'blank_' + f.palette}.jpg`;
+    // pictures of the briefing cards with their text, made by tools/export/briefing_images.mts
+    out.img = briefingImage(f.type === 'briefing' ? f.role : 'blank_' + f.palette, hd ? 'full' : 'thumb');
     out.aw = d.w + 2 * PIECE_BLEED; out.ah = d.h + 2 * PIECE_BLEED;
+    out.iw = d.w; out.ih = d.h;
   }
   return out;
 }

@@ -1,5 +1,6 @@
 import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { cardImage } from '../../core/assets';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BoardStyle, DEFAULT_OPTIONS, Paper, PrintOptions, REF_CARDS, RefSize, SPARE_KINDS, SpareKind, normalise, refCardAllowed } from '../../print/options';
@@ -75,15 +76,15 @@ export class PrintPage {
       ...n(p.placards.length, 'placard', 'placards'),
     ].join(', ');
   });
-  /** the piece's own label from pieces.json where there is one: "Emergency: Policy Peek", not "Emergency power" */
+  /** the piece's own label from cards.json where there is one: "Emergency: Policy Peek", not "Emergency power" */
   pieceLabel(slot: Slot): string {
     const f = slot.front;
-    return (f.type === 'piece' && this.data.pieces()?.[f.id]?.label) || slot.name;
+    return (f.type === 'piece' && this.data.cards()?.[f.id]?.label) || slot.name;
   }
   pickSheet(i: number) { this.sheetPick.set(Math.max(0, Math.min(i, this.sheets().length - 1))); }
   pieceBox(it: PreviewItem) { return `0 0 ${it.w} ${it.h}`; }
 
-  /** what an optional role brings to the table, beyond the text in roles.json */
+  /** what an optional role brings to the table, beyond the text in the role files */
   roleTags(r: Role): string[] {
     const tags: string[] = [];
     const extra = Object.entries(r.extraMembership ?? {}).map(([k, v]) => `${v} ${k[0].toUpperCase() + k.slice(1)}`);
@@ -134,6 +135,7 @@ export class PrintPage {
     { k: 'small', label: 'Small', hint: '280 × 95 mm: four stacked on A3, two side by side on A4.' },
   ];
   refCards = REF_CARDS;
+  img = cardImage;
   /** the reference card shown full size, and which side */
   refZoom = signal<{ id: string; label: string } | null>(null);
   refZoomBack = signal(false);

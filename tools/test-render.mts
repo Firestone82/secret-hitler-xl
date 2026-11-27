@@ -1,11 +1,12 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import { loadRoles } from '../src/app/core/load-data';
 import { makePlan } from '../src/app/print/plan';
 import { layout } from '../src/app/print/layout';
 import { Renderer } from '../src/app/print/render';
 import { DEFAULT_OPTIONS, normalise, PrintOptions } from '../src/app/print/options';
 
 const pub = (p: string) => readFile('public/' + p).then((b) => new Uint8Array(b));
-const data = JSON.parse(await readFile('public/data/roles.json', 'utf8'));
+const data = await loadRoles(async (p) => JSON.parse(await readFile('public/' + p, 'utf8')));
 const extra = Object.fromEntries(data.roles.filter((r: any) => r.module === 'roles').map((r: any) => [r.id, true]));
 const cases: [string, Partial<PrintOptions>][] = [
   ['full_A3', { paper: 'A3', roles: extra }],
@@ -13,7 +14,7 @@ const cases: [string, Partial<PrintOptions>][] = [
   ['base_A4', { paper: 'A4', xl: false, players: 10 }],
   ['expansion_A4', { paper: 'A4', base: false, refSize: 'small', roles: extra }],
   ['borderless_A4', { paper: 'A4', boardStyle: 'borderless' }],
-  ['borderless_A3', { paper: 'A3', boardStyle: 'both', refSize: 'small', spares: { tiles: 1, roles: 1, memberships: 2, ballots: 1 }, refCards: { r_round: 4, r_contents: 0 } }],
+  ['borderless_A3', { paper: 'A3', boardStyle: 'both', refSize: 'small', spares: { tiles: 1, roles: 1, memberships: 2, ballots: 1 }, refCards: { 'reference/round': 4, 'reference/contents': 0 } }],
 ];
 const r = new Renderer(pub);
 for (const [name, o] of cases) {

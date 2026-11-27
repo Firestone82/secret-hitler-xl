@@ -1,0 +1,35 @@
+{
+  "roles": [
+    "liberal",
+    "fascist",
+    "hitler",
+    "communist",
+    "anarchist",
+    "monarchist",
+    "bodyguard",
+    "fascist_spy",
+    "liberal_spy",
+    "centrist",
+    "capitalist",
+    "jester",
+    "propagandist",
+    "bureaucrat",
+    "detective"
+  ],
+  "blank": {
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "lines": 3
+      },
+      {
+        "label": "YOU KNOW",
+        "lines": 2
+      },
+      {
+        "label": "YOUR POWER",
+        "lines": 3
+      }
+    ]
+  }
+}

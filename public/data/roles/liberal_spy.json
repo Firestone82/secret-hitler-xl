@@ -1,0 +1,98 @@
+{
+  "id": "liberal_spy",
+  "name": "Liberal Spy",
+  "module": "roles",
+  "palette": "lib",
+  "party": "liberal",
+  "regular": false,
+  "seat": "liberal",
+  "seatLabel": "A Liberal",
+  "count": 1,
+  "countLabel": null,
+  "pair": "fascist_spy",
+  "withCommunists": false,
+  "needsCommunists": false,
+  "extraMembership": null,
+  "art": [
+    "roles/liberal_spy"
+  ],
+  "portrait": "liberal_spy",
+  "crop": [
+    0.5,
+    0.47,
+    0.66
+  ],
+  "briefing": {
+    "side": "Team Liberal",
+    "card": "Liberal",
+    "sections": [
+      {
+        "label": "YOU WIN IF",
+        "items": [
+          "The Liberal board is full.",
+          "Hitler is executed."
+        ]
+      },
+      {
+        "label": "YOU KNOW",
+        "items": [
+          "Every Fascist except Hitler: at setup they show you their thumbs."
+        ]
+      },
+      {
+        "label": "DANGER",
+        "items": [
+          "If a player of the Fascist team executes you, the game ends right away and the Fascists win."
+        ]
+      },
+      {
+        "label": "TIPS",
+        "items": [
+          "Never say outright that you know the Fascists.",
+          "Steer the votes quietly."
+        ]
+      }
+    ]
+  },
+  "rulebook": {
+    "title": "The Liberal Spy",
+    "teamLabel": "Team Liberal",
+    "image": "cards/roles/liberal_spy.jpg",
+    "addWhen": "you want a hidden duel. Always add it together with the Fascist Spy.",
+    "addWhenTable": "You want a hidden duel. Always add it together with the Fascist Spy.",
+    "seatLabel": "A Liberal",
+    "pitch": "<b>Knows every Fascist</b> except Hitler, but must stay hidden: if the Fascists shoot them, they win."
+  },
+  "details": [
+    {
+      "label": "Goal",
+      "text": [
+        "You play for the Liberal team. You win when the <b>Liberal board is full</b> or when <b>Hitler is executed</b>."
+      ]
+    },
+    {
+      "label": "What you know",
+      "text": [
+        "Every Fascist except Hitler: at setup you open your eyes while the Fascists show their thumbs. The Monarchist does not show a thumb to you."
+      ]
+    },
+    {
+      "label": "Danger",
+      "text": [
+        "If any player of the Fascist team executes you, as President, with Confession or with the Fascist Spy's shot, the game ends at once and the Fascists win. The Fascists know that a Liberal Spy is in the game and will look for you."
+      ]
+    },
+    {
+      "label": "Help quietly",
+      "text": [
+        "Your knowledge is only worth something while nobody knows that you have it. Use it to steer votes and nominations, never to accuse openly."
+      ]
+    },
+    {
+      "label": "How to play it",
+      "text": [
+        "Never say outright that you know the Fascists. Vote against Fascist governments as if by instinct, and let other Liberals draw the conclusions."
+      ]
+    }
+  ]
+}

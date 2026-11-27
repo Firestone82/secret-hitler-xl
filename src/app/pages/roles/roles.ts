@@ -1,5 +1,6 @@
 import { Component, DestroyRef, computed, effect, inject, signal, untracked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { cardImage } from '../../core/assets';
 import { DataService } from '../../core/data.service';
 import { Role } from '../../core/types';
 import { BriefingCard } from '../../shared/briefing-card';
@@ -29,7 +30,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
               <div class="tocg">{{ g.label }}</div>
               @for (r of g.roles; track r.id) {
                 <button type="button" [class.on]="(active() || shown()[0]?.id) === r.id" [style.--c]="rf.palettes[r.palette].accent" (click)="go(r.id)">
-                  <img [src]="'cards/' + r.art[0] + '.jpg'" alt="" loading="lazy" />{{ r.name }}
+                  <img [src]="img(r.art[0], 0, 'thumb')" alt="" loading="lazy" />{{ r.name }}
                 </button>
               }
             }
@@ -39,7 +40,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
           @for (r of shown(); track r.id) {
             <section class="role" [id]="'role-' + r.id" [style.--c]="rf.palettes[r.palette].accent">
               <div class="cards">
-                <img class="secret" [src]="'cards/' + r.art[0] + '.jpg'" [alt]="r.name + ' Secret Role card'" loading="lazy" />
+                <img class="secret" [src]="img(r.art[0])" [alt]="r.name + ' Secret Role card'" loading="lazy" />
                 <app-briefing-card [role]="r" [palettes]="rf.palettes" />
               </div>
               <div class="info">
@@ -97,7 +98,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
       <div class="lightbox" role="dialog" aria-modal="true" [attr.aria-label]="r.name + ' cards full size'" (click)="close()">
         <div class="big" [style.zoom]="zoom()" (click)="$event.stopPropagation()">
           <!-- the full-size view loads the sharper copy of the card; the small one shows until it arrives -->
-          <img class="secret" [src]="'cards/hd/' + r.art[0] + '.jpg'" [style.background-image]="'url(cards/' + r.art[0] + '.jpg)'"
+          <img class="secret" [src]="img(r.art[0])" [style.background-image]="'url(' + img(r.art[0], 0, 'thumb') + ')'"
             [alt]="r.name + ' Secret Role card'" />
           <app-briefing-card [role]="r" [palettes]="data.roles()!.palettes" />
         </div>
@@ -176,6 +177,7 @@ type Filter = 'all' | 'base' | 'communists' | 'roles';
   `,
 })
 export class RolesPage {
+  img = cardImage;
   data = inject(DataService);
   filter = signal<Filter>('all');
   /** id of the role whose zip is being built */

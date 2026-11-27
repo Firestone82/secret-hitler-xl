@@ -1,0 +1,163 @@
+[
+  {
+    "type": "h1",
+    "text": "3  A round",
+    "id": "3-a-round"
+  },
+  {
+    "type": "p",
+    "html": "The game is played in rounds. Each round has an <b>Election</b> to form a government, a <b>Legislative Session</b> to enact a new policy, and an <b>Executive Action</b> to use a power, if one was unlocked."
+  },
+  {
+    "type": "h2",
+    "text": "Election",
+    "id": "election"
+  },
+  {
+    "type": "list",
+    "ordered": true,
+    "items": [
+      "<b>Pass the presidency.</b> The President placard moves clockwise to the next player, who is the new presidential candidate.",
+      "<b>Nominate a Chancellor.</b> The candidate passes the Chancellor placard to any other eligible player. The candidate may discuss the options with the table.",
+      "<b>Vote.</b> When everyone is ready, every player, including both candidates, picks their <b>Ja!</b> or <b>Nein</b> ballot card and holds it face down. Everyone reveals their vote at the same moment."
+    ]
+  },
+  {
+    "type": "figure",
+    "images": [
+      "cards/ballots/ja.jpg",
+      "cards/ballots/ja.jpg",
+      "cards/ballots/ja.jpg",
+      "cards/ballots/ja.jpg",
+      "cards/ballots/nein.jpg",
+      "cards/ballots/nein.jpg",
+      "cards/ballots/nein.jpg"
+    ],
+    "labels": null,
+    "caption": "Example with seven players: four <b>Ja!</b>, three <b>Nein</b>. A majority voted yes, so the government is elected. Three against three with one player dead would be a tie, and a tie fails."
+  },
+  {
+    "type": "h3",
+    "text": "Who can be Chancellor"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "items": [
+      "The last <i>elected</i> President and the last <i>elected</i> Chancellor are term-limited and cannot be nominated as Chancellor.",
+      "Term limits follow the last pair elected, not the last pair nominated.",
+      "Term limits affect only the chancellorship. Anyone can be President, even the player who was just Chancellor.",
+      "If only five players are left in the game, only the last elected Chancellor is barred. The last President may be nominated."
+    ]
+  },
+  {
+    "type": "h3",
+    "text": "If the vote fails"
+  },
+  {
+    "type": "p",
+    "html": "A tie or a majority of <b>Nein</b> means the vote fails. The candidate misses the chance to be President, the placard moves clockwise to the next player, and the election tracker advances one step."
+  },
+  {
+    "type": "note",
+    "label": "Election tracker",
+    "html": "If the group rejects three governments in a row, the country falls into chaos. Reveal the policy on top of the deck and enact it at once. Any power it would grant is ignored. Existing term limits are forgotten, so every player is eligible as Chancellor in the next election. If fewer than three tiles remain in the deck at that point, shuffle them with the discard pile into a new deck. The tracker resets whenever any policy is placed face up, by a government or by chaos."
+  },
+  {
+    "type": "h3",
+    "text": "If the vote passes"
+  },
+  {
+    "type": "p",
+    "html": "The candidates become President and Chancellor. If three or more Fascist policies are already enacted, ask whether the new Chancellor is Hitler. If so, the game is over and the Fascists win. If not, everyone now knows for sure that this player is not Hitler. Then go to the legislative session."
+  },
+  {
+    "type": "h2",
+    "text": "Legislative session",
+    "id": "legislative-session"
+  },
+  {
+    "type": "list",
+    "ordered": true,
+    "items": [
+      "The President draws the top three tiles, looks at them in secret and discards one face down.",
+      "The other two go to the Chancellor, who looks in secret, discards one face down and enacts the last one face up on the matching board."
+    ]
+  },
+  {
+    "type": "legislative",
+    "discard": "cards/backs/policy.jpg",
+    "steps": [
+      {
+        "title": "The President",
+        "html": "draws three tiles and discards one, face down.",
+        "tiles": [
+          {
+            "image": "cards/policies/fascist.jpg",
+            "alt": "Fascist"
+          },
+          {
+            "image": "cards/policies/fascist.jpg",
+            "alt": "Fascist"
+          },
+          {
+            "image": "cards/policies/liberal.jpg",
+            "alt": "Liberal"
+          }
+        ],
+        "discards": true
+      },
+      {
+        "title": "The Chancellor",
+        "html": "receives the other two and discards one, face down.",
+        "tiles": [
+          {
+            "image": "cards/policies/fascist.jpg",
+            "alt": "Fascist"
+          },
+          {
+            "image": "cards/policies/liberal.jpg",
+            "alt": "Liberal"
+          }
+        ],
+        "discards": true
+      },
+      {
+        "title": "Enacted",
+        "html": "The last tile goes face up on its board.",
+        "tiles": [
+          {
+            "image": "cards/policies/liberal.jpg",
+            "alt": "Liberal"
+          }
+        ],
+        "discards": false
+      }
+    ],
+    "caption": "Example: the President draws Fascist, Fascist, Liberal. Had the President been a Fascist, the Liberal tile could have been the one discarded, and nobody else would know."
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "items": [
+      "The President hands both tiles over at the same time, not one by one.",
+      "No talking and no signals between President and Chancellor during the session.",
+      "Neither may pick at random, shuffle the tiles first or use any other trick to avoid deliberately choosing a policy.",
+      "Discarded tiles are never shown. The table must rely on the word of the President and the Chancellor, who are free to lie.",
+      "If fewer than three tiles remain in the deck at the end of a session, shuffle them with the discard pile into a new deck. Do not reveal the leftover tiles and do not simply put them on top."
+    ]
+  },
+  {
+    "type": "p",
+    "html": "If the enacted Fascist policy covered a presidential power, the sitting President uses it now. If a Liberal policy was enacted, or a Fascist policy with no power, start a new round."
+  },
+  {
+    "type": "h2",
+    "text": "Executive action",
+    "id": "executive-action"
+  },
+  {
+    "type": "p",
+    "html": "The President must use the power before the next round can begin. The President may discuss it with other players first, but decides alone how and when it is used. Powers are used once. They do not stack or roll over to later turns."
+  }
+]

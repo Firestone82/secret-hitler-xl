@@ -1,0 +1,199 @@
+[
+  {
+    "type": "part",
+    "num": "PART TWO",
+    "title": "Secret Hitler XL",
+    "sub": "6 to 19 players. The fan expansion by Bo-Jivan Parker (Lord_Roguy): a Communist party, thirteen extra roles, emergency powers and anti-policies. Use Part One for everything not changed here.",
+    "color": "#c62f2a",
+    "id": "secret-hitler-xl"
+  },
+  {
+    "type": "h1",
+    "text": "6  What XL adds",
+    "id": "6-what-xl-adds"
+  },
+  {
+    "type": "p",
+    "html": "XL is a kit of modules. Every part is optional, and the table shows when each one is worth adding."
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Module",
+        "What it is",
+        "Use it"
+      ],
+      [
+        "The Communists",
+        "A third hidden party with its own board, policies and powers.",
+        "Always. This is what makes XL."
+      ],
+      [
+        "Emergency powers",
+        "Ten one-shot policies that give the President an extra power.",
+        "From 11 players up."
+      ],
+      [
+        "Extra roles",
+        "Thirteen roles with their own powers and goals.",
+        "Optional: see chapter 8."
+      ],
+      [
+        "Anti-policies",
+        "Policies that remove a rival policy and help the Liberals.",
+        "When the Liberals keep losing."
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "h2",
+    "text": "What every player gets",
+    "id": "what-every-player-gets"
+  },
+  {
+    "type": "p",
+    "html": "Each envelope holds three cards, plus the <b>Ja!</b> and <b>Nein</b> ballot cards. The <b>Secret Role</b> card says who you are. The <b>Role Briefing</b> card explains, on its own, how that role wins, what it knows and what it can do. The <b>Party Membership</b> card is what investigations see."
+  },
+  {
+    "type": "figure",
+    "images": [
+      "cards/roles/communist_1.jpg",
+      "cards/briefing/communist.jpg",
+      "cards/membership/communist.jpg",
+      "cards/ballots/ja.jpg",
+      "cards/ballots/nein.jpg"
+    ],
+    "labels": [
+      "Secret Role",
+      "Role Briefing",
+      "Party Membership",
+      "Ballot: <b>Ja!</b>",
+      "Ballot: <b>Nein</b>"
+    ],
+    "caption": "A Communist's envelope: Secret Role, Role Briefing, Party Membership, and the two ballot cards."
+  },
+  {
+    "type": "h2",
+    "text": "Big-game setup table",
+    "id": "big-game-setup-table"
+  },
+  {
+    "type": "seats",
+    "table": "xl",
+    "caption": "Counts for 6 to 16 players are from the XL rules. <b>17 to 19 players are experimental.</b> Those counts are a suggestion of this edition, not part of the XL rules."
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "items": [
+      "<b>Fascist board:</b> by player count, as in the original game: 5-6, 7-8 or <b>9+ players</b>.",
+      "<b>Communist board:</b> one board for every player count.",
+      "<b>Who knows whom:</b> the Communists always know each other. Hitler knows the Fascists only when there is exactly one Fascist."
+    ]
+  },
+  {
+    "type": "h2",
+    "text": "Policy deck",
+    "id": "policy-deck"
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Game",
+        "Liberal",
+        "Fascist",
+        "Communist",
+        "Emergency"
+      ],
+      [
+        "6, 7, 9 or 10 players",
+        "5",
+        "10",
+        "8",
+        "-"
+      ],
+      [
+        "Exactly 8 players",
+        "6",
+        "9",
+        "8",
+        "-"
+      ],
+      [
+        "11 to 14 players",
+        "5",
+        "10",
+        "8",
+        "7"
+      ],
+      [
+        "15 to 19 players",
+        "5",
+        "10",
+        "8",
+        "10"
+      ]
+    ],
+    "caption": null,
+    "center": true
+  },
+  {
+    "type": "table",
+    "rows": [
+      [
+        "Keep in reserve",
+        "For"
+      ],
+      [
+        "2 Communist + 1 Liberal policy",
+        "The Five-year plan power"
+      ],
+      [
+        "2 Communist Party Membership cards",
+        "Radicalisation"
+      ],
+      [
+        "Spare membership deck: 2 Liberal, 1 Fascist, 1 Communist",
+        "The Detective, if that role plays"
+      ]
+    ],
+    "caption": null,
+    "center": false
+  },
+  {
+    "type": "h2",
+    "text": "Night script",
+    "id": "night-script"
+  },
+  {
+    "type": "p",
+    "html": "Read it aloud at setup. Lines marked with a role are read only when that role is in the game. <b>Fascists</b> here means the Fascist roles, the Bodyguard, the Fascist Spy, and a Propagandist, Bureaucrat or Detective holding a Fascist card: never Hitler, the Monarchist or the Jester."
+  },
+  {
+    "type": "script",
+    "title": "Night script for Secret Hitler XL",
+    "lines": [
+      "Everybody close your eyes and hold a fist out in front of you.",
+      "<span style=\"color:#c62f2a\"><b>Only with the Detective:</b></span> Detective, open your eyes. Take the top card of the spare membership deck: you now belong to that party. Put it in your envelope and close your eyes.",
+      "Fascists, except Hitler and the Monarchist, open your eyes and recognise each other.",
+      "Hitler, put your thumb out. Fascists, this is Hitler. Hitler, put your thumb away. (With only one Fascist, Hitler opens their eyes with them instead.)",
+      "<span style=\"color:#c62f2a\"><b>Only with the Monarchist:</b></span> Monarchist, put your thumb out. Fascists, this is the Monarchist. Monarchist, put your thumb away.",
+      "Fascists, close your eyes.",
+      "<span style=\"color:#c62f2a\"><b>Only with the Spies:</b></span> Liberal Spy, open your eyes. Fascists, put your thumbs out. Thumbs away. Liberal Spy, close your eyes.",
+      "Communists, open your eyes and recognise each other.",
+      "<span style=\"color:#c62f2a\"><b>Only with the Anarchist:</b></span> Anarchist, put your thumb out (with only one other Communist, open your eyes instead). Thumb away.",
+      "Communists, close your eyes.",
+      "<span style=\"color:#c62f2a\"><b>Only with Centrists:</b></span> Centrists, open your eyes, recognise each other, close your eyes.",
+      "Everybody put your hands down and open your eyes."
+    ]
+  },
+  {
+    "type": "note",
+    "label": "How long is a big game?",
+    "html": "The Communist board adds up to five more governments. From 11 players, emergency tiles stretch the game further, so that most players get a turn as President."
+  }
+]

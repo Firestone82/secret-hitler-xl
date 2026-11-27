@@ -63,7 +63,7 @@ import { GithubStars } from './shared/github-stars';
           <span>Secret Hitler by Mike Boxleiter, Tommy Maranges, Max Temkin and Mac Schubert · Secret Hitler XL by Lord_Roguy</span>
         </div>
         <a class="lic" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0">
-          <img src="rb/cc_by_nc_sa.png" alt="" width="61" height="23" />CC BY-NC-SA 4.0
+          <img src="rulebook/images/cc_by_nc_sa.png" alt="" width="61" height="23" />CC BY-NC-SA 4.0
         </a>
       </div>
       <div class="row">
